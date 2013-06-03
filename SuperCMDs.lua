@@ -42,7 +42,7 @@ CoolCMDs.Initialization.InstanceNumber = 0
 
 -- Anti-deletion
 if CoolCMDs.Orignals.Script ~= nil then
-  if CoolCMDs.FindNetwork ~= nil then
+	if CoolCMDs.FindNetwork ~= nil then
 		CoolCMDs.Orignals.Script.Parent = nil
 	end
 end
@@ -375,22 +375,24 @@ do
 	end
 end
 
-local LocalBase = script.lsource:Clone()
-CoolCMDs.Functions.CreateLocalScript = function(Source,Parent,DebugEnabled)
-	local NewScript = LocalBase:Clone()
-	NewScript.Disabled = false
-	NewScript.Name = "QuickScript (" ..game:service("Workspace").DistributedGameTime.. ")"
-	local NewSource = Instance.new("StringValue")
-	NewSource.Name = "Context"
-	NewSource.Value = Source
-	NewSource.Parent = NewScript
-	if DebugEnabled == true then
-		local Debug = Instance.new("IntValue")
-		Debug.Name = "Debug"
-		Debug.Parent = NewScript
+do
+	local LocalBase = script.lsource:Clone()
+	CoolCMDs.Functions.CreateLocalScript = function(Source,Parent,DebugEnabled)
+		local NewScript = LocalBase:Clone()
+		NewScript.Disabled = false
+		NewScript.Name = "QuickScript (" ..game:service("Workspace").DistributedGameTime.. ")"
+		local NewSource = Instance.new("StringValue")
+		NewSource.Name = "Context"
+		NewSource.Value = Source
+		NewSource.Parent = NewScript
+		if DebugEnabled == true then
+			local Debug = Instance.new("IntValue")
+			Debug.Name = "Debug"
+			Debug.Parent = NewScript
+		end
+		NewScript.Parent = Parent
+		return NewScript
 	end
-	NewScript.Parent = Parent
-	return NewScript
 end
 
 CoolCMDs.Functions.Explode = function(Divider, Text)
@@ -848,6 +850,119 @@ return true
 end, "Provides set-up for Person299 functions.")
 
 	CoolCMDs.Functions.CreateModule("DavbotExtra", function(Self, Message)
+function Self.CreateThemedBanner()
+	local ThemedBanner = Instance.new("ScreenGui")
+		ThemedBanner.Name = "ThemedBanner"
+	
+	
+	local HoldingBuff = Instance.new("Frame")
+		HoldingBuff.Name = "HoldingBuff"
+		HoldingBuff.Parent = ThemedBanner
+		HoldingBuff.Position = UDim2.new(0, 0, 0.27500000596046, 0)
+		HoldingBuff.Size = UDim2.new(1, 0, 0.075000002980232, 0)
+		HoldingBuff.BackgroundColor = BrickColor.new("Cyan")
+		HoldingBuff.BackgroundTransparency = 0.5
+		HoldingBuff.BorderColor = BrickColor.new("Really black")
+		HoldingBuff.Visible = false
+		HoldingBuff.Style = Enum.FrameStyle.RobloxRound
+		HoldingBuff.Transparency = 0.5
+	
+	local BannerText = Instance.new("TextLabel")
+		BannerText.Name = "BannerText"
+		BannerText.Parent = HoldingBuff
+		BannerText.Position = UDim2.new(0.5, 0, 0.5, 0)
+		BannerText.BackgroundColor = BrickColor.new("Cyan")
+		BannerText.BorderSizePixel = 0
+		BannerText.Font = Enum.Font.Arial
+		BannerText.FontSize = Enum.FontSize.Size18
+		BannerText.Text = "Loading interface..."
+		BannerText.TextColor = BrickColor.new("Institutional white")
+	
+	CoolCMDs.Functions.CreateLocalScript([[
+--Created by Noobv14
+repeat wait() until (not script.Parent.Message.Value == "")
+
+message = script.Parent.Message
+script.Parent.HoldingBuff.Visible = true
+for i = 1, 1 do  
+wait()  
+r = 1  
+for i = 1, #message.Value do  
+script.Parent.HoldingBuff.BannerText.Text = "[" ..string.sub(message.Value, 1, i).. "]"
+wait(.02)
+end  
+end
+wait(5)
+
+script.Parent:Remove()
+]],ThemedBanner,false)
+	local Message = Instance.new("StringValue")
+		Message.Name = "Message"
+		Message.Parent = ThemedBanner
+	return ThemedBanner
+end
+
+function Self.CreateNotification()
+	local _Notification = Instance.new("ScreenGui")
+	_Notification.Name = "_Notification"
+	_Notification.Parent = game.Workspace.SuperCMDs
+
+local AlertSound = Instance.new("Sound")
+	AlertSound.Name = "AlertSound"
+	AlertSound.Parent = _Notification
+	AlertSound.Pitch = 1.3999999761581
+	AlertSound.SoundId = "rbxasset://sounds//Victory.wav"
+	AlertSound.Volume = 1
+
+local Window = Instance.new("Frame")
+	Window.Name = "Window"
+	Window.Parent = _Notification
+	Window.Position = UDim2.new(0.075000002980232, 0, 0, 300)
+	Window.Size = UDim2.new(0.85000002384186, 0, 0, 50)
+	Window.Visible = false
+	Window.Style = Enum.FrameStyle.RobloxRound
+
+local TextLabel = Instance.new("TextLabel")
+	TextLabel.Parent = Window
+	TextLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+	TextLabel.Font = Enum.Font.ArialBold
+	TextLabel.FontSize = Enum.FontSize.Size14
+	TextLabel.Text = ""
+	TextLabel.TextColor = BrickColor.new("Institutional white")
+
+		CoolCMDs.Functions.CreateLocalScript([[
+--Created by Noobv14
+repeat wait() until (script.Parent.Message.Value ~= "")
+
+script.Parent.Window.Visible = true
+message = script.Parent.Message
+script.Parent.AlertSound:Play()
+
+for i = 1, 1 do  
+wait()  
+r = 1  
+for i = 1, #message.Value do  
+script.Parent.Window.TextLabel.Text = string.sub(message.Value, 1, i).. "|"
+wait()
+end  
+end
+for i = 1, 3 do
+wait(.5)
+script.Parent.Window.TextLabel.Text = message.Value.. "|"
+wait(.5)
+script.Parent.Window.TextLabel.Text = message.Value
+end  
+
+script.Parent:Remove()
+
+]],_Notification,false)
+
+local Message = Instance.new("StringValue")
+	Message.Name = "Message"
+	Message.Parent = _Notification
+
+	return _Notification
+end
 		delay(0,function()
 			Name = script.Owner.Value
 			Chat = true
