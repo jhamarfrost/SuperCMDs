@@ -1,9 +1,9 @@
--- WARNING: There is over 10000 lines in this script! :-)
+-- WARNING: There is over 10000 lines in this script! 
 -- Thanks to creator of CoolCMDs.
--- Upgrade CoolCMDS base to v4 R17 RC coming soon.
+-- Upgrade CoolCMDS base to v4 R17 RC coming soon?
 -- Created by uyjulian (goo (dot) gl/w8F9w)
 -- TODO: add Kohl's commands
-Admins = {"noobv11","noobv14","Player", "Player1"}
+Admins = {"noobv11","noobv14","Player", "Player1"} --Put Admins name here
 Banned = {} --banned people
 ItemId = 0 --auto admin (Not enabled yet)
 KeyFor = ";" --the key you use to seprate the parts
@@ -15,9 +15,8 @@ CrEnBo = false --make this true if you want to award a badge when you enter (Not
 CrEnId = 0000000 --the ID of the badge (Not enabled yet)
 MoName = "Money" --for the donate command (Not enabled yet)
 AutAdm = {"Player1, Admin", "uyjulian, Owner", "Player, Admin"} -- AutoAdmin plugin
-
--- Scroll down a bit for groups!
-
+-- Thank you for using SuperCMDs!
+-- If you like this admin script, share it with your friends!
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- DO NOT TOUCH THE BELOW! (main script) ---------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
