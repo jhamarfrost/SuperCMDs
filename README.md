@@ -1,6 +1,13 @@
 SuperCMDs
 =========
 
+This project is abandoned
+We suggest you use https://github.com/ROBLOX/G-CMDS
+
+
+Old information
+===============
+
 Advanced commands for ROBLOX.
 
 This is a work in progress!
