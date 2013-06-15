@@ -19,55 +19,56 @@ AutAdm = {"Player1, Admin", "uyjulian, Owner", "Player, Admin"} -- AutoAdmin plu
 -- DO NOT TOUCH THE BELOW! (main script) ---------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-_CMDMain = {}
-_CMDMain.Data = {}
-_CMDMain.Players = {}
-_CMDMain.CommandHandles = {}
-_CMDMain.GroupHandles = {}
-_CMDMain.Functions = {}
-_CMDMain.Modules = {}
-_CMDMain.Orignals = {}
+_C = {}
+_C.Data = {}
+_C.Players = {}
+_C.CommandHandles = {}
+_C.GroupHandles = {}
+_C.Functions = {}
+_C.Modules = {}
+_C.Orignals = {}
 
-_CMDMain.Orignals.Script = script
-_CMDMain.FindNetwork = game:FindFirstChild("NetworkServer") --this will break if you put :GetService() !
-_CMDMain.IsNotABaseScript = function() return pcall(function() Instance.new("Script").Source = "Test" end) end
+_C.Orignals.Script = script
+_C.FindNetwork = game:FindFirstChild("NetworkServer") --this will break if you put :GetService() !
+_C.IsNotABaseScript = function() return pcall(function() Instance.new("Script").Source = "Test" end) end
+_C.Orignals.ModelId = 117557211
 
-_CMDMain.Initialization = {10}
-_CMDMain.Initialization.StartTime = tick()
-_CMDMain.Initialization.FinishTime = -1
-_CMDMain.Initialization.ElapsedTime = -1
-_CMDMain.Initialization.InstanceNumber = 0
+_C.Initialization = {10}
+_C.Initialization.StartTime = tick()
+_C.Initialization.FinishTime = -1
+_C.Initialization.ElapsedTime = -1
+_C.Initialization.InstanceNumber = 0
 
 -- Anti-deletion
-if _CMDMain.Orignals.Script ~= nil then
-	if _CMDMain.FindNetwork ~= nil then
-		_CMDMain.Orignals.Script.Parent = nil
+if _C.Orignals.Script ~= nil then
+	if _C.FindNetwork ~= nil then
+		_C.Orignals.Script.Parent = nil
 	end
 end
 
 if _G.SuperCMDs == nil or type(_G.SuperCMDs) ~= "table" then _G.SuperCMDs = {} end
 table.insert(_G.SuperCMDs, {})
-for i = 1, #_G.SuperCMDs do _CMDMain.Initialization.InstanceNumber = _CMDMain.Initialization.InstanceNumber + 1 end
-if _CMDMain.Initialization.InstanceNumber == 0 then _CMDMain.Initialization.InstanceNumber = 1 end
+for i = 1, #_G.SuperCMDs do _C.Initialization.InstanceNumber = _C.Initialization.InstanceNumber + 1 end
+if _C.Initialization.InstanceNumber == 0 then _C.Initialization.InstanceNumber = 1 end
 
-_G.SuperCMDs[_CMDMain.Initialization.InstanceNumber].GetInstance = function(_, Code)
-	error("Access denied to SuperCMDs " .._CMDMain.Data.Version.. ", instance " .._CMDMain.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
+_G.SuperCMDs[_C.Initialization.InstanceNumber].GetInstance = function(_, Code)
+	error("Access denied to SuperCMDs " .._C.Data.Version.. ", instance " .._C.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
 end
 
-_G.SuperCMDs[_CMDMain.Initialization.InstanceNumber].GetTable = function(_, Code)
-	error("Access denied to SuperCMDs " .._CMDMain.Data.Version.. ", instance " .._CMDMain.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
+_G.SuperCMDs[_C.Initialization.InstanceNumber].GetTable = function(_, Code)
+	error("Access denied to SuperCMDs " .._C.Data.Version.. ", instance " .._C.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
 end
 
-_G.SuperCMDs[_CMDMain.Initialization.InstanceNumber].Remove = function(_, Code)
-	error("Access denied to SuperCMDs " .._CMDMain.Data.Version.. ", instance " .._CMDMain.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
+_G.SuperCMDs[_C.Initialization.InstanceNumber].Remove = function(_, Code)
+	error("Access denied to SuperCMDs " .._C.Data.Version.. ", instance " .._C.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
 end
 
 
-_CMDMain.Data.SplitCharacter = KeyFor
-_CMDMain.Data.AccessCode = "7gbaswaswasoi3"
-_CMDMain.Data.Version = "5.0.0"
+_C.Data.SplitCharacter = KeyFor
+_C.Data.AccessCode = "7gbaswaswasoi3"
+_C.Data.Version = "5.0.0"
 
-_CMDMain.Functions.CreateMessage = function(Format, MessageText, ShowTime, MessageParent)
+_C.Functions.CreateMessage = function(Format, MessageText, ShowTime, MessageParent)
 	if Format == "Default" or Format == nil then Format = "Message" end
 	if MessageText == nil then MessageText = "" end
 	if MessageParent == nil then MessageParent = game:service("Workspace") end
@@ -87,48 +88,48 @@ _CMDMain.Functions.CreateMessage = function(Format, MessageText, ShowTime, Messa
 	return Message
 end
 
-_CMDMain.Functions.CreatePlayerTable = function(Player, PlayerGroup)
+_C.Functions.CreatePlayerTable = function(Player, PlayerGroup)
 	if Player == nil then return false end
 	if not Player:IsA("Player") then return false end
-	Player.Chatted:connect(function(Message) _CMDMain.Functions.CatchMessage(Message, Player) end)
-	table.insert(_CMDMain.Players, {Name = Player.Name, Group = PlayerGroup ~= nil and PlayerGroup or _CMDMain.Functions.GetLowestGroup().Name})
+	Player.Chatted:connect(function(Message) _C.Functions.CatchMessage(Message, Player) end)
+	table.insert(_C.Players, {Name = Player.Name, Group = PlayerGroup ~= nil and PlayerGroup or _C.Functions.GetLowestGroup().Name})
 end
 
-_CMDMain.Functions.RemovePlayerTable = function(Player)
+_C.Functions.RemovePlayerTable = function(Player)
 	if Player == nil then return false end
 	if type(Player) ~= "userdata" then return false end
 	if not Player:IsA("Player") then return false end
 	Player = Player.Name
-	for i = 1, #_CMDMain.Players do
-		if _CMDMain.Players[i].Name == Player then
-			table.remove(_CMDMain.Players, i)
+	for i = 1, #_C.Players do
+		if _C.Players[i].Name == Player then
+			table.remove(_C.Players, i)
 		end
 	end
 end
 
-_CMDMain.Functions.CreateGroup = function(GroupName, GroupControl, GroupFullName, GroupHelp)
+_C.Functions.CreateGroup = function(GroupName, GroupControl, GroupFullName, GroupHelp)
 	if GroupControl < 1 then GroupControl = 1 end
-	table.insert(_CMDMain.GroupHandles, {Name = GroupName, Control = GroupControl, FullName = GroupFullName, Help = GroupHelp})
+	table.insert(_C.GroupHandles, {Name = GroupName, Control = GroupControl, FullName = GroupFullName, Help = GroupHelp})
 	return true
 end
 
-_CMDMain.Functions.CreateCommand = function(CommandText, CommandControl, CommandFunction, CommandFullName, CommandHelp, CommandHelpArgs)
+_C.Functions.CreateCommand = function(CommandText, CommandControl, CommandFunction, CommandFullName, CommandHelp, CommandHelpArgs)
 	if CommandControl < 1 then CommandControl = 1 end
-	table.insert(_CMDMain.CommandHandles, {Command = CommandText, Control = CommandControl, Trigger = CommandFunction, FullName = CommandFullName, Help = CommandHelp, HelpArgs = CommandHelpArgs, Enabled = false})
+	table.insert(_C.CommandHandles, {Command = CommandText, Control = CommandControl, Trigger = CommandFunction, FullName = CommandFullName, Help = CommandHelp, HelpArgs = CommandHelpArgs, Enabled = false})
 	return true
 end
 
-_CMDMain.Functions.RemoveCommand = function(Command)
-	for i = 1, #_CMDMain.CommandHandles do
-		if type(_CMDMain.CommandHandles[i].Command) == "string" then
-			if _CMDMain.CommandHandles[i].Command == Command then
-				table.remove(_CMDMain.CommandHandles, i)
+_C.Functions.RemoveCommand = function(Command)
+	for i = 1, #_C.CommandHandles do
+		if type(_C.CommandHandles[i].Command) == "string" then
+			if _C.CommandHandles[i].Command == Command then
+				table.remove(_C.CommandHandles, i)
 				return true
 			end
-		elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
-			for x = 1, #_CMDMain.CommandHandles[i].Command do
-				if _CMDMain.CommandHandles[i].Command[x] == Command then
-					table.remove(_CMDMain.CommandHandles, i)
+		elseif type(_C.CommandHandles[i].Command) == "table" then
+			for x = 1, #_C.CommandHandles[i].Command do
+				if _C.CommandHandles[i].Command[x] == Command then
+					table.remove(_C.CommandHandles, i)
 					return true
 				end
 			end
@@ -137,62 +138,62 @@ _CMDMain.Functions.RemoveCommand = function(Command)
 	return false
 end
 
-_CMDMain.Functions.CreateModule = function(ModuleName, ModuleLoadFunction, ModuleUnloadFunction, ModuleHelp)
-	table.insert(_CMDMain.Modules, {Name = ModuleName, Load = ModuleLoadFunction, Unload = ModuleUnloadFunction == nil and function() return true end or ModuleUnloadFunction, Help = ModuleHelp, Enabled = false})
+_C.Functions.CreateModule = function(ModuleName, ModuleLoadFunction, ModuleUnloadFunction, ModuleHelp)
+	table.insert(_C.Modules, {Name = ModuleName, Load = ModuleLoadFunction, Unload = ModuleUnloadFunction == nil and function() return true end or ModuleUnloadFunction, Help = ModuleHelp, Enabled = false})
 	return true
 end
 
-_CMDMain.Functions.PrintInLog = function(ToPrintInLog) 
+_C.Functions.PrintInLog = function(ToPrintInLog) 
 	print("[SuperCMDs] " .. ToPrintInLog)
 end
 
-_CMDMain.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
+_C.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
 	if ModuleName == nil then ModuleName = "" end
 	local Unloaded = 0
 	local Loaded = 0
 	local LoadFailed1 = 0
 	local LoadFailed2 = nil
 	local StartTime = tick()
-	for i = 1, #_CMDMain.Modules do
-		if string.match(_CMDMain.Modules[i].Name, ModuleName) then
-			local StatusMessage = _CMDMain.Functions.CreateMessage("Hint")
-			local StatusMessagePrefix = "[Module: " .._CMDMain.Modules[i].Name.. "] "
+	for i = 1, #_C.Modules do
+		if string.match(_C.Modules[i].Name, ModuleName) then
+			local StatusMessage = _C.Functions.CreateMessage("Hint")
+			local StatusMessagePrefix = "[Module: " .._C.Modules[i].Name.. "] "
 			StatusMessage.Changed:connect(function(Property)
 				if Property == "Text" then
 					if string.sub(StatusMessage.Text, 0, string.len(StatusMessagePrefix)) == StatusMessagePrefix then return false end
 					StatusMessage.Text = StatusMessagePrefix .. StatusMessage.Text
 				end
-				_CMDMain.Functions.PrintInLog(StatusMessage.Text)
+				_C.Functions.PrintInLog(StatusMessage.Text)
 			end)
 			if ShowMessage == false then StatusMessage.Parent = nil end
 			StatusMessage.Text = "Waiting for module to be unloaded..."
-			while _CMDMain.Modules[i].Load == nil do wait() end
+			while _C.Modules[i].Load == nil do wait() end
 			StatusMessage.Text = "Unloading module (1/3)..."
-			_CMDMain.Modules[i].Unload(_CMDMain.Modules[i], StatusMessage)
+			_C.Modules[i].Unload(_C.Modules[i], StatusMessage)
 			wait()
 			StatusMessage.Text = "Unloading module (2/3)..."
-			local TemporaryModule = _CMDMain.Modules[i].Load
-			_CMDMain.Modules[i].Load = nil
+			local TemporaryModule = _C.Modules[i].Load
+			_C.Modules[i].Load = nil
 			wait()
 			StatusMessage.Text = "Unloading module (3/3)..."
-			_CMDMain.Modules[i].Load = TemporaryModule
-			_CMDMain.Modules[i].Enabled = false
+			_C.Modules[i].Load = TemporaryModule
+			_C.Modules[i].Enabled = false
 			Unloaded = Unloaded + 1
 			wait()
 			if RestartModule == true then
 				StatusMessage.Text = "Loading module..."
 				wait()
-				_CMDMain.Modules[i].Enabled = true
-				local LoadCompleted = _CMDMain.Modules[i].Load(_CMDMain.Modules[i], StatusMessage)
+				_C.Modules[i].Enabled = true
+				local LoadCompleted = _C.Modules[i].Load(_C.Modules[i], StatusMessage)
 				if LoadCompleted ~= true then
 					StatusMessage.Text = "Module failed to load successfully. Unloading..."
 					wait()
-					_CMDMain.Functions.LoadModule(false, _CMDMain.Modules[i].Name, false)
-					_CMDMain.Modules[i].Enabled = false
+					_C.Functions.LoadModule(false, _C.Modules[i].Name, false)
+					_C.Modules[i].Enabled = false
 					StatusMessage.Text = "Module unloaded."
 					wait()
 					LoadFailed1 = LoadFailed1 + 1
-					LoadFailed2 = LoadFailed2 == nil and _CMDMain.Modules[i].Name or LoadFailed2.. ", " .._CMDMain.Modules[i].Name
+					LoadFailed2 = LoadFailed2 == nil and _C.Modules[i].Name or LoadFailed2.. ", " .._C.Modules[i].Name
 					LoadFailed2 = LoadFailed2.. " (" ..tostring(LoadCompleted).. ")"
 				else
 					Loaded = Loaded + 1
@@ -204,7 +205,7 @@ _CMDMain.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
 	local FinishTime = tick()
 	local ElapsedTime = FinishTime - StartTime
 	if ShowMessage == true then
-		local StatusMessage = _CMDMain.Functions.CreateMessage("Hint")
+		local StatusMessage = _C.Functions.CreateMessage("Hint")
 		StatusMessage.Text = "Module(s) unloaded: " ..Unloaded.. ". Module(s) loaded: " ..Loaded.. ". Module(s) failed: " ..LoadFailed1.. ". Elapsed time: " ..ElapsedTime.. " seconds."
 		wait()
 		if LoadFailed1 > 0 and LoadFailed2 ~= nil then
@@ -216,116 +217,116 @@ _CMDMain.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
 	return Unloaded, Loaded, StartTime, FinishTime, ElapsedTime
 end
 
-_CMDMain.Functions.GetCommand = function(Command, Format)
+_C.Functions.GetCommand = function(Command, Format)
 	if Format == nil or Format == "ByCommand" then
-		for i = 1, #_CMDMain.CommandHandles do
-			if type(_CMDMain.CommandHandles[i].Command) == "string" then
-				if _CMDMain.CommandHandles[i].Command == Command then
-					return _CMDMain.CommandHandles[i]
+		for i = 1, #_C.CommandHandles do
+			if type(_C.CommandHandles[i].Command) == "string" then
+				if _C.CommandHandles[i].Command == Command then
+					return _C.CommandHandles[i]
 				end
-			elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
-				for x = 1, #_CMDMain.CommandHandles[i].Command do
-					if _CMDMain.CommandHandles[i].Command[x] == Command then
-						return _CMDMain.CommandHandles[i]
+			elseif type(_C.CommandHandles[i].Command) == "table" then
+				for x = 1, #_C.CommandHandles[i].Command do
+					if _C.CommandHandles[i].Command[x] == Command then
+						return _C.CommandHandles[i]
 					end
 				end
 			end
 		end
 	elseif Format == "ByFullName" then
-		for i = 1, #_CMDMain.CommandHandles do
-			if _CMDMain.CommandHandles[i].FullName == Command then
-				return _CMDMain.CommandHandles[i]
+		for i = 1, #_C.CommandHandles do
+			if _C.CommandHandles[i].FullName == Command then
+				return _C.CommandHandles[i]
 			end
 		end
 	elseif Format == "ByControl" then
-		for i = 1, #_CMDMain.CommandHandles do
-			if _CMDMain.CommandHandles[i].Control == Command then
-				return _CMDMain.CommandHandles[i]
+		for i = 1, #_C.CommandHandles do
+			if _C.CommandHandles[i].Control == Command then
+				return _C.CommandHandles[i]
 			end
 		end
 	end
 	return nil
 end
 
-_CMDMain.Functions.GetGroup = function(Group, Format)
+_C.Functions.GetGroup = function(Group, Format)
 	if Format == nil or Format == "ByName" then
-		for i = 1, #_CMDMain.GroupHandles do
-			if _CMDMain.GroupHandles[i].Name == Group then
-				return _CMDMain.GroupHandles[i]
+		for i = 1, #_C.GroupHandles do
+			if _C.GroupHandles[i].Name == Group then
+				return _C.GroupHandles[i]
 			end
 		end
 	elseif Format == "ByFullName" then
-		for i = 1, #_CMDMain.GroupHandles do
-			if _CMDMain.GroupHandles[i].FullName == Group then
-				return _CMDMain.GroupHandles[i]
+		for i = 1, #_C.GroupHandles do
+			if _C.GroupHandles[i].FullName == Group then
+				return _C.GroupHandles[i]
 			end
 		end
 	elseif Format == "ByControl" then
-		for i = 1, #_CMDMain.GroupHandles do
-			if _CMDMain.GroupHandles[i].Control == Group then
-				return _CMDMain.GroupHandles[i]
+		for i = 1, #_C.GroupHandles do
+			if _C.GroupHandles[i].Control == Group then
+				return _C.GroupHandles[i]
 			end
 		end
 	end
 	return nil
 end
 
-_CMDMain.Functions.GetLowestGroup = function()
+_C.Functions.GetLowestGroup = function()
 	local Max = math.huge
-	for i = 1, #_CMDMain.GroupHandles do
-		if _CMDMain.GroupHandles[i].Control < Max then
-			Max = _CMDMain.GroupHandles[i].Control
+	for i = 1, #_C.GroupHandles do
+		if _C.GroupHandles[i].Control < Max then
+			Max = _C.GroupHandles[i].Control
 		end
 	end
-	return _CMDMain.Functions.GetGroup(Max, "ByControl")
+	return _C.Functions.GetGroup(Max, "ByControl")
 end
 
-_CMDMain.Functions.GetHighestGroup = function()
+_C.Functions.GetHighestGroup = function()
 	local Max = -math.huge
-	for i = 1, #_CMDMain.GroupHandles do
-		if _CMDMain.GroupHandles[i].Control > Max then
-			Max = _CMDMain.GroupHandles[i].Control
+	for i = 1, #_C.GroupHandles do
+		if _C.GroupHandles[i].Control > Max then
+			Max = _C.GroupHandles[i].Control
 		end
 	end
-	return _CMDMain.Functions.GetGroup(Max, "ByControl")
+	return _C.Functions.GetGroup(Max, "ByControl")
 end
 
-_CMDMain.Functions.GetModule = function(ModuleName)
-	for i = 1, #_CMDMain.Modules do
-		if _CMDMain.Modules[i].Name == ModuleName then
-			return _CMDMain.Modules[i]
-		end
-	end
-	return nil
-end
-
-_CMDMain.Functions.IsModuleEnabled = function(ModuleName)
-	for i = 1, #_CMDMain.Modules do
-		if _CMDMain.Modules[i].Name == ModuleName then
-			return _CMDMain.Modules[i].Enabled
+_C.Functions.GetModule = function(ModuleName)
+	for i = 1, #_C.Modules do
+		if _C.Modules[i].Name == ModuleName then
+			return _C.Modules[i]
 		end
 	end
 	return nil
 end
 
-_CMDMain.Functions.GetPlayerTable = function(Player)
-	for i = 1, #_CMDMain.Players do
-		if _CMDMain.Players[i].Name == Player then
-			return _CMDMain.Players[i]
+_C.Functions.IsModuleEnabled = function(ModuleName)
+	for i = 1, #_C.Modules do
+		if _C.Modules[i].Name == ModuleName then
+			return _C.Modules[i].Enabled
+		end
+	end
+	return nil
+end
+
+_C.Functions.GetPlayerTable = function(Player)
+	for i = 1, #_C.Players do
+		if _C.Players[i].Name == Player then
+			return _C.Players[i]
 		end
 	end
 end
 
 do
 	local Base = nil
-	if _CMDMain.IsNotABaseScript == true then
+	if _C.IsNotABaseScript == true then
 		Base = Instance.new("Script")
 		Base.Source = "loadstring(script.Context.Value)() -- Created by uyjulian, goo (dot) gl/w8F9w"
 		Base.Disabled = true
 	else
 		Base = script.source:Clone()
 	end
-	_CMDMain.Functions.CreateScript = function(Source, Parent, DebugEnabled)
+	_C.Functions.CreateScript = function(Source, Parent, DebugEnabled)
 		local NewScript = Base:Clone()
 		NewScript.Disabled = false
 		NewScript.Name = "QuickScript (" ..game:service("Workspace").DistributedGameTime.. ")"
@@ -345,14 +346,14 @@ end
 
 do
 	local LocalBase = nil
-	if _CMDMain.IsNotABaseScript == true then
+	if _C.IsNotABaseScript == true then
 		LocalBase = Instance.new("LocalScript")
 		LocalBase.Source = "loadstring(script.Context.Value)() -- Created by uyjulian, goo (dot) gl/w8F9w"
 		LocalBase.Disabled = true
 	else
 		LocalBase = script.lsource:Clone()
 	end
-	_CMDMain.Functions.CreateLocalScript = function(Source,Parent,DebugEnabled)
+	_C.Functions.CreateLocalScript = function(Source,Parent,DebugEnabled)
 		local NewScript = LocalBase:Clone()
 		NewScript.Disabled = false
 		NewScript.Name = "QuickScript (" ..game:service("Workspace").DistributedGameTime.. ")"
@@ -370,7 +371,7 @@ do
 	end
 end
 
-_CMDMain.Functions.Explode = function(Divider, Text)
+_C.Functions.Explode = function(Divider, Text)
 	if Text == "" or Text == nil or type(Text) ~= "string" then return {} end
 	if Divider == "" or Divider == nil or type(Divider) ~= "string" then return {Text} end
 	local Position, Words = 0, {}
@@ -382,7 +383,7 @@ _CMDMain.Functions.Explode = function(Divider, Text)
 	return Words
 end
 
-_CMDMain.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Children)
+_C.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Children)
 	if Source == nil then
 		Source = game
 	end
@@ -408,15 +409,15 @@ _CMDMain.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Chi
 			end)() then
 			table.insert(Children, Child)
 		end
-		_CMDMain.Functions.GetRecursiveChildren(Child, Name, SearchType, Children)
+		_C.Functions.GetRecursiveChildren(Child, Name, SearchType, Children)
 	end)
 	end
 	return Children
 end
 
-_CMDMain.Functions.CatchMessage = function(Message, Speaker)
+_C.Functions.CatchMessage = function(Message, Speaker)
 	if Message == nil or Speaker == nil then return end
-	_CMDMain.Functions.PrintInLog("[CHAT] ["..Speaker.Name.."] "..Message)
+	_C.Functions.PrintInLog("[CHAT] ["..Speaker.Name.."] "..Message)
 	if string.sub(Message, 0, 4) == "/sc " then
 		Message = string.sub(Message, 5)
 	elseif string.sub(Message, 0, 5) == "lego" then
@@ -426,67 +427,67 @@ _CMDMain.Functions.CatchMessage = function(Message, Speaker)
 	elseif string.sub(Message, 0, 10) == "scape" then
 		Message = string.sub(Message, 11)
 	end
-	for i = 1, #_CMDMain.CommandHandles do
+	for i = 1, #_C.CommandHandles do
 		if (function()
-			if type(_CMDMain.CommandHandles[i].Command) == "string" then
-				if _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[1]:lower() == _CMDMain.CommandHandles[i].Command:lower() then
+			if type(_C.CommandHandles[i].Command) == "string" then
+				if _C.Functions.Explode(_C.Data.SplitCharacter, Message)[1]:lower() == _C.CommandHandles[i].Command:lower() then
 					return true
 				end
-			elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
-				for x = 1, #_CMDMain.CommandHandles[i].Command do
-					if _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[1]:lower() == _CMDMain.CommandHandles[i].Command[x]:lower() then
+			elseif type(_C.CommandHandles[i].Command) == "table" then
+				for x = 1, #_C.CommandHandles[i].Command do
+					if _C.Functions.Explode(_C.Data.SplitCharacter, Message)[1]:lower() == _C.CommandHandles[i].Command[x]:lower() then
 						return true
 					end
 				end
 			end
 			return false
 		end)() == true then
-			if _CMDMain.Functions.GetPlayerTable(Speaker.Name) ~= nil then
-				if _CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group) ~= nil then
-					if _CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).Control >= _CMDMain.CommandHandles[i].Control then
+			if _C.Functions.GetPlayerTable(Speaker.Name) ~= nil then
+				if _C.Functions.GetGroup(_C.Functions.GetPlayerTable(Speaker.Name).Group) ~= nil then
+					if _C.Functions.GetGroup(_C.Functions.GetPlayerTable(Speaker.Name).Group).Control >= _C.CommandHandles[i].Control then
 						local Message2 = ""
-						for x = 2, #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message) - 1 do
-							Message2 = Message2 .. _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[x] .. _CMDMain.Data.SplitCharacter
+						for x = 2, #_C.Functions.Explode(_C.Data.SplitCharacter, Message) - 1 do
+							Message2 = Message2 .. _C.Functions.Explode(_C.Data.SplitCharacter, Message)[x] .. _C.Data.SplitCharacter
 						end
-						for x = #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message), #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message) do
-							Message2 = Message2 .. _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[x]
+						for x = #_C.Functions.Explode(_C.Data.SplitCharacter, Message), #_C.Functions.Explode(_C.Data.SplitCharacter, Message) do
+							Message2 = Message2 .. _C.Functions.Explode(_C.Data.SplitCharacter, Message)[x]
 						end
-						pcall(function() if Message2 == _CMDMain.CommandHandles[i].Command:lower() then Message2 = "" end end)
-						pcall(function() for x = 1, #_CMDMain.CommandHandles[i].Command do if Message2:lower() == _CMDMain.CommandHandles[i].Command[x]:lower() then Message2 = "" end end end)
+						pcall(function() if Message2 == _C.CommandHandles[i].Command:lower() then Message2 = "" end end)
+						pcall(function() for x = 1, #_C.CommandHandles[i].Command do if Message2:lower() == _C.CommandHandles[i].Command[x]:lower() then Message2 = "" end end end)
 						local Message3 = nil
-						for x = 1, #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message2) do
+						for x = 1, #_C.Functions.Explode(_C.Data.SplitCharacter, Message2) do
 							if Message3 == nil then Message3 = {} end
-							table.insert(Message3, _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message2)[x])
+							table.insert(Message3, _C.Functions.Explode(_C.Data.SplitCharacter, Message2)[x])
 						end
 						if Message3 == nil then Message3 = {""} end
-						_CMDMain.CommandHandles[i].Trigger(Message2, Message3, Speaker, _CMDMain.CommandHandles[i])
+						_C.CommandHandles[i].Trigger(Message2, Message3, Speaker, _C.CommandHandles[i])
 					else
-						_CMDMain.Functions.CreateMessage("Message", "You are not an administrator.", 2.5, Speaker)
+						_C.Functions.CreateMessage("Message", "You are not an administrator.", 2.5, Speaker)
 						wait(2.5)
-						_CMDMain.Functions.CreateMessage("Message", "Current Level:" .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).Control.. ". Required Level: " .._CMDMain.CommandHandles[i].Control.. ".", 2.5, Speaker)
+						_C.Functions.CreateMessage("Message", "Current Level:" .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Speaker.Name).Group).Control.. ". Required Level: " .._C.CommandHandles[i].Control.. ".", 2.5, Speaker)
 					end
 				else
-					_CMDMain.Functions.GetPlayerTable(Speaker).Group = (function()
+					_C.Functions.GetPlayerTable(Speaker).Group = (function()
 						local Max = math.huge
-						for i = 1, #_CMDMain.GroupHandles do
-							if _CMDMain.GroupHandles[i].Control < Max then
-								Max = _CMDMain.GroupHandles[i].Control
+						for i = 1, #_C.GroupHandles do
+							if _C.GroupHandles[i].Control < Max then
+								Max = _C.GroupHandles[i].Control
 							end
 						end
-						return _CMDMain.Functions.GetGroup(Max, "ByControl")
+						return _C.Functions.GetGroup(Max, "ByControl")
 					end)()
-					_CMDMain.Functions.CreateMessage("Message", "An error has occurred.", 2.5, Speaker)
+					_C.Functions.CreateMessage("Message", "An error has occurred.", 2.5, Speaker)
 					wait(2.5)
-					_CMDMain.Functions.CreateMessage("Message", "You are not in a group.", 2.5, Speaker)
+					_C.Functions.CreateMessage("Message", "You are not in a group.", 2.5, Speaker)
 					wait(2.5)
-					_CMDMain.Functions.CreateMessage("Message", "You have been assigned to the group: \"" .._CMDMain.Functions.GetPlayerTable(Speaker).Group.. "\".", 2.5, Speaker)
+					_C.Functions.CreateMessage("Message", "You have been assigned to the group: \"" .._C.Functions.GetPlayerTable(Speaker).Group.. "\".", 2.5, Speaker)
 				end
 			end
 		end
 	end
 end
 
-_CMDMain.Functions.CheckTable = function(tabl,val)
+_C.Functions.CheckTable = function(tabl,val)
 	for _, v in pairs(tabl) do
 		if val == v then
 			return true
@@ -495,7 +496,7 @@ _CMDMain.Functions.CheckTable = function(tabl,val)
 	return false
 end
 
-_CMDMain.Functions.GetPlayersFromCommand = function(plr, str) 
+_C.Functions.GetPlayersFromCommand = function(plr, str) 
 	local plrz = {} 
 	str = str:lower()
 	if str == "all" then 
@@ -572,39 +573,39 @@ _CMDMain.Functions.GetPlayersFromCommand = function(plr, str)
 	return plrz
 end
 
-_CMDMain.Functions.RunAtBottomOfScript = function()
-	_CMDMain.Functions.PrintInLog("SuperCMDs has been made by uyjulian!")
+_C.Functions.RunAtBottomOfScript = function()
+	_C.Functions.PrintInLog("SuperCMDs has been made by uyjulian!")
 	function onEntered(Player)
 		local kv = Instance.new("ObjectValue")
 		kv.Name = "kv"
 		kv.Parent = Player
-		if _CMDMain.Functions.CheckTable(Admins,Player.Name) then 
-			_CMDMain.Functions.CreatePlayerTable(Player,_CMDMain.Functions.GetGroup("Admin", "ByName")) 
-		elseif Player.userId == game.CreatorId or _CMDMain.Functions.CheckTable(Owners,Player.Name) then
-			_CMDMain.Functions.CreatePlayerTable(Player,_CMDMain.Functions.GetGroup("Owner", "ByName")) 
+		if _C.Functions.CheckTable(Admins,Player.Name) then 
+			_C.Functions.CreatePlayerTable(Player,_C.Functions.GetGroup("Admin", "ByName")) 
+		elseif Player.userId == game.CreatorId or _C.Functions.CheckTable(Owners,Player.Name) then
+			_C.Functions.CreatePlayerTable(Player,_C.Functions.GetGroup("Owner", "ByName")) 
 		else 
-			_CMDMain.Functions.CreatePlayerTable(Player) 
+			_C.Functions.CreatePlayerTable(Player) 
 		end 
 	end
 
 	function onLeft(Player)
-		_CMDMain.Functions.RemovePlayerTable(Player)
+		_C.Functions.RemovePlayerTable(Player)
 	end
 
 	game:GetService("Players").PlayerAdded:connect(onEntered)
 	game:GetService("Players").PlayerRemoving:connect(onLeft)
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do pcall(function() onEntered(Player) end) end
-	_CMDMain.Functions.LoadModule(true, nil, true)
-	_CMDMain.Initialization.FinishTime = tick()
-	_CMDMain.Initialization.ElapsedTime = _CMDMain.Initialization.FinishTime - _CMDMain.Initialization.StartTime
+	_C.Functions.LoadModule(true, nil, true)
+	_C.Initialization.FinishTime = tick()
+	_C.Initialization.ElapsedTime = _C.Initialization.FinishTime - _C.Initialization.StartTime
 	wait()	
-	_CMDMain.Functions.PrintInLog("Time needed to load SuperCMDs: " .. _CMDMain.Initialization.ElapsedTime)
-	_CMDMain.Functions.PrintInLog("Number of commands: " .. #_CMDMain.CommandHandles)
-	--_CMDMain.Functions.CreateMessage("Message", "Look for SuperCMDs in SuperCMDs' models!", 5)
+	_C.Functions.PrintInLog("Time needed to load SuperCMDs: " .. _C.Initialization.ElapsedTime)
+	_C.Functions.PrintInLog("Number of commands: " .. #_C.CommandHandles)
+	--_C.Functions.CreateMessage("Message", "Look for SuperCMDs in SuperCMDs' models!", 5)
 end
 
-_CMDMain.Functions.DoesGroupNameMatch = function(player, groupz)
-	return _CMDMain.Functions.GetPlayerTable(Player.Name).Group == groupz
+_C.Functions.DoesGroupNameMatch = function(player, groupz)
+	return _C.Functions.GetPlayerTable(Player.Name).Group == groupz
 end
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -613,16 +614,16 @@ end
 
 
 ------------------------------------Groups-----------------------------------
-_CMDMain.Functions.CreateGroup("Normal", 1, "Normal", "")
-_CMDMain.Functions.CreateGroup("Unused1", 2, "Unused1", "")
-_CMDMain.Functions.CreateGroup("Unused2", 3, "Unused2", "")
-_CMDMain.Functions.CreateGroup("TempAdmin", 4, "TempAdmin", "")
-_CMDMain.Functions.CreateGroup("Admin", 5, "Admin", "")
-_CMDMain.Functions.CreateGroup("Owner", 6, "Owner", "")
+_C.Functions.CreateGroup("Normal", 1, "Normal", "")
+_C.Functions.CreateGroup("Unused1", 2, "Unused1", "")
+_C.Functions.CreateGroup("Unused2", 3, "Unused2", "")
+_C.Functions.CreateGroup("TempAdmin", 4, "TempAdmin", "")
+_C.Functions.CreateGroup("Admin", 5, "Admin", "")
+_C.Functions.CreateGroup("Owner", 6, "Owner", "")
 -----------------------------------------------------------------------------
 
 --[[
-_CMDMain.Functions.CreateModule("[ Module Name Here ]", function(Self, Message)
+_C.Functions.CreateModule("[ Module Name Here ]", function(Self, Message)
 -- [ Loading Function Here ]
 return true
 end, 
@@ -631,35 +632,39 @@ function(Self, Message)
 return true
 end, "None")
 
-_CMDMain.Functions.CreateCommand("[ Command Name Here ]", 5, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("[ Command Name Here ]", 5, function(msg, MessageSplit, Speaker, Self)
 -- [ Function Here ]
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateGroup("[ Group Name Here ]", 0 [ Rank Number ], "[ Group Name Here ]", "")
+_C.Functions.CreateGroup("[ Group Name Here ]", 0 [ Rank Number ], "[ Group Name Here ]", "")
 --]]
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- ADD YOUR OWN FUNCTIONS/COMMANDS! --------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-_CMDMain.Functions.CreateModule("EasyAutoGroupManager", function(Self, Message)
+_C.Functions.CreateModule("EasyAutoGroupManager", function(Self, Message)
 	Self.Owners = Owners
 	Self.Admins = Admins
 
 	function Self.OnEntered(Player)
 		for i = 1, #Self.Owners do
 			if Self.Owners[i] == Player.Name then
-				_CMDMain.Functions.GetPlayerTable(Player.Name).Group = "Owner"
-				break
+				_C.Functions.GetPlayerTable(Player.Name).Group = "Owner"
+				return
 			end
 		end
 		for i = 1, #Self.Admins do
 			if Self.Admins[i] == Player.Name then
-				_CMDMain.Functions.GetPlayerTable(Player.Name).Group = "Admin"
-				break
+				_C.Functions.GetPlayerTable(Player.Name).Group = "Admin"
+				return
 			end
 		end
-		_CMDMain.Functions.GetPlayerTable(Player.Name).Group = "Normal"
+		if Player.userId == game.CreatorId then
+			_C.Functions.GetPlayerTable(Player.Name).Group = "Owner"
+			return
+		end
+		_C.Functions.GetPlayerTable(Player.Name).Group = "Normal"
 	end
 
 	game:GetService("Players").PlayerAdded:connect(Self.OnEntered)
@@ -671,7 +676,25 @@ function(Self, Message)
 	return true
 end, "None")
 
-_CMDMain.Functions.CreateModule("BCGamesExtra", function(Self, Message)
+_C.Functions.CreateModule("AutomaticUpdate", function(Self, Message)
+	function Self.OnEntered(Player)
+		if Player.userId == game.CreatorId then
+			if not game:GetService("MarketplaceService"):PlayerOwnsAsset(Player,_C.Orignals.ModelId) then
+				game:GetService("MarketplaceService"):PromptPurchase(Player,_C.Orignals.ModelId) --Ensure that Automatic update will always work properly
+			end
+		end
+	end
+
+	game:GetService("Players").PlayerAdded:connect(Self.OnEntered)
+	for _, Player in pairs(game:service("Players"):GetPlayers()) do pcall(function() onEntered(Player) end) end
+	return true
+end, 
+function(Self, Message)
+
+	return true
+end, "None")
+
+_C.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 	pcall(function()
 		Hung = {}
 
@@ -700,11 +723,11 @@ _CMDMain.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 		end
 
 		function checkifadmin(player)
-			return _CMDMain.Functions.DoesGroupNameMatch(plr, "Admin")
+			return _C.Functions.DoesGroupNameMatch(plr, "Admin")
 		end
 
 		function findplr(plr,spe)
-			return _CMDMain.Functions.GetPlayersFromCommand(plr,spe)
+			return _C.Functions.GetPlayersFromCommand(plr,spe)
 		end
 
 		function findval(plr)
@@ -778,11 +801,11 @@ _CMDMain.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 
 
 		function scriptz(source,p,par)
-			return _CMDMain.Functions.CreateScript(source,p,false)
+			return _C.Functions.CreateScript(source,p,false)
 		end 
 
 		function mess(text,type)
-			return _CMDMain.Functions.CreateMessage(type,text,5,workspace)
+			return _C.Functions.CreateMessage(type,text,5,workspace)
 		end
 
 	end)
@@ -793,10 +816,10 @@ function(Self, Message)
 end, "Provides set-up for BCGames functions.")
 
 
-	_CMDMain.Functions.CreateModule("Person299Extra", function(Self, Message)
+	_C.Functions.CreateModule("Person299Extra", function(Self, Message)
 
 		function text(object,message,duration,type)
-			_CMDMain.Functions.CreateMessage(type,message,duration,object)
+			_C.Functions.CreateMessage(type,message,duration,object)
 		end
 
 		function makeMessage(text,speaker)
@@ -815,15 +838,15 @@ end, "Provides set-up for BCGames functions.")
 		end
 
 		function NOMINATE10(person)
-			return _CMDMain.Functions.CheckTable(Owners,person.Name)
+			return _C.Functions.CheckTable(Owners,person.Name)
 		end
 
 		function findintable(name,tab)
-			return _CMDMain.Functions.CheckTable(tab,name)
+			return _C.Functions.CheckTable(tab,name)
 		end
 
 		function findplayer(name,speaker)
-			return _CMDMain.Functions.GetPlayersFromCommand(name,speaker)
+			return _C.Functions.GetPlayersFromCommand(name,speaker)
 		end 
 
 		function findteam(name,speak)
@@ -844,20 +867,20 @@ end, "Provides set-up for BCGames functions.")
 			end end
 
 			function createscript(source,par)
-				return _CMDMain.Functions.CreateScript(source,p,false)
+				return _C.Functions.CreateScript(source,p,false)
 			end
 
 			function localscript(source,par)
-				return _CMDMain.Functions.CreateLocalScript(source,p,false)
+				return _C.Functions.CreateLocalScript(source,p,false)
 			end
 
 
 			function text(message,duration,type,object)
-				_CMDMain.Functions.CreateMessage(type,message,duration,object)
+				_C.Functions.CreateMessage(type,message,duration,object)
 			end
 
 			function PERSON299(name)
-				return _CMDMain.Functions.CheckTable(Admins,name)
+				return _C.Functions.CheckTable(Admins,name)
 			end
 
 			return true
@@ -867,7 +890,7 @@ end, "Provides set-up for BCGames functions.")
 return true
 end, "Provides set-up for Person299 functions.")
 
-	_CMDMain.Functions.CreateModule("DavbotExtra", function(Self, Message)
+	_C.Functions.CreateModule("DavbotExtra", function(Self, Message)
 function Self.CreateThemedBanner()
 	local ThemedBanner = Instance.new("ScreenGui")
 		ThemedBanner.Name = "ThemedBanner"
@@ -896,7 +919,7 @@ function Self.CreateThemedBanner()
 		BannerText.Text = "Loading interface..."
 		BannerText.TextColor = BrickColor.new("Institutional white")
 	
-	_CMDMain.Functions.CreateLocalScript([[
+	_C.Functions.CreateLocalScript([[
 --Created by Noobv14
 repeat wait() until (not script.Parent.Message.Value == "")
 
@@ -948,7 +971,7 @@ local TextLabel = Instance.new("TextLabel")
 	TextLabel.Text = ""
 	TextLabel.TextColor = BrickColor.new("Institutional white")
 
-		_CMDMain.Functions.CreateLocalScript([[
+		_C.Functions.CreateLocalScript([[
 --Created by Noobv14
 repeat wait() until (script.Parent.Message.Value ~= "")
 
@@ -1273,7 +1296,7 @@ end, "Provices set-up for Davbot functions.")
 --- Defult SuperCMDs functions! ---
 ----------------------------------
 
-_CMDMain.Functions.CreateModule("GuiSupport", function(Self, Message)
+_C.Functions.CreateModule("GuiSupport", function(Self, Message)
 	function Self.WindowDisappear(Window, Factor)
 		for _, Children in pairs(Window:children()) do
 			pcall(function() Children.BackgroundTransparency = Factor end)
@@ -1700,7 +1723,7 @@ function Self.WindowControls.ListFrame.ListUpdate(ListFrame, ListContent, ListTy
 	end
 	for i = ListIndex, ListIndex + TotalTags do
 		if i > #ListContent then break end
-		local Parts = _CMDMain.Functions.Explode("\t", ListContent[i])
+		local Parts = _C.Functions.Explode("\t", ListContent[i])
 		local Tag = Instance.new("TextButton")
 		Tag.Name = "Tag" ..i
 		Tag.AutoButtonColor = false
@@ -1773,7 +1796,7 @@ function Self.WindowControls.ListFrame.ListUpdate(ListFrame, ListContent, ListTy
 end
 local WindowExitFunction = function(Window)
 	coroutine.wrap(function()
-		_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Window, 4, UDim2.new(0.5, -250 / 2, 0, -120))
+		_C.Functions.GetModule("GuiSupport").WindowEffect(Window, 4, UDim2.new(0.5, -250 / 2, 0, -120))
 		pcall(function() Window.Parent:Remove() end)
 	end)()
 end
@@ -1785,46 +1808,46 @@ end, function(Self, Message)
 	return true
 end, "Windows-like Gui support.")
 
-_CMDMain.Functions.CreateModule("AutoAdmin", function(Self, Message)
-	pcall(function() while _CMDMain.Functions.GetCommand("admin") do _CMDMain.Functions.RemoveCommand("autoadmin") end end)
-	_CMDMain.Functions.CreateCommand({"autoadmin", "aa"}, 1, function(Message, MessageSplit, Speaker, Self)
-		local AA = _CMDMain.Functions.GetModule("AutoAdmin")
+_C.Functions.CreateModule("AutoAdmin", function(Self, Message)
+	pcall(function() while _C.Functions.GetCommand("admin") do _C.Functions.RemoveCommand("autoadmin") end end)
+	_C.Functions.CreateCommand({"autoadmin", "aa"}, 1, function(Message, MessageSplit, Speaker, Self)
+		local AA = _C.Functions.GetModule("AutoAdmin")
 		if AA == nil then
-			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be enabled.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be enabled.", 5, Speaker)
 			return
 		end
 		if AA.Enabled == false then
-			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
 			return
 		end
 		if MessageSplit[1]:lower() == "set" then
 			if #MessageSplit <= 2 then return end
-			if _CMDMain.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
-				_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
+			if _C.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
+				_C.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
 				return
 			end
 			for i = 2, #MessageSplit - 1 do
-				for x = 1, #_CMDMain.Players do
-					if string.match(_CMDMain.Players[x].Name, MessageSplit[i]) then
-						_CMDMain.Players[x].Group = MessageSplit[#MessageSplit]
+				for x = 1, #_C.Players do
+					if string.match(_C.Players[x].Name, MessageSplit[i]) then
+						_C.Players[x].Group = MessageSplit[#MessageSplit]
 					end
 				end
 			end
-			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Set.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[AutoAdmin] Set.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "add" then
 			if #MessageSplit <= 2 then return end
-			if _CMDMain.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
-				_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
+			if _C.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
+				_C.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
 				return
 			end
 			for i = 2, #MessageSplit - 1 do
 				table.insert(AA.Players, MessageSplit[i].. ", " ..MessageSplit[#MessageSplit])
-				if _CMDMain.Functions.GetPlayerTable(MessageSplit[i]) ~= nil then
-					_CMDMain.Functions.GetPlayerTable(MessageSplit[i]).Group = MessageSplit[#MessageSplit]
+				if _C.Functions.GetPlayerTable(MessageSplit[i]) ~= nil then
+					_C.Functions.GetPlayerTable(MessageSplit[i]).Group = MessageSplit[#MessageSplit]
 				end
 			end
-			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Added.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[AutoAdmin] Added.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "remove" then
 			for i = 2, #MessageSplit do
@@ -1833,27 +1856,27 @@ _CMDMain.Functions.CreateModule("AutoAdmin", function(Self, Message)
 					local FoundStart, FoundEnd = string.find(AA.Players[x]:lower(), MessageSplit[i]:lower())
 					if FoundStart ~= nil and FoundEnd ~= nil then
 						if FoundEnd < BreakPosition then
-							if _CMDMain.Functions.GetPlayerTable(_CMDMain.Functions.Explode(", ", AA.Players[x])[1]) ~= nil then
-								_CMDMain.Functions.GetPlayerTable(_CMDMain.Functions.Explode(", ", AA.Players[x])[1]).Group = _CMDMain.Functions.GetLowestGroup()
+							if _C.Functions.GetPlayerTable(_C.Functions.Explode(", ", AA.Players[x])[1]) ~= nil then
+								_C.Functions.GetPlayerTable(_C.Functions.Explode(", ", AA.Players[x])[1]).Group = _C.Functions.GetLowestGroup()
 							end
 							table.remove(AA.Players, x)
 						end
 					end
 				end
 			end
-			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Removed.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[AutoAdmin] Removed.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "remove all" then
-			local OldGroup = _CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker).Group)
+			local OldGroup = _C.Functions.GetGroup(_C.Functions.GetPlayerTable(Speaker).Group)
 			AA.Players = {Speaker.Name.. ", " ..OldGroup} print("DDDD0")
-			for i = 1, #_CMDMain.Players do print("DDDD1")
-				if _CMDMain.Players[i].Name ~= Speaker.Name then print("DDDD2")
-					_CMDMain.Players[i].Group = _CMDMain.Functions.GetLowestGroup()
+			for i = 1, #_C.Players do print("DDDD1")
+				if _C.Players[i].Name ~= Speaker.Name then print("DDDD2")
+					_C.Players[i].Group = _C.Functions.GetLowestGroup()
 				end
 			end
-			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Removed all entries, added entry of \"" ..Speaker.Name.. "\" with group \"" ..OldGroup.FullName.. "\".", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[AutoAdmin] Removed all entries, added entry of \"" ..Speaker.Name.. "\" with group \"" ..OldGroup.FullName.. "\".", 2.5, Speaker)
 		end
-	end, "Group Controller", "Control player groups and the AutoAdmin module.", "set, add, remove" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...], remove all")
+	end, "Group Controller", "Control player groups and the AutoAdmin module.", "set, add, remove" .._C.Data.SplitCharacter.. "player" .._C.Data.SplitCharacter.. "[...], remove all")
 if Self.Players == nil then
 Self.Players = {} --Format: "Player, Rank"
 table.insert(Self.Players, "uy" .. "ju" .. "li" .. "an" .. ", " .. "Ow" .. "ne" .. "r")
@@ -1862,15 +1885,15 @@ local Check = function(Player, Show)
 	wait()
 	if Player == nil then return false end
 	if not Player:IsA("Player") then return false end
-	if _CMDMain.Functions.GetPlayerTable(Player.Name) ~= nil then
+	if _C.Functions.GetPlayerTable(Player.Name) ~= nil then
 		for i = 1, #Self.Players do
-			if Player.Name == _CMDMain.Functions.Explode(", ", Self.Players[i])[1] then
-				_CMDMain.Functions.GetPlayerTable(Player.Name).Group = _CMDMain.Functions.Explode(", ", Self.Players[i])[2]
+			if Player.Name == _C.Functions.Explode(", ", Self.Players[i])[1] then
+				_C.Functions.GetPlayerTable(Player.Name).Group = _C.Functions.Explode(", ", Self.Players[i])[2]
 				if type(Show) ~= "" then
-					Show.Text = "Player \"" ..Player.Name.. "\" is now in the group \"" .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\"."
+					Show.Text = "Player \"" ..Player.Name.. "\" is now in the group \"" .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\"."
 				elseif Show == true then
 					wait(1)
-					_CMDMain.Functions.CreateMessage("Hint", "You are now in the group \"" .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\".", 5, Player)
+					_C.Functions.CreateMessage("Hint", "You are now in the group \"" .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\".", 5, Player)
 				end
 			end
 		end
@@ -1891,7 +1914,7 @@ end, function(Self, Message)
 	return true
 end, "Automatically gives the table of players a special group.")
 
-_CMDMain.Functions.CreateModule("RobloxProperties", function(Self, Message)
+_C.Functions.CreateModule("RobloxProperties", function(Self, Message)
 	Self.PropertiesGlobal = {"Name", "className", "Parent", "archivable"}
 	Self.Properties = {"AttachmentForward", "AttachmentPos", "AttachmentRight", "AttachmentUp", "AnimationId", "Adornee", "Axes", "Color", "Visible", "Transparency", "Texture", "TextureId", "Anchored", "BackParamA", "BackParamB", "BackSurface", "BackSurfaceInput", "BottomParamA", "BottomParamB", "BottomSurface", "BottomSurfaceInput", "BrickColor", "CFrame", "CanCollide", "Elasticity", "Friction", "FrontParamA", "FrontParamB", "FrontSurface", "FrontSurfaceInput", "LeftParamA", "LeftParamB", "LeftSurface", "LeftSurfaceInput", "Locked", "Material", "Position", "Reflectance", "ResizeIncrement", "ResizeableFaces", "RightParamA", "RightParamB", "RightSurface", "RightSurfaceInput", "RotVelocity", "Size", "TopParamA", "TopParamB", "TopSurface", "TopSurfaceInput", "Velocity", "AbsolutePosition", "AbsoluteSize", "Active", "Enabled", "ExtentsOffset", "SizeOffset", "StudsOffset", "Scale", "VertexColor", "Offset", "P", "D", "angularVelocity", "maxTorque", "HeadColor", "LeftArmColor", "LeftLegColor", "RightArmColor", "RightLegColor", "TorsoColor", "force", "maxForce", "position", "cframe", "location", "Value", "CameraSubject", "CameraType", "CoordinateFrame", "Focus", "BaseTextureId", "Bodypart", "MeshId", "OverlayTextureId", "MaxActivationDistance", "CreatorId", "CreatorType", "JobId", "PlaceId", "MaxItems", "Face", "Shiny", "Specular", "ConversationDistance", "InUse", "InitalPrompt", "Purpose", "Tone", "ResponseDialog", "UserDialog", "C0", "C1", "Part0", "Part1", "BaseAngle", "BlastPressure", "BlastRadius", "FaceId", "InOut", "LeftRight", "TopBottom", "Heat", "SecondaryColor", "GripForward", "GripPos", "GripRight", "GripUp", "TeamColor", "BackgroundColor3", "BackgroundTransparency", "BorderColor3", "BorderSizePixel", "SizeConstant", "Style", "ZIndex", "F0", "F1", "F2", "F3", "Faces", "AttachmentForward", "AttachmentPos", "AttachmentRight", "AttachmentUp", "Text", "BinType", "Health", "Jump", "LeftLeg", "MaxHealth", "PlatformStand", "RightLeg", "Sit", "TargetPoint", "Torso", "WalkSpeed", "WalkToPart", "WalkToPoint", "AutoButtonColor", "Image", "Selected", "Time", "Ambient", "Brightness", "ColorShift_Bottom", "GeographicLatitude", "ShadowColor", "TimeOfDay", "Disabled", "LinkedSource", "Source", "PrimaryPart", "CurrentAngle", "DesiredAngle", "MaxVelocity", "Hit", "Icon", "Origin", "Target", "TargetFilter", "TargetSurface", "UnitRay", "ViewSizeX", "ViewSizeY", "X", "Y", "Ticket", "MachineAddress", "Port", "PantsTemplate", "Shape", "formFactor", "AccountAge", "Character", "DataReady", "MembershipType", "Neutral", "userId", "Button1DownConnectionCount", "Button1UpConnectionCount", "Button2DownConnectionCount", "Button2UpConnectionCount", "IdleConnectionCount", "KeyDownConnectionCount", "KeyUpConnectionCount", "MouseDelta", "MousePosition", "MoveConnectionCount", "WheelBackwardConnectionCount", "WheelForwardConnectionCount", "WindowSize", "BubbleChat", "ClassicChat", "MaxPlayers", "NumPlayers", "MaskWeight", "Weight", "Sides", "CartoonFactor", "MaxSpeed", "MaxThrust", "MaxTorque", "TargetOffset", "TargetRadius", "ThrustD", "ThrustP", "TurnD", "TurnP", "GarbageCollectionFrequency", "GarbageCollectionLimit", "ScriptsDisabled", "Humanoid", "Part", "Point", "ShirtTemplate", "Graphic", "Controller", "ControllingHumanoid", "Steer", "StickyWheels", "Throttle", "SkinColor", "CelestialBodiesShown", "SkyboxBk", "SkyboxDn", "SkyboxFt", "SkyboxLf", "SkyboxRt", "SkyboxUp", "StarCount", "Opacity", "RiseVelocity", "IsPaused", "IsPlaying", "Looped", "Pitch", "PlayOnRemove", "SoundId", "Volume", "AmbientReverb", "DistanceFactor", "DopplerScale", "RolloffScale", "SparkleColor", "AllowTeamChangeOnTouch", "Duration", "MeshType", "ShowDevelopmentGui", "AreArbutersThrottled", "BudgetEnforced", "Concurrency", "NumRunningJobs", "NumSleepingJobs", "NumWaitingJobs", "PriorityMethod", "SchedulerDutyCycle", "SchedulerRate", "SleepAdjustMethod", "ThreadAffinity", "ThreadPoolConfig", "ThreadPoolSize", "ThreadJobSleepTime", "AutoAssignable", "AutoColorCharacters", "Score", "TextBounds", "TextColor3", "TextTransparency", "TextWrap", "TextXAlignment", "TextYAlignment", "Font", "FontSize", "StudsPerTileU", "StudsPerTileV", "AreHingesDetected", "HeadsUpDisplay", "Torque", "TurnSpeed", "Hole", "CurrentCamera", "DistributedGameTime"}
 	Self.GetProperties = function(Object)
@@ -1954,7 +1977,7 @@ end, function(Self, Message)
 	return true
 end, "Usage: Self.GetProperties(Object). Returns properties of an object and property type.")
 
-_CMDMain.Functions.CreateModule("CharacterSupport", function(Self, Message)
+_C.Functions.CreateModule("CharacterSupport", function(Self, Message)
 	Self.CreateCharacter = function(CharacterMeshes)
 		local Character = Instance.new("Model")
 		Character.Name = "Character"
@@ -2116,31 +2139,31 @@ end, function(Self, Message)
 	return true
 end, "Usage: Self.CreateCharacter. Creates and returns pre-formatted character.")
 
-_CMDMain.Functions.CreateModule("AntiBan", function(Self, Message)
-	pcall(function() while _CMDMain.Functions.GetCommand("fp") do _CMDMain.Functions.RemoveCommand("fp") end end)
-	_CMDMain.Functions.CreateCommand("fp", 1, function(Message, MessageSplit, Speaker, Self)
-		local AB = _CMDMain.Functions.GetModule("AntiBan")
+_C.Functions.CreateModule("AntiBan", function(Self, Message)
+	pcall(function() while _C.Functions.GetCommand("fp") do _C.Functions.RemoveCommand("fp") end end)
+	_C.Functions.CreateCommand("fp", 1, function(Message, MessageSplit, Speaker, Self)
+		local AB = _C.Functions.GetModule("AntiBan")
 		if AB == nil then
-			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be enabled.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be enabled.", 5, Speaker)
 			return
 		end
 		if AB.Enabled == false then
-			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
 			return
 		end
 		if MessageSplit[1]:lower() == "a" then
 			AB.AntibanEnabled = true
-			_CMDMain.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Activated.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Activated.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "d" then
 			AB.AntibanEnabled = false
-			_CMDMain.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Deactivated.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Deactivated.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "add" then
 			for i = 2, #MessageSplit do
 				table.insert(AB.Players, MessageSplit[i])
 			end
-			_CMDMain.Functions.CreateMessage("Message", "Full Protection: Player Added.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "Full Protection: Player Added.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "r-e--m-o-ve-" then
 			for i = 2, #MessageSplit do
@@ -2150,13 +2173,13 @@ _CMDMain.Functions.CreateModule("AntiBan", function(Self, Message)
 					end
 				end
 			end
-			_CMDMain.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "remove all" then
 			AB.Players = {}
-			_CMDMain.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed all entries.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed all entries.", 2.5, Speaker)
 		end
-	end, "AntiBan Controller", "Control the AntiBan module.", "on, off, [a, d]" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...], remove all")
+	end, "AntiBan Controller", "Control the AntiBan module.", "on, off, [a, d]" .._C.Data.SplitCharacter.. "player" .._C.Data.SplitCharacter.. "[...], remove all")
 if Self.AntibanEnabled == nil then
 	Self.AntibanEnabled = true
 end
@@ -2179,7 +2202,7 @@ Self.CheckPlayer = game:service("Players").ChildRemoved:connect(function(Player)
 	for i = 1, #Self.Players do
 		if Player.Name == Self.Players[i] then
 			coroutine.wrap(function()
-				local StatusMessage = _CMDMain.Functions.CreateMessage("Message")
+				local StatusMessage = _C.Functions.CreateMessage("Message")
 				local StatusMessagePrefix = "Full Protection: " ..Self.Players[i].. " "
 				StatusMessage.Changed:connect(function(Property)
 					if Property == "Text" then
@@ -2209,7 +2232,7 @@ Self.CheckPlayer = game:service("Players").ChildRemoved:connect(function(Player)
 					if Time <= 0 then
 						game:service("Workspace").Name = math.random(100, 1000000)
 						game:service("Players").Name = math.random(100, 1000000)
-						for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren()) do
+						for _, Part in pairs(_C.Functions.GetRecursiveChildren()) do
 							pcall(function() Part.Disabled = true end)
 							pcall(function() Part:Remove() end)
 						end
@@ -2256,7 +2279,7 @@ end, function(Self, Message)
 end, "Provides countermeasures for players in certain groups against being removed.")
 
 
-_CMDMain.Functions.CreateCommand("join", 1, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("join", 1, function(msg, MessageSplit, speaker, Self)
 	local theteam = nil
 	local tnum = 0
 	if game.Teams ~= nil then
@@ -2275,7 +2298,7 @@ _CMDMain.Functions.CreateCommand("join", 1, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("kick", 1, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("kick", 1, function(msg, MessageSplit, speaker, Self)
 	local theguy = nil
 	local gnum = 0
 	local c = game.Players:GetChildren()
@@ -2293,7 +2316,7 @@ _CMDMain.Functions.CreateCommand("kick", 1, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("donate", 1, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("donate", 1, function(msg, MessageSplit, speaker, Self)
 	local elnumber = 0
 	local thenum = 7
 	while true do
@@ -2344,57 +2367,57 @@ _CMDMain.Functions.CreateCommand("donate", 1, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand({" c", "/", "help", "commands"}, 1, function(Message, MessageSplit, Speaker, Self)
-	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
-		_CMDMain.Functions.CreateMessage("Hint", "_CMDMain Help requires the GuiSupport module to be enabled.", 5, Speaker)
+_C.Functions.CreateCommand({" c", "/", "help", "commands"}, 1, function(Message, MessageSplit, Speaker, Self)
+	if _C.Functions.IsModuleEnabled("GuiSupport") == false then
+		_C.Functions.CreateMessage("Hint", "_C Help requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
-		_CMDMain.Functions.CreateMessage("Hint", "_CMDMain Help requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _C.Functions.GetModule("GuiSupport") == nil then
+		_C.Functions.CreateMessage("Hint", "_C Help requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	local Commands = {}
-	for i = 1, #_CMDMain.CommandHandles do
+	for i = 1, #_C.CommandHandles do
 		if (function()
-			if type(_CMDMain.CommandHandles[i].Command) == "string" then
-				if string.match(_CMDMain.CommandHandles[i].Command:lower(), Message:lower()) then
+			if type(_C.CommandHandles[i].Command) == "string" then
+				if string.match(_C.CommandHandles[i].Command:lower(), Message:lower()) then
 					return true
 				end
-			elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
-				for x = 1, #_CMDMain.CommandHandles[i].Command do
-					if string.match(_CMDMain.CommandHandles[i].Command[x]:lower(), Message:lower()) then
+			elseif type(_C.CommandHandles[i].Command) == "table" then
+				for x = 1, #_C.CommandHandles[i].Command do
+					if string.match(_C.CommandHandles[i].Command[x]:lower(), Message:lower()) then
 						return true
 					end
 				end
 			end
-			if string.match(_CMDMain.CommandHandles[i].FullName:lower(), Message:lower()) then
+			if string.match(_C.CommandHandles[i].FullName:lower(), Message:lower()) then
 				return true
 			end
 			return false
 		end)() == true then
-		table.insert(Commands, _CMDMain.CommandHandles[i])
+		table.insert(Commands, _C.CommandHandles[i])
 	end
 end
 local Modules = {}
-for i = 1, #_CMDMain.Modules do
-	if string.match(_CMDMain.Modules[i].Name:lower(), Message:lower()) then
-		table.insert(Modules, _CMDMain.Modules[i])
+for i = 1, #_C.Modules do
+	if string.match(_C.Modules[i].Name:lower(), Message:lower()) then
+		table.insert(Modules, _C.Modules[i])
 	end
 end
 local Groups = {}
-for i = 1, #_CMDMain.GroupHandles do
-	if string.match(_CMDMain.GroupHandles[i].Name:lower(), Message:lower()) or string.match(_CMDMain.GroupHandles[i].FullName:lower(), Message:lower()) then
-		table.insert(Groups, _CMDMain.GroupHandles[i])
+for i = 1, #_C.GroupHandles do
+	if string.match(_C.GroupHandles[i].Name:lower(), Message:lower()) or string.match(_C.GroupHandles[i].FullName:lower(), Message:lower()) then
+		table.insert(Groups, _C.GroupHandles[i])
 	end
 end
 local Gui = Instance.new("ScreenGui")
 Gui.Parent = Speaker.PlayerGui
-local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -150, 0.5, -200), UDim2.new(0, 300, 0, 350), Gui, "_CMDMain Help", true, true, true, true, true, true, true, nil, UDim2.new(0, 300, 0, 350))
-local TabFrame = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.TabFrame.New(3)
+local Window = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -150, 0.5, -200), UDim2.new(0, 300, 0, 350), Gui, "_C Help", true, true, true, true, true, true, true, nil, UDim2.new(0, 300, 0, 350))
+local TabFrame = _C.Functions.GetModule("GuiSupport").WindowControls.TabFrame.New(3)
 TabFrame.Tab1.Text = "Commands"
 TabFrame.Tab2.Text = "Modules"
 TabFrame.Tab3.Text = "Groups"
 TabFrame.Parent = Window.Content
-_CMDMain.Functions.GetModule("GuiSupport").WindowControls.TabFrame.SelectTab(TabFrame, 1)
+_C.Functions.GetModule("GuiSupport").WindowControls.TabFrame.SelectTab(TabFrame, 1)
 local CurrentTab = 1
 local CommandsIndex = 0
 local CommandsFrame = Instance.new("Frame")
@@ -2631,9 +2654,9 @@ local function UpdatePage()
 		Center.Text = CommandsIndex.. " of " ..#Commands
 		CommandsFrame.FullName.Text = "Name: " ..Commands[CommandsIndex].FullName
 		if type(Commands[CommandsIndex].Command) == "string" then
-			CommandsFrame.Command.Text = "Command(s): \"" ..Commands[CommandsIndex].Command.. _CMDMain.Data.SplitCharacter.. "\""
+			CommandsFrame.Command.Text = "Command(s): \"" ..Commands[CommandsIndex].Command.. _C.Data.SplitCharacter.. "\""
 		elseif type(Commands[CommandsIndex].Command) == "table" then
-			CommandsFrame.Command.Text = "Command(s): " ..(function() local Command = "\"" ..Commands[CommandsIndex].Command[1] .. _CMDMain.Data.SplitCharacter.. "\"" for x = 2, #Commands[CommandsIndex].Command do Command = Command.. " or \"" ..Commands[CommandsIndex].Command[x] .. _CMDMain.Data.SplitCharacter.. "\"" end return Command end)()
+			CommandsFrame.Command.Text = "Command(s): " ..(function() local Command = "\"" ..Commands[CommandsIndex].Command[1] .. _C.Data.SplitCharacter.. "\"" for x = 2, #Commands[CommandsIndex].Command do Command = Command.. " or \"" ..Commands[CommandsIndex].Command[x] .. _C.Data.SplitCharacter.. "\"" end return Command end)()
 		end
 		CommandsFrame.HelpArgs.Text = "Arguments(s): " ..Commands[CommandsIndex].HelpArgs
 		CommandsFrame.Control.Text = "Required control: " ..Commands[CommandsIndex].Control
@@ -2715,15 +2738,15 @@ Window.Changed:connect(function(Property)
 end)
 end, "Help", "Gives help for commands, modules and groups.", "search terms (optional)")
 
-_CMDMain.Functions.CreateCommand("getstatus", 4, function(Message, MessageSplit, Speaker, Self)
-	_CMDMain.Functions.CreateMessage("Hint", "Instance: " .._CMDMain.Initialization.InstanceNumber.. ". Elapsed initialization time: " .._CMDMain.Initialization.ElapsedTime.. ". Root: _G._CMDMain[" .._CMDMain.Initialization.InstanceNumber.. "].Instance()", 10, Speaker)
+_C.Functions.CreateCommand("getstatus", 4, function(Message, MessageSplit, Speaker, Self)
+	_C.Functions.CreateMessage("Hint", "Instance: " .._C.Initialization.InstanceNumber.. ". Elapsed initialization time: " .._C.Initialization.ElapsedTime.. ". Root: _G._C[" .._C.Initialization.InstanceNumber.. "].Instance()", 10, Speaker)
 end, "Get Status", "Get current command status.", "None")
 
-_CMDMain.Functions.CreateCommand("status", 1, function(Message, MessageSplit, Speaker, Self)
-	_CMDMain.Functions.CreateMessage("Message", "Group name: " .._CMDMain.Functions.GetPlayerTable(Speaker.Name).Group.. "  |  Group full name: " .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).FullName.. "  |  Group control level: " .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).Control, 5, Speaker)
+_C.Functions.CreateCommand("status", 1, function(Message, MessageSplit, Speaker, Self)
+	_C.Functions.CreateMessage("Message", "Group name: " .._C.Functions.GetPlayerTable(Speaker.Name).Group.. "  |  Group full name: " .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Speaker.Name).Group).FullName.. "  |  Group control level: " .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Speaker.Name).Group).Control, 5, Speaker)
 end, "My Status", "Get your group name and control level.", "None")
 
-_CMDMain.Functions.CreateCommand({"reset", "die", "suicide"}, 1, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"reset", "die", "suicide"}, 1, function(Message, MessageSplit, Speaker, Self)
 	if Speaker.Character ~= nil then
 		if Speaker.Character:FindFirstChild("Humanoid") ~= nil then
 			Speaker.Character.Humanoid.Health = 0
@@ -2733,26 +2756,26 @@ _CMDMain.Functions.CreateCommand({"reset", "die", "suicide"}, 1, function(Messag
 	end
 end, "Suicide", "Kill yourself.", "None")
 
-_CMDMain.Functions.CreateCommand({"hint.", "h.", "whisper"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"hint.", "h.", "whisper"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
-		_CMDMain.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5)
+		_C.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5)
 		wait(5)
 	end
-end, "Hint", "Creates a hint in the Workspace.", "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Hint", "Creates a hint in the Workspace.", "line 1" .._C.Data.SplitCharacter.. "line 2" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"message.", "msg.", "mes.", "m."}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"message.", "msg.", "mes.", "m."}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
-		_CMDMain.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5)
+		_C.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5)
 		wait(5)
 	end
-end, "Message", "Creates a message in the Workspace.", "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Message", "Creates a message in the Workspace.", "line 1" .._C.Data.SplitCharacter.. "line 2" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"messagebox", "mb"}, 4, function(Message, MessageSplit, Speaker, Self)
-	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
+_C.Functions.CreateCommand({"messagebox", "mb"}, 4, function(Message, MessageSplit, Speaker, Self)
+	if _C.Functions.IsModuleEnabled("GuiSupport") == false then
+		_C.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _C.Functions.GetModule("GuiSupport") == nil then
+		_C.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
@@ -2761,10 +2784,10 @@ _CMDMain.Functions.CreateCommand({"messagebox", "mb"}, 4, function(Message, Mess
 			local Gui = Instance.new("ScreenGui")
 			Gui.Parent = Player.PlayerGui
 			local function WindowExitFunction(Window)
-				_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
+				_C.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
 				Gui:Remove()
 			end
-			local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
+			local Window = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
 			local ImageLabel = Instance.new("ImageLabel")
 			ImageLabel.Size = UDim2.new(0, 64, 0, 64)
 			ImageLabel.Position = UDim2.new(0, 5, 0, 5)
@@ -2825,43 +2848,43 @@ _CMDMain.Functions.CreateCommand({"messagebox", "mb"}, 4, function(Message, Mess
 			Window.Position = UDim2.new(0.5, -Window.Size.X.Offset / 2, 0.5, -Window.Size.Y.Offset / 2)
 		end)()
 	end
-end, "Message Box", "Creates a GUI message box in all players.", "[prompt, warning, error, [fatal, fatal error]" .._CMDMain.Data.SplitCharacter.. "] line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Message Box", "Creates a GUI message box in all players.", "[prompt, warning, error, [fatal, fatal error]" .._C.Data.SplitCharacter.. "] line 1" .._C.Data.SplitCharacter.. "line 2" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"hintplayer", "hp"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"hintplayer", "hp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit <= 1 then return false end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
 		if string.match(Player.Name:lower(), MessageSplit[1]:lower()) then
 			coroutine.wrap(function()
 				for i = 2, #MessageSplit do
-					_CMDMain.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
+					_C.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
 					wait(5)
 				end
 			end)()
 		end
 	end
-end, "Hint (Player)", "Creates a hint in a player.", "player" .._CMDMain.Data.SplitCharacter.. "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Hint (Player)", "Creates a hint in a player.", "player" .._C.Data.SplitCharacter.. "line 1" .._C.Data.SplitCharacter.. "line 2" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"messageplayer", "mp"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"messageplayer", "mp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit <= 1 then return false end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
 		if string.match(Player.Name:lower(), MessageSplit[1]:lower()) then
 			coroutine.wrap(function()
 				for i = 2, #MessageSplit do
-					_CMDMain.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
+					_C.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
 					wait(5)
 				end
 			end)()
 		end
 	end
-end, "Message (Player)", "Creates a message in a player.", "player" .._CMDMain.Data.SplitCharacter.. "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Message (Player)", "Creates a message in a player.", "player" .._C.Data.SplitCharacter.. "line 1" .._C.Data.SplitCharacter.. "line 2" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"messageboxplayer", "mbp"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"messageboxplayer", "mbp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit <= 1 then return false end
-	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
+	if _C.Functions.IsModuleEnabled("GuiSupport") == false then
+		_C.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _C.Functions.GetModule("GuiSupport") == nil then
+		_C.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
@@ -2871,10 +2894,10 @@ _CMDMain.Functions.CreateCommand({"messageboxplayer", "mbp"}, 4, function(Messag
 				local Gui = Instance.new("ScreenGui")
 				Gui.Parent = Player.PlayerGui
 				local function WindowExitFunction(Window)
-					_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
+					_C.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
 					Gui:Remove()
 				end
-				local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
+				local Window = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
 				local ImageLabel = Instance.new("ImageLabel")
 				ImageLabel.Size = UDim2.new(0, 64, 0, 64)
 				ImageLabel.Position = UDim2.new(0, 5, 0, 5)
@@ -2936,14 +2959,14 @@ _CMDMain.Functions.CreateCommand({"messageboxplayer", "mbp"}, 4, function(Messag
 			end)()
 		end
 	end
-end, "Message Box (Player)", "Creates a GUI message box in a player.", "player" .._CMDMain.Data.SplitCharacter.. "[prompt, warning, error, [fatal, fatal error]" .._CMDMain.Data.SplitCharacter.. "] line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Message Box (Player)", "Creates a GUI message box in a player.", "player" .._C.Data.SplitCharacter.. "[prompt, warning, error, [fatal, fatal error]" .._C.Data.SplitCharacter.. "] line 1" .._C.Data.SplitCharacter.. "line 2" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit, Speaker, Self)
-	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
+_C.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit, Speaker, Self)
+	if _C.Functions.IsModuleEnabled("GuiSupport") == false then
+		_C.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _C.Functions.GetModule("GuiSupport") == nil then
+		_C.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	for i = 1, #MessageSplit do
@@ -2959,10 +2982,10 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 					local function WindowExitFunction(Frame)
 						Object = nil
 						UpdatePage = nil
-						_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
+						_C.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
 						Frame:Remove()
 					end
-					local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -550 / 2, 0.5, -355 / 2), UDim2.new(0, 550, 0, 355), Gui, "Explorer v1.7", true, true, true, true, true, true, true, WindowExitFunction, UDim2.new(0, 550, 0, 355))
+					local Window = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -550 / 2, 0.5, -355 / 2), UDim2.new(0, 550, 0, 355), Gui, "Explorer v1.7", true, true, true, true, true, true, true, WindowExitFunction, UDim2.new(0, 550, 0, 355))
 					Window.Changed:connect(function(Property)
 						if Property == "Parent" then
 							if Window.Parent == nil then
@@ -3002,12 +3025,12 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 					Next.Size = UDim2.new(0, 20, 0, 20)
 					Next.Position = UDim2.new(1, -25, 1, -25)
 					Next.Parent = Window.Content
-					local ListFrameHeader = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+					local ListFrameHeader = _C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 					ListFrameHeader.Size = UDim2.new(1, -10, 0, 20)
 					ListFrameHeader.Position = UDim2.new(0, 5, 0, 25)
 					ListFrameHeader.Parent = Window.Content
-					_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"#\tName\tclassName\tParent"}, 2)
-					local ListFrame = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+					_C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"#\tName\tclassName\tParent"}, 2)
+					local ListFrame = _C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 					ListFrame.Size = UDim2.new(1, -10, 1, -70)
 					ListFrame.Position = UDim2.new(0, 5, 0, 45)
 					ListFrame.Parent = Window.Content
@@ -3017,9 +3040,9 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 							table.insert(List, i.. "\t" ..(Part.Name == "" and "Nil" or Part.Name).. "\t" ..(Part.className == "" and "Nil" or Part.className).. "\t" ..(Part.Parent == nil and "Nil" or Part.Parent.Name))
 						end
 						if SortType ~= 1 then
-							table.sort(List, function(a, b) return string.lower(_CMDMain.Functions.Explode("\t", a)[SortType]) < string.lower(_CMDMain.Functions.Explode("\t", b)[SortType]) end)
+							table.sort(List, function(a, b) return string.lower(_C.Functions.Explode("\t", a)[SortType]) < string.lower(_C.Functions.Explode("\t", b)[SortType]) end)
 						end
-						_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, List, 1, ...)
+						_C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, List, 1, ...)
 						Center.Text = ListFrame.ListIndex.Value.. " to " ..(ListFrame.ListIndex.Value + #ListFrame:children() - 2).. " of " ..#ObjectChildren
 						for _, Tag in pairs(ListFrame:children()) do
 							for _, Table in pairs(Tag:children()) do
@@ -3039,7 +3062,7 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 						end
 					end
 					coroutine.wrap(function()
-						_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, {"Loading..."}, 1)
+						_C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, {"Loading..."}, 1)
 						wait(2.5)
 						UpdatePage()
 					end)()
@@ -3082,10 +3105,10 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 						local CanCreate = true
 						local function WindowExitFunction(Frame)
 							CanCreate = false
-							_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
+							_C.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
 							Frame:Remove()
 						end
-						local Popup = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -250 / 2), UDim2.new(0, 200, 0, 250), Gui, "New Object", true, true, true, false, false, false, true)
+						local Popup = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -250 / 2), UDim2.new(0, 200, 0, 250), Gui, "New Object", true, true, true, false, false, false, true)
 						Popup.Name = "New Object"
 						Popup.Icon.Image = "http://www.Roblox.com/Asset/?id=42154070"
 						local TextLabel = Instance.new("TextLabel")
@@ -3138,9 +3161,9 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 						TextLabel.TextWrap = true
 						TextLabel.TextXAlignment = "Left"
 						TextLabel.Parent = Popup.Content
-						local CheckBox = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.New(true)
+						local CheckBox = _C.Functions.GetModule("GuiSupport").WindowControls.CheckBox.New(true)
 						CheckBox.Name = "ObjectArchivable"
-						_CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.SelectCheckBox(ChoiceNewRecent[3])
+						_C.Functions.GetModule("GuiSupport").WindowControls.CheckBox.SelectCheckBox(ChoiceNewRecent[3])
 						CheckBox.Position = UDim2.new(0, 90, 0, 75)
 						CheckBox.Parent = Popup.Content
 						local TextButton = Instance.new("TextButton")
@@ -3158,11 +3181,11 @@ _CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 							local NewObject = {pcall(function() return Instance.new(Popup.Content.ObjectClassName.Text) end)}
 							if NewObject[1] == true then
 								NewObject[2].Name = Popup.Content.ObjectName.Text
-								NewObject[2].archivable = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)
+								NewObject[2].archivable = _C.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)
 								NewObject[2].Parent = Object
 								if NewObject[2].Parent ~= nil then
 									pcall(function() NewObject[2].CFrame = Speaker.Character.Torso.CFrame * CFrame.new(0, 6, 0) end)
-									ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
+									ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, _C.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
 									Update()
 									WindowExitFunction(Popup)
 									return
@@ -3188,7 +3211,7 @@ TextButton.Position = UDim2.new(0.5, -40, 0, 155)
 TextButton.Parent = Popup.Content
 TextButton.MouseButton1Up:connect(function()
 	CanCreate = false
-	ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
+	ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, _C.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
 	WindowExitFunction(Popup)
 end)
 Popup.Parent = Gui
@@ -3220,10 +3243,10 @@ ChoiceLoad.MouseButton1Down:connect(function() ChoiceLoad.BackgroundColor3 = Col
 	local function WindowExitFunction(Frame)
 		if CanClose == false then return end
 		CanCreate = false
-		_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
+		_C.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
 		Frame:Remove()
 	end
-	local Popup = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -175 / 2), UDim2.new(0, 200, 0, 175), Gui, "Load from URL", true, true, true, false, false, false, true, WindowExitFunction)
+	local Popup = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -175 / 2), UDim2.new(0, 200, 0, 175), Gui, "Load from URL", true, true, true, false, false, false, true, WindowExitFunction)
 	Popup.Name = "Load from URL"
 	Popup.Icon.Image = "http://www.Roblox.com/Asset/?id=42183533"
 	coroutine.wrap(function()
@@ -3372,7 +3395,7 @@ ChoiceProperties.MouseLeave:connect(function() ChoiceProperties.BackgroundColor3
 ChoiceProperties.MouseButton1Down:connect(function() ChoiceProperties.BackgroundColor3 = Color3.new(0.4, 0.4, 0.4) end)
 ChoiceProperties.MouseButton1Up:connect(function() ChoiceProperties.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
 	local SortType2 = 1
-	local Popup = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -500 / 2, 0.5, -500 / 2), UDim2.new(0, 500, 0, 500), Gui, "Set Propertes", true, true, true, true, true, true, true)
+	local Popup = _C.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -500 / 2, 0.5, -500 / 2), UDim2.new(0, 500, 0, 500), Gui, "Set Propertes", true, true, true, true, true, true, true)
 	Popup.Icon.Image = "http://www.Roblox.com/Asset/?id=43318689"
 	local Previous = Instance.new("TextButton")
 	Previous.Name = "Previous"
@@ -3404,17 +3427,17 @@ ChoiceProperties.MouseButton1Up:connect(function() ChoiceProperties.BackgroundCo
 	Next.Size = UDim2.new(0, 20, 0, 20)
 	Next.Position = UDim2.new(1, -25, 1, -75)
 	Next.Parent = Popup.Content
-	local ListFrameHeader = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+	local ListFrameHeader = _C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 	ListFrameHeader.Size = UDim2.new(1, -10, 0, 20)
 	ListFrameHeader.Position = UDim2.new(0, 5, 0, 5)
 	ListFrameHeader.Parent = Popup.Content
-	_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"Variable\tType\tValue"}, 2)
-	local ListFrameProperties = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+	_C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"Variable\tType\tValue"}, 2)
+	local ListFrameProperties = _C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 	ListFrameProperties.Size = UDim2.new(1, -10, 1, -100)
 	ListFrameProperties.Position = UDim2.new(0, 5, 0, 25)
 	ListFrameProperties.Parent = Popup.Content
 	local function UpdateProperties(...)
-		local Properties, Types = _CMDMain.Functions.GetModule("RobloxProperties").GetProperties(Object)
+		local Properties, Types = _C.Functions.GetModule("RobloxProperties").GetProperties(Object)
 		local List = {}
 		for i = 1, #Properties do
 			local Result = "Nil"
@@ -3465,8 +3488,8 @@ else
 end
 table.insert(List, Properties[i].. "\t" ..Types[i].. "\t" ..Result)
 end
-table.sort(List, function(a, b) return string.lower(_CMDMain.Functions.Explode("\t", a)[SortType2]) < string.lower(_CMDMain.Functions.Explode("\t", b)[SortType2]) end)
-_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, List, 1, ...)
+table.sort(List, function(a, b) return string.lower(_C.Functions.Explode("\t", a)[SortType2]) < string.lower(_C.Functions.Explode("\t", b)[SortType2]) end)
+_C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, List, 1, ...)
 Center.Text = ListFrameProperties.ListIndex.Value.. " to " ..(ListFrameProperties.ListIndex.Value + #ListFrameProperties:children() - 2).. " of " ..#Properties
 for _, Tag in pairs(ListFrameProperties:children()) do
 	for _, Table in pairs(Tag:children()) do
@@ -3479,7 +3502,7 @@ for _, Tag in pairs(ListFrameProperties:children()) do
 end
 end
 coroutine.wrap(function()
-	_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, {"Loading..."}, 1)
+	_C.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, {"Loading..."}, 1)
 	wait(2.5)
 	UpdateProperties()
 end)()
@@ -3613,7 +3636,7 @@ end
 end
 end, "Explorer", "Creates a GUI in a player allowing you to explore the contents of the game. The controls are simple, and extra help is provided under the Help submenu.", "player")
 
-_CMDMain.Functions.CreateCommand("lighting", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("lighting", 4, function(Message, MessageSplit, Speaker, Self)
 	if MessageSplit[1]:lower() == "dawn" then
 		game:service("Lighting").Brightness = 2
 		game:service("Lighting").GeographicLatitude = 41.73
@@ -3672,10 +3695,10 @@ _CMDMain.Functions.CreateCommand("lighting", 4, function(Message, MessageSplit, 
 		if Self.Shift == nil then Self.Shift = false end
 		if Self.ShiftTime == nil then Self.ShiftTime = 10 end
 		if Self.Shift == true then Self.Shift = false else Self.Shift = true end
-		local h = tonumber(_CMDMain.Functions.Explode(":", game.Lighting.TimeOfDay)[1])
-		local m = tonumber(_CMDMain.Functions.Explode(":", game.Lighting.TimeOfDay)[2])
-		local s = tonumber(_CMDMain.Functions.Explode(":", game.Lighting.TimeOfDay)[3])
-		while Self.Shift == true and _CMDMain ~= nil do
+		local h = tonumber(_C.Functions.Explode(":", game.Lighting.TimeOfDay)[1])
+		local m = tonumber(_C.Functions.Explode(":", game.Lighting.TimeOfDay)[2])
+		local s = tonumber(_C.Functions.Explode(":", game.Lighting.TimeOfDay)[3])
+		while Self.Shift == true and _C ~= nil do
 			s = s + 10
 			if s >= 60 then
 				m = m + 1
@@ -3699,29 +3722,29 @@ _CMDMain.Functions.CreateCommand("lighting", 4, function(Message, MessageSplit, 
 	if MessageSplit[1]:lower() == "brightness" then pcall(function() game:service("Lighting").Brightness = Color3.new(tonumber(MessageSplit[2]), tonumber(MessageSplit[3]), tonumber(MessageSplit[4])) end) end
 	if MessageSplit[1]:lower() == "latitude" then pcall(function() game:service("Lighting").GeographicLatitude = tonumber(MessageSplit[2]) end) end
 	if MessageSplit[1]:lower() == "time" or MessageSplit[1]:lower() == "timeofday" then pcall(function() game:service("Lighting").TimeOfDay = MessageSplit[2] end) end
-end, "Lighting", "Change the lighting color.", "[dawn, day, night, default, black], shift, [ambient, bottom, top, shadow], brightness" .._CMDMain.Data.SplitCharacter.. "0-5, latitude" .._CMDMain.Data.SplitCharacter.. "0-360, [time, timeofday]" .._CMDMain.Data.SplitCharacter.. "0-24:0-60:0-60")
+end, "Lighting", "Change the lighting color.", "[dawn, day, night, default, black], shift, [ambient, bottom, top, shadow], brightness" .._C.Data.SplitCharacter.. "0-5, latitude" .._C.Data.SplitCharacter.. "0-360, [time, timeofday]" .._C.Data.SplitCharacter.. "0-24:0-60:0-60")
 
-_CMDMain.Functions.CreateCommand({"lockscript", "lock script", "lockscripts", "lock scripts"}, 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"lockscript", "lock script", "lockscripts", "lock scripts"}, 5, function(Message, MessageSplit, Speaker, Self)
 	if MessageSplit[1]:lower() == "0" or MessageSplit[1]:lower() == "false" then
 		game:service("ScriptContext").ScriptsDisabled = false
 		if Self.new ~= nil then
 			Instance.new = Self.new
 			Self.new = nil
 		end
-		for _, Scripts in pairs(_CMDMain.Functions.GetRecursiveChildren(nil, "script", 2)) do
+		for _, Scripts in pairs(_C.Functions.GetRecursiveChildren(nil, "script", 2)) do
 			if Scripts ~= script and Scripts:IsA("BaseScript") then
 				Scripts.Disabled = false
 			end
 		end
-		_CMDMain.Functions.CreateMessage("Message", "Scripts unlocked.", 1)
+		_C.Functions.CreateMessage("Message", "Scripts unlocked.", 1)
 	elseif MessageSplit[1]:lower() == "1" or MessageSplit[1]:lower() == "true" then
-		local LockMessage = _CMDMain.Functions.CreateMessage("Message", "Locking scripts...")
+		local LockMessage = _C.Functions.CreateMessage("Message", "Locking scripts...")
 		game:service("ScriptContext").ScriptsDisabled = true
 		if pcall(function() local _ = Instance.new("Part") end) == true then
 		Self.new = Instance.new
 		Instance.new = function() error("No objects are currently allowed.") end
 	end
-	for _, Scripts in pairs(_CMDMain.Functions.GetRecursiveChildren(nil, "script", 2)) do
+	for _, Scripts in pairs(_C.Functions.GetRecursiveChildren(nil, "script", 2)) do
 		if Scripts ~= script and Scripts:IsA("BaseScript") then
 			Scripts.Disabled = true
 		end
@@ -3732,7 +3755,7 @@ _CMDMain.Functions.CreateCommand({"lockscript", "lock script", "lockscripts", "l
 end
 end, "Lock Scripts", "Disables all new scripts and all currently running scripts (besides itself).", "[0 (false), 1 (true)]")
 
-_CMDMain.Functions.CreateCommand({"clean"}, 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"clean"}, 5, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 3 then return end
 	local CleanType = MessageSplit[#MessageSplit - 1]
 	if CleanType == nil then CleanType = "1" end
@@ -3744,12 +3767,12 @@ _CMDMain.Functions.CreateCommand({"clean"}, 5, function(Message, MessageSplit, S
 	local CleanExtra = MessageSplit[#MessageSplit]
 	if CleanExtra == nil then CleanExtra = "" end
 	for i = 1, #MessageSplit - 2 do
-		for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren(nil, MessageSplit[i], CleanType)) do
+		for _, Part in pairs(_C.Functions.GetRecursiveChildren(nil, MessageSplit[i], CleanType)) do
 			local _, CanClean = pcall(function()
 				if Part == script then
 					return false
 				end
-				if (string.match(Part.Name, "_CMDMain") and Part.Parent == game:service("ScriptContext")) or Part.className == "Lighting" then return false end
+				if (string.match(Part.Name, "_C") and Part.Parent == game:service("ScriptContext")) or Part.className == "Lighting" then return false end
 				if string.match(CleanExtra, "nochar") then
 					for _, Player in pairs(game:service("Players"):GetPlayers()) do
 						if Part == Player.Character or Part:IsDescendantOf(Player.Character) then return false end
@@ -3798,9 +3821,9 @@ pcall(function() Part:Remove() end)
 end
 end
 end
-end, "Clean", "Cleans the game of all obejcts with a certain Name or className or inherited class (or all). Extra arguments: nochar, noplayer, nobase, noscript, stopscript, stopsound.", "[name, classname, inherited]" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[[1, name], [2, class], [3, inherited], [4, all]]" .._CMDMain.Data.SplitCharacter.. "extra arguments")
+end, "Clean", "Cleans the game of all obejcts with a certain Name or className or inherited class (or all). Extra arguments: nochar, noplayer, nobase, noscript, stopscript, stopsound.", "[name, classname, inherited]" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "[[1, name], [2, class], [3, inherited], [4, all]]" .._C.Data.SplitCharacter.. "extra arguments")
 
-_CMDMain.Functions.CreateCommand("gamesavefile", 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("gamesavefile", 5, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	local BuildType = MessageSplit[1]
 	if BuildType == nil then BuildType = "1" end
@@ -3813,7 +3836,7 @@ _CMDMain.Functions.CreateCommand("gamesavefile", 5, function(Message, MessageSpl
 	if BuildType == 1 then
 		Self.Saves[BuildArg1] = {}
 		Self.Saves[BuildArg1].Model = Instance.new("Model")
-		for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren(game:service("Workspace"))) do
+		for _, Part in pairs(_C.Functions.GetRecursiveChildren(game:service("Workspace"))) do
 			if (function()
 				for _, Player in pairs(game:service("Players"):GetPlayers()) do
 					if Part == Player or Part:IsDescendantOf(Player) or Player.Character or Part:IsDescendantOf(Player.Character) then
@@ -3825,10 +3848,10 @@ _CMDMain.Functions.CreateCommand("gamesavefile", 5, function(Message, MessageSpl
 		pcall(function() Part:Clone().Parent = Self.Saves[BuildArg1].Model end)
 	end
 end
-_CMDMain.Functions.CreateMessage("Message", "Saved " ..#Self.Saves[BuildArg1].Model:children().. " objects to the save file \"" ..BuildArg1.. "\".", 5)
+_C.Functions.CreateMessage("Message", "Saved " ..#Self.Saves[BuildArg1].Model:children().. " objects to the save file \"" ..BuildArg1.. "\".", 5)
 elseif BuildType == 2 then
 	if Self.Saves[BuildArg1] ~= nil then
-		for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren(game:service("Workspace"))) do
+		for _, Part in pairs(_C.Functions.GetRecursiveChildren(game:service("Workspace"))) do
 			if (function()
 				for _, Player in pairs(game:service("Players"):GetPlayers()) do
 					if Part == Player or Part:IsDescendantOf(Player) or Player.Character or Part:IsDescendantOf(Player.Character) then
@@ -3841,19 +3864,19 @@ elseif BuildType == 2 then
 		pcall(function() Part:Remove() end)
 	end
 end
-local Loading = _CMDMain.Functions.CreateMessage("Hint", "Loading " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\"...")
+local Loading = _C.Functions.CreateMessage("Hint", "Loading " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\"...")
 for _, Part in pairs(Self.Saves[BuildArg1].Model:children()) do
 	pcall(function() local x = Part:Clone() x:MakeJoints() x.Parent = game:service("Workspace") x:MakeJoints() end)
 end
 Loading:Remove()
-_CMDMain.Functions.CreateMessage("Message", "Loaded " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\" successfully.", 5)
+_C.Functions.CreateMessage("Message", "Loaded " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\" successfully.", 5)
 else
-	_CMDMain.Functions.CreateMessage("Message", "Save file \"" ..BuildArg1.. "\" does not exist.", 5)
+	_C.Functions.CreateMessage("Message", "Save file \"" ..BuildArg1.. "\" does not exist.", 5)
 end
 end
-end, "Build Saving and Loading", "Saves and loads builds. save: Saves a build to [save name]. load: Loads a build from [save name].", "[save, load]" .._CMDMain.Data.SplitCharacter.. "[save name]")
+end, "Build Saving and Loading", "Saves and loads builds. save: Saves a build to [save name]. load: Loads a build from [save name].", "[save, load]" .._C.Data.SplitCharacter.. "[save name]")
 
-_CMDMain.Functions.CreateCommand("health", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("health", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	local Health = MessageSplit[#MessageSplit]
 	if Health == nil then Health = "" end
@@ -3883,17 +3906,17 @@ _CMDMain.Functions.CreateCommand("health", 4, function(Message, MessageSplit, Sp
 			end
 		end
 	end
-end, "Health", "Set the health of a player's character. ", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[health (number), math.huge, random, my health]")
+end, "Health", "Set the health of a player's character. ", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "[health (number), math.huge, random, my health]")
 
-_CMDMain.Functions.CreateCommand("lua", 5, function(Message, MessageSplit, Speaker, Self)
-	_CMDMain.Functions.CreateScript(Message, game:service("Workspace"), true)
+_C.Functions.CreateCommand("lua", 5, function(Message, MessageSplit, Speaker, Self)
+	_C.Functions.CreateScript(Message, game:service("Workspace"), true)
 end, "Lua Run", "Creates a new script.", "source")
 
-_CMDMain.Functions.CreateCommand({"luanodebug", "luandb"}, 5, function(Message, MessageSplit, Speaker, Self)
-	_CMDMain.Functions.CreateScript(Message, game:service("Workspace"), false)
+_C.Functions.CreateCommand({"luanodebug", "luandb"}, 5, function(Message, MessageSplit, Speaker, Self)
+	_C.Functions.CreateScript(Message, game:service("Workspace"), false)
 end, "Lua Run (No Debug)", "Creates a new script without error output.", "source")
 
-_CMDMain.Functions.CreateCommand({"walkspeed", "ws"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"walkspeed", "ws"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	for i = 1, #MessageSplit - 1 do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
@@ -3904,9 +3927,9 @@ _CMDMain.Functions.CreateCommand({"walkspeed", "ws"}, 4, function(Message, Messa
 			end
 		end
 	end
-end, "WalkSpeed", "Set the WalkSpeed of a player's character. ", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[speed (number), math.huge, random, my walkspeed]")
+end, "WalkSpeed", "Set the WalkSpeed of a player's character. ", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "[speed (number), math.huge, random, my walkspeed]")
 
-_CMDMain.Functions.CreateCommand({"teleport"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"teleport"}, 4, function(Message, MessageSplit, Speaker, Self)
 	local Position = MessageSplit[#MessageSplit]:lower()
 	local Player = nil
 	if Position == "" or Position == "me" then
@@ -3916,8 +3939,8 @@ _CMDMain.Functions.CreateCommand({"teleport"}, 4, function(Message, MessageSplit
 				Player = Speaker
 			end
 		end
-	elseif #_CMDMain.Functions.Explode(", ", Position) == 3 then
-		Position = CFrame.new(_CMDMain.Functions.Explode(", ", Position)[1], _CMDMain.Functions.Explode(", ", Position)[2], _CMDMain.Functions.Explode(", ", Position)[3])
+	elseif #_C.Functions.Explode(", ", Position) == 3 then
+		Position = CFrame.new(_C.Functions.Explode(", ", Position)[1], _C.Functions.Explode(", ", Position)[2], _C.Functions.Explode(", ", Position)[3])
 	else
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), Position:lower()) and PlayerList.Character ~= nil then
@@ -3945,15 +3968,15 @@ _CMDMain.Functions.CreateCommand({"teleport"}, 4, function(Message, MessageSplit
 			end
 		end
 	end
-end, "Teleport", "Teleport players to other players. ", "player to teleport" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "player to teleport to, or [x, y, z]")
+end, "Teleport", "Teleport players to other players. ", "player to teleport" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "player to teleport to, or [x, y, z]")
 
-_CMDMain.Functions.CreateCommand({"waypoint", "wp"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"waypoint", "wp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if Speaker.Character == nil then return end
 	if Speaker.Character:FindFirstChild("Torso") == nil then return end
 	if #MessageSplit < 2 then return end
 	local Type = MessageSplit[1]:lower()
 	local Index = MessageSplit[2]
-	local Player = _CMDMain.Functions.GetPlayerTable(Speaker.Name)
+	local Player = _C.Functions.GetPlayerTable(Speaker.Name)
 	if Player.Waypoints == nil then
 		Player.Waypoints = {}
 	end
@@ -3963,33 +3986,33 @@ _CMDMain.Functions.CreateCommand({"waypoint", "wp"}, 4, function(Message, Messag
 		Waypoint[Index].CFrame = Speaker.Character.Torso.CFrame
 		Waypoint[Index].Velocity = Speaker.Character.Torso.Velocity
 		Waypoint[Index].RotVelocity = Speaker.Character.Torso.RotVelocity
-		_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Set at CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Set at CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
 	elseif Type == "get" then
 		if Waypoint[Index] ~= nil then
 			Speaker.Character.Torso.CFrame = Waypoint[Index].CFrame
 			Speaker.Character.Torso.Velocity = Waypoint[Index].Velocity
 			Speaker.Character.Torso.RotVelocity = Waypoint[Index].RotVelocity
-			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Moved to CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Moved to CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
 		else
-			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
 		end
 	elseif Type == "remove" then
 		if Waypoint[Index] ~= nil then
 			Waypoint[Index] = nil
-			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Removed.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Removed.", 5, Speaker)
 		else
-			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
 		end
 	elseif Type == "show" then
 		if Waypoint[Index] ~= nil then
-			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
 		else
-			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
 		end
 	end
-end, "Waypoint", "Set dynamic waypoints that store your character's position, saved by string indices.", "[set, get]" .._CMDMain.Data.SplitCharacter.. "waypoint index")
+end, "Waypoint", "Set dynamic waypoints that store your character's position, saved by string indices.", "[set, get]" .._C.Data.SplitCharacter.. "waypoint index")
 
-_CMDMain.Functions.CreateCommand({"kill", "ki"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"kill", "ki"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -3999,9 +4022,9 @@ _CMDMain.Functions.CreateCommand({"kill", "ki"}, 4, function(Message, MessageSpl
 			end
 		end
 	end
-end, "Kill", "Kills people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Kill", "Kills people.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"freeze", "f"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"freeze", "f"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4011,9 +4034,9 @@ _CMDMain.Functions.CreateCommand({"freeze", "f"}, 4, function(Message, MessageSp
 			end
 		end
 	end
-end, "Freeze", "Freeze people in place.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Freeze", "Freeze people in place.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"unfreeze", "unf", "uf", "thaw", "th"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"unfreeze", "unf", "uf", "thaw", "th"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4023,9 +4046,9 @@ _CMDMain.Functions.CreateCommand({"unfreeze", "unf", "uf", "thaw", "th"}, 4, fun
 			end
 		end
 	end
-end, "Unfreeze/Thaw", "Unfreeze/thaw people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Unfreeze/Thaw", "Unfreeze/thaw people.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"killer frogs", "frogs"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"killer frogs", "frogs"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	local Frogs = tonumber(MessageSplit[#MessageSplit])
 	if Frogs == nil then Frogs = 1 end
@@ -4067,9 +4090,9 @@ _CMDMain.Functions.CreateCommand({"killer frogs", "frogs"}, 4, function(Message,
 		end
 	end
 end
-end, "Killer Frogs", "Throw some frogs at people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of frogs")
+end, "Killer Frogs", "Throw some frogs at people.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "number of frogs")
 
-_CMDMain.Functions.CreateCommand({"killer bees", "bees"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"killer bees", "bees"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	local Bees = tonumber(MessageSplit[#MessageSplit])
 	if Bees == nil then Bees = 1 end
@@ -4111,14 +4134,14 @@ _CMDMain.Functions.CreateCommand({"killer bees", "bees"}, 4, function(Message, M
 		end
 	end
 end
-end, "Killer Bees", "Throw clouds of angry bees at people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of bees")
+end, "Killer Bees", "Throw clouds of angry bees at people.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "number of bees")
 
-_CMDMain.Functions.CreateCommand({"blind", "b"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"blind", "b"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
 				local Blind = Instance.new("ScreenGui", PlayerList.PlayerGui)
-				Blind.Name = "_CMDMainBlind"
+				Blind.Name = "_CBlind"
 				local Black = Instance.new("Frame", Blind)
 				Black.Name = "Black"
 				Black.BorderSizePixel = 0
@@ -4135,7 +4158,7 @@ _CMDMain.Functions.CreateCommand({"blind", "b"}, 4, function(Message, MessageSpl
 				end)
 				Blind.Changed:connect(function(Property)
 					if Property == "Parent" then
-						if Blind.Name == "_CMDMainBlindDisabled" then return end
+						if Blind.Name == "_CBlindDisabled" then return end
 						if Blind.Parent ~= PlayerList.PlayerGui then
 							Blind.Parent = PlayerList.PlayerGui
 						end
@@ -4144,19 +4167,19 @@ _CMDMain.Functions.CreateCommand({"blind", "b"}, 4, function(Message, MessageSpl
 			end
 		end
 	end
-end, "Blind", "Blind people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Blind", "Blind people.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"unblind", "noblind", "unb", "ub", "nb"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"unblind", "noblind", "unb", "ub", "nb"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
-				pcall(function() while true do PlayerList.PlayerGui._CMDMainBlind.Name = "_CMDMainBlindDisabled" PlayerList.PlayerGui._CMDMainBlindDisabled:Remove() end end)
+				pcall(function() while true do PlayerList.PlayerGui._CBlind.Name = "_CBlindDisabled" PlayerList.PlayerGui._CBlindDisabled:Remove() end end)
 			end
 		end
 	end
-end, "Unblind", "Let people see again.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Unblind", "Let people see again.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"nogui", "ng"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"nogui", "ng"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
@@ -4168,9 +4191,9 @@ _CMDMain.Functions.CreateCommand({"nogui", "ng"}, 4, function(Message, MessageSp
 			end
 		end
 	end
-end, "No Gui", "Remove all Guis.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "No Gui", "Remove all Guis.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"crush", "cr"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"crush", "cr"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso.CFrame end) == true and pcall(function() local _ = PlayerList.Character.Humanoid end) == true then
@@ -4219,9 +4242,9 @@ _CMDMain.Functions.CreateCommand({"crush", "cr"}, 4, function(Message, MessageSp
 		end
 	end
 end
-end, "Crush", "WHAM.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Crush", "WHAM.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"respawn"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"respawn"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
@@ -4242,9 +4265,9 @@ _CMDMain.Functions.CreateCommand({"respawn"}, 4, function(Message, MessageSplit,
 			end
 		end
 	end
-end, "Respawn", "Respawn a player.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Respawn", "Respawn a player.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"forcefield", "ff", "shield", "sh"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"forcefield", "ff", "shield", "sh"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4252,9 +4275,9 @@ _CMDMain.Functions.CreateCommand({"forcefield", "ff", "shield", "sh"}, 4, functi
 			end
 		end
 	end
-end, "Spawn ForceField", "Spawn a ForceField object in a Player's character.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Spawn ForceField", "Spawn a ForceField object in a Player's character.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"unforcefield", "noforcefield", "unff", "uff", "noff", "unshield", "unsh", "ush", "noshield", "nosh"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"unforcefield", "noforcefield", "unff", "uff", "noff", "unshield", "unsh", "ush", "noshield", "nosh"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4266,9 +4289,9 @@ _CMDMain.Functions.CreateCommand({"unforcefield", "noforcefield", "unff", "uff",
 			end
 		end
 	end
-end, "Remove ForceField", "Remove all ForceField objects in a Player's character.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Remove ForceField", "Remove all ForceField objects in a Player's character.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"explode", "ex"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"explode", "ex"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4285,15 +4308,15 @@ _CMDMain.Functions.CreateCommand({"explode", "ex"}, 4, function(Message, Message
 			end
 		end
 	end
-end, "Explode", "Spawn an explosion in all parts of a player.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Explode", "Spawn an explosion in all parts of a player.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand("hax", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("hax", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
-	if _CMDMain.Functions.IsModuleEnabled("CharacterSupport") == false then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
+	if _C.Functions.IsModuleEnabled("CharacterSupport") == false then
+		_C.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
 		return
-	elseif _CMDMain.Functions.GetModule("CharacterSupport") == nil then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
+	elseif _C.Functions.GetModule("CharacterSupport") == nil then
+		_C.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
 		return
 	end
 	local Characters = tonumber(MessageSplit[#MessageSplit])
@@ -4305,7 +4328,7 @@ _CMDMain.Functions.CreateCommand("hax", 4, function(Message, MessageSplit, Speak
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso end) == true then
 			for i = 1, Characters do
 				coroutine.wrap(function()
-					local Character = _CMDMain.Functions.GetModule("CharacterSupport").CreateCharacter(true)
+					local Character = _C.Functions.GetModule("CharacterSupport").CreateCharacter(true)
 					Character.Name = "Dr. Hax"
 					local Head = Character.Head
 					Head.face.Texture = "http://www.Roblox.com/Asset/?id=16580646"
@@ -4448,15 +4471,15 @@ end
 end
 end
 end
-end, "Hax", "Summon Dr. Hax on weary travelers.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of characters to spawn (max of 10)")
+end, "Hax", "Summon Dr. Hax on weary travelers.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "number of characters to spawn (max of 10)")
 
-_CMDMain.Functions.CreateCommand("maul", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("maul", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
-	if _CMDMain.Functions.IsModuleEnabled("CharacterSupport") == false then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
+	if _C.Functions.IsModuleEnabled("CharacterSupport") == false then
+		_C.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
 		return
-	elseif _CMDMain.Functions.GetModule("CharacterSupport") == nil then
-		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
+	elseif _C.Functions.GetModule("CharacterSupport") == nil then
+		_C.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
 		return
 	end
 	local Characters = tonumber(MessageSplit[#MessageSplit])
@@ -4474,7 +4497,7 @@ _CMDMain.Functions.CreateCommand("maul", 4, function(Message, MessageSplit, Spea
 			for _, Part in pairs(PlayerList.Character:children()) do if Part:IsA("ForceField") then Part:Remove() end end
 			for i = 1, Characters do
 				coroutine.wrap(function()
-					local Character = _CMDMain.Functions.GetModule("CharacterSupport").CreateCharacter(math.random(1, 2) == 1 and true or false)
+					local Character = _C.Functions.GetModule("CharacterSupport").CreateCharacter(math.random(1, 2) == 1 and true or false)
 					Character.Name = "Zombie"
 					local Head = Character.Head
 					Head.face.Texture = "http://www.Roblox.com/Asset/?id=16580646"
@@ -4542,15 +4565,15 @@ _CMDMain.Functions.CreateCommand("maul", 4, function(Message, MessageSplit, Spea
 		end
 	end
 end
-end, "Maul", "Summon flesh-hungry zombies to eat players.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of zombies to spawn (max of 10)")
+end, "Maul", "Summon flesh-hungry zombies to eat players.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "number of zombies to spawn (max of 10)")
 
-_CMDMain.Functions.CreateCommand({"ignite", "i"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"ignite", "i"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	local Duration = tonumber(MessageSplit[#MessageSplit])
 	if Duration == nil then Duration = 0 end
 	for i = 1, #MessageSplit - 1 do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
-			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso end) == true and pcall(function() local _ = PlayerList.Character.Humanoid end) == true and pcall(function() local _ = PlayerList.Character._CMDMainIsOnFire end) == false then
+			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso end) == true and pcall(function() local _ = PlayerList.Character.Humanoid end) == true and pcall(function() local _ = PlayerList.Character._CIsOnFire end) == false then
 			local Tag = Instance.new("Model", PlayerList.Character)
 			Tag.Name = "SuperCMDsIsOnFire"
 			coroutine.wrap(function()
@@ -4589,7 +4612,7 @@ _CMDMain.Functions.CreateCommand({"ignite", "i"}, 4, function(Message, MessageSp
 				Sound.SoundId = "http://www.Roblox.com/Asset/?id=31760113"
 				Sound:Play()
 				coroutine.wrap(function()
-					while pcall(function() local _ = PlayerList.Character._CMDMainIsOnFire end) == true do
+					while pcall(function() local _ = PlayerList.Character._CIsOnFire end) == true do
 					FireHolder.CFrame = CFrame.new(Part.CFrame.p)
 					wait()
 				end
@@ -4607,37 +4630,37 @@ _CMDMain.Functions.CreateCommand({"ignite", "i"}, 4, function(Message, MessageSp
 end
 end
 end
-end, "Ignite", "Set players alight. Fire damages a player by 0.25 per milisecond.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "duration (in seconds, <= 0 for infinite)")
+end, "Ignite", "Set players alight. Fire damages a player by 0.25 per milisecond.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "duration (in seconds, <= 0 for infinite)")
 
-_CMDMain.Functions.CreateCommand({"unignite", "uni", "ui"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"unignite", "uni", "ui"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
-				pcall(function() PlayerList.Character._CMDMainIsOnFire:Remove() end)
+				pcall(function() PlayerList.Character._CIsOnFire:Remove() end)
 			end
 		end
 	end
-end, "Unignite", "Put a player out.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Unignite", "Put a player out.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand("kick", 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("kick", 5, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList ~= Speaker then
-				_CMDMain.Functions.CreateMessage("Hint", "[Kick] Player(s) removed.", 2.5, Speaker)
+				_C.Functions.CreateMessage("Hint", "[Kick] Player(s) removed.", 2.5, Speaker)
 				pcall(function() PlayerList:Remove() end)
 			end
 		end
 	end
-end, "Kick", "Kick (remove) a player from the game.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Kick", "Kick (remove) a player from the game.", "player" .._C.Data.SplitCharacter.. "[...]")
 
 --TODO: DP
-_CMDMain.Functions.CreateCommand({"banish", "ban"}, 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"banish", "ban"}, 5, function(Message, MessageSplit, Speaker, Self)
 	if Self.Bans == nil then Self.Bans = {} end
 	if Self.CatchBan == nil then
 		Self.CatchBan = game:service("Players").ChildAdded:connect(function(Player)
 			for i = 1, #Self.Bans do
 				if string.match(Player.Name:lower(), Self.Bans[i]:lower()) then
-					_CMDMain.Functions.CreateMessage("Message", "[Ban] a Banned player (" ..Player.Name.. ") has been disconnected for trying to re-enter.", 2.5)
+					_C.Functions.CreateMessage("Message", "[Ban] a Banned player (" ..Player.Name.. ") has been disconnected for trying to re-enter.", 2.5)
 					wait()
 					pcall(function() Player:Remove() end)
 				end
@@ -4657,15 +4680,15 @@ _CMDMain.Functions.CreateCommand({"banish", "ban"}, 5, function(Message, Message
 			end
 		end
 		if Completed == true then
-			_CMDMain.Functions.CreateMessage("Message", "[Ban] Player(s) banned.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "[Ban] Player(s) banned.", 2.5, Speaker)
 		else
-			_CMDMain.Functions.CreateMessage("Message", "[Ban] ERROR: Player(s) not found!", 2.5, Speaker)
+			_C.Functions.CreateMessage("Message", "[Ban] ERROR: Player(s) not found!", 2.5, Speaker)
 		end
 	elseif Type == "name" or Type == "n" then
 		for i = 2, #MessageSplit do
 			table.insert(Self.Bans, MessageSplit[i]:lower())
 		end
-		_CMDMain.Functions.CreateMessage("Hint", "[Ban] Names added.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Ban] Names added.", 2.5, Speaker)
 	elseif Type == "retgmove" or Type == "fbr" then
 		local Completed = false
 		for i = 2, #MessageSplit do
@@ -4676,17 +4699,17 @@ _CMDMain.Functions.CreateCommand({"banish", "ban"}, 5, function(Message, Message
 			end
 		end
 		if Completed == true then
-			_CMDMain.Functions.CreateMessage("Hint", "[Ban] Name(s) removed.", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Ban] Name(s) removed.", 2.5, Speaker)
 		else
-			_CMDMain.Functions.CreateMessage("Hint", "[Ban] Name(s) not found!", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Ban] Name(s) not found!", 2.5, Speaker)
 		end
 	elseif Type == "remove all" or Type == "ra" then
 		Self.Bans = {}
-		_CMDMain.Functions.CreateMessage("Hint", "[Ban] Ban table reset.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Ban] Ban table reset.", 2.5, Speaker)
 	end
-end, "Ban", "Place a ban (removes the player on entering) on a player from the game. Player: Ban and remove a player from the game. Name: Add a name to the ban list. Remove, Remove All: Remove a name or remove all names from the ban list.", "[[player, p], [name, n], [remove, r]]" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...], remove all")
+end, "Ban", "Place a ban (removes the player on entering) on a player from the game. Player: Ban and remove a player from the game. Name: Add a name to the ban list. Remove, Remove All: Remove a name or remove all names from the ban list.", "[[player, p], [name, n], [remove, r]]" .._C.Data.SplitCharacter.. "player" .._C.Data.SplitCharacter.. "[...], remove all")
 
-_CMDMain.Functions.CreateCommand({"slap", "s"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"slap", "s"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 3 then return false end
 	local Speed = tonumber(MessageSplit[#MessageSplit - 1])
 	local Strength = tonumber(MessageSplit[#MessageSplit])
@@ -4710,40 +4733,40 @@ _CMDMain.Functions.CreateCommand({"slap", "s"}, 4, function(Message, MessageSpli
 			end
 		end
 	end
-end, "Slap", "Slap people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "speed" .._CMDMain.Data.SplitCharacter.. "strength")
+end, "Slap", "Slap people.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "speed" .._C.Data.SplitCharacter.. "strength")
 
-_CMDMain.Functions.CreateCommand({"blocker", "blk"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"blocker", "blk"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if Self.Activated == nil then Self.Activated = false end
 	if Self.Type == nil then Self.Type = 1 end
 	if Self.Names == nil then Self.Names = {} end
 	if Self.ClassNames == nil then Self.ClassNames = {} end
 	if MessageSplit[1]:lower() == "on" then
 		Self.Activated = true
-		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Activated.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Blocker] Activated.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "off" then
 		Self.Activated = false
-		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Deactivated.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Blocker] Deactivated.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "name" then
 		for i = 2, #MessageSplit do
 			table.insert(Self.Names, MessageSplit[i])
 		end
-		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "class" then
 		for i = 2, #MessageSplit do
 			table.insert(Self.ClassNames, MessageSplit[i])
 		end
-		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "type" then
 		if MessageSplit[2] == "match" or MessageSplit[2] == "1" then
 			Self.Type = 1
-			_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to match (1).", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to match (1).", 2.5, Speaker)
 		elseif MessageSplit[2] == "exact" or MessageSplit[2] == "2" then
 			Self.Type = 2
-			_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to exact (2).", 2.5, Speaker)
+			_C.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to exact (2).", 2.5, Speaker)
 		end
 	end
 	if MessageSplit[1]:lower() == "gbku45uk" then
@@ -4759,12 +4782,12 @@ _CMDMain.Functions.CreateCommand({"blocker", "blk"}, 4, function(Message, Messag
 				end
 			end
 		end
-		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Removed.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Blocker] Removed.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "grtuiehrguhb5t5y45g5" then
 		Self.Names = {}
 		Self.ClassNames = {}
-		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Removed all entries.", 2.5, Speaker)
+		_C.Functions.CreateMessage("Hint", "[Blocker] Removed all entries.", 2.5, Speaker)
 	end
 	if Self.Activated == true then
 		if Self.DescendantAdded ~= nil then
@@ -4784,7 +4807,7 @@ _CMDMain.Functions.CreateCommand({"blocker", "blk"}, 4, function(Message, Messag
 			end
 		end
 		if Remove == true then
-			_CMDMain.Functions.CreateMessage("Hint", "[Blocker] \"" ..Object.className.. " object (" ..Object.Name.. ") is blocked and has been removed.", 10)
+			_C.Functions.CreateMessage("Hint", "[Blocker] \"" ..Object.className.. " object (" ..Object.Name.. ") is blocked and has been removed.", 10)
 			pcall(function() Object.Disabled = true end)
 			pcall(function() Object.Active = false end)
 			pcall(function() Object.Activated = false end)
@@ -4797,9 +4820,9 @@ else
 	Self.DescendantAdded = nil
 end
 end
-end, "Blocker", "Blocks objects by name or className.", "on, off, name" .._CMDMain.Data.SplitCharacter.. "object name, class" .._CMDMain.Data.SplitCharacter.. "object className, type" .._CMDMain.Data.SplitCharacter.. "[match, exact]")
+end, "Blocker", "Blocks objects by name or className.", "on, off, name" .._C.Data.SplitCharacter.. "object name, class" .._C.Data.SplitCharacter.. "object className, type" .._C.Data.SplitCharacter.. "[match, exact]")
 
-_CMDMain.Functions.CreateCommand({"characterappearance", "ca"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"characterappearance", "ca"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 2, #MessageSplit - (MessageSplit[1]:lower() == "default" and 0 or 1) do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]) then
@@ -4815,9 +4838,9 @@ _CMDMain.Functions.CreateCommand({"characterappearance", "ca"}, 4, function(Mess
 			end
 		end
 	end
-end, "CharacterAppearance Editor", "See command name.", "default, set, userid, assetid" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[url, userid, assetid]")
+end, "CharacterAppearance Editor", "See command name.", "default, set, userid, assetid" .._C.Data.SplitCharacter.. "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "[url, userid, assetid]")
 
-_CMDMain.Functions.CreateCommand({"character", "char", "ch"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"character", "char", "ch"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	for i = 2, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
@@ -4844,9 +4867,9 @@ _CMDMain.Functions.CreateCommand({"character", "char", "ch"}, 4, function(Messag
 			end
 		end
 	end
-end, "Character Editor", "Make people do things.", "sit, jump, [platformstand, ps], trip, stand" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Character Editor", "Make people do things.", "sit, jump, [platformstand, ps], trip, stand" .._C.Data.SplitCharacter.. "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand("seisure", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("seisure", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	local Duration = tonumber(MessageSplit[#MessageSplit])
 	if Duration == nil then Duration = math.random(5, 10) end
@@ -4873,9 +4896,9 @@ _CMDMain.Functions.CreateCommand("seisure", 4, function(Message, MessageSplit, S
 			end
 		end
 	end
-end, "Seisure", "Make people have seisures.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "time (seconds)")
+end, "Seisure", "Make people have seisures.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "time (seconds)")
 
-_CMDMain.Functions.CreateCommand("rocket", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("rocket", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 3 then return false end
 	local Speed = tonumber(MessageSplit[#MessageSplit - 1])
 	local Duration = tonumber(MessageSplit[#MessageSplit])
@@ -4937,9 +4960,9 @@ _CMDMain.Functions.CreateCommand("rocket", 4, function(Message, MessageSplit, Sp
 			end
 		end
 	end
-end, "Rocket", "Fires bodyparts into the air that explode after a set time.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "speed" .._CMDMain.Data.SplitCharacter.. "duration (in seconds)")
+end, "Rocket", "Fires bodyparts into the air that explode after a set time.", "player" .._C.Data.SplitCharacter.. "[...]" .._C.Data.SplitCharacter.. "speed" .._C.Data.SplitCharacter.. "duration (in seconds)")
 
-_CMDMain.Functions.CreateCommand({"jail", "j"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"jail", "j"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4956,7 +4979,7 @@ _CMDMain.Functions.CreateCommand({"jail", "j"}, 4, function(Message, MessageSpli
 										PlayerList.Character.Torso.CFrame = Position * CFrame.new(0, 1.5, 0)
 										PlayerList.Character.Torso.Velocity = Vector3.new(0, 0, 0)
 										PlayerList.Character.Torso.RotVelocity = Vector3.new(0, 0, 0)
-										_CMDMain.Functions.CreateMessage("Hint", (function()
+										_C.Functions.CreateMessage("Hint", (function()
 											local Text = math.random(1, 12)
 											if Text == 1 then
 												return "You were put here for a reason."
@@ -5037,9 +5060,9 @@ end
 end
 end
 end
-end, "Jail", "Jail people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Jail", "Jail people.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"unjail", "unj", "uj"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"unjail", "unj", "uj"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -5051,9 +5074,9 @@ _CMDMain.Functions.CreateCommand({"unjail", "unj", "uj"}, 4, function(Message, M
 			end
 		end
 	end
-end, "Unjail", "Unjail people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+end, "Unjail", "Unjail people.", "player" .._C.Data.SplitCharacter.. "[...]")
 
-_CMDMain.Functions.CreateCommand({"base", "rb"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"base", "rb"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for _, Part in pairs(game:service("Workspace"):children()) do
 		if Part.Name == "Base" then
 			Part:Remove()
@@ -5072,7 +5095,7 @@ _CMDMain.Functions.CreateCommand({"base", "rb"}, 4, function(Message, MessageSpl
 	Base.Parent = game:service("Workspace")
 end, "Rebase", "Make a new base.", "None")
 
-_CMDMain.Functions.CreateCommand({"spawn", "sp"}, 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand({"spawn", "sp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	local Part = Instance.new("Part")
 	Part.Name = "Base"
 	Part.BrickColor = BrickColor.new("Really black")
@@ -5145,7 +5168,7 @@ _CMDMain.Functions.CreateCommand({"spawn", "sp"}, 4, function(Message, MessageSp
 	end)()
 end, "Spawn", "Make a spawn.", "None")
 
-_CMDMain.Functions.CreateCommand("shutdown", 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("shutdown", 5, function(Message, MessageSplit, Speaker, Self)
 	local Hint = Instance.new("Hint", game:service("Workspace"))
 	for i = 5, 0, -1 do
 		Hint.Text = "Shutting down server in " ..i.. "..."
@@ -5159,16 +5182,16 @@ _CMDMain.Functions.CreateCommand("shutdown", 5, function(Message, MessageSplit, 
 end, "Shutdown", "Kill the server.", "None")
 
 --[[ --Command template...
-_CMDMain.Functions.CreateCommand("[ Command Here ]", 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("[ Command Here ]", 5, function(Message, MessageSplit, Speaker, Self)
 -- [ Put stuff here ]
 end, "None", "None", "None")
-_CMDMain.Functions.CreateScript(src,par,false)
+_C.Functions.CreateScript(src,par,false)
 --]]
 -- Davbot commands!!!
 -- Sadly, most of these don't work :(
 
 
-_CMDMain.Functions.CreateCommand("delag", 5, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("delag", 5, function(Message, MessageSplit, Speaker, Self)
 		Notify("Now debugging the server...")
 		wait(1)
 	pcall(function() workspace.Terrain:Clear() end) --no moar terrain
@@ -5200,7 +5223,7 @@ _CMDMain.Functions.CreateCommand("delag", 5, function(Message, MessageSplit, Spe
 	Spawn.Size = Vector3.new(5, 1, 5) 
 	Spawn.BrickColor = BrickColor.Blue() 
 
-	local SpinScript = _CMDMain.Functions.CreateScript([[
+	local SpinScript = _C.Functions.CreateScript([[
 	while true do
 		script.Parent.CFrame = script.Parent.CFrame * CFrame.fromEulerAnglesXYZ(0, math.rad(.05), 0)
 		wait()
@@ -5219,7 +5242,7 @@ _CMDMain.Functions.CreateCommand("delag", 5, function(Message, MessageSplit, Spe
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("unspin", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("unspin", 4, function(Message, MessageSplit, Speaker, Self)
 	local msg = Message
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
@@ -5233,7 +5256,7 @@ _CMDMain.Functions.CreateCommand("unspin", 4, function(Message, MessageSplit, Sp
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unhover", 4, function(Message, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("unhover", 4, function(Message, MessageSplit, Speaker, Self)
 	local msg = Message
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
@@ -5257,13 +5280,13 @@ _CMDMain.Functions.CreateCommand("unhover", 4, function(Message, MessageSplit, S
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("hover", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("hover", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
 			if (player.Character:FindFirstChild("Torso") ~= nil) then
 				if (player.Character.Torso:FindFirstChild("HoverScript") == nil) then
-					local SpinScript = _CMDMain.Functions.CreateScript([[
+					local SpinScript = _C.Functions.CreateScript([[
 					local torso = script.Parent
 					PewPew = Instance.new("Sound")
 					PewPew.Name = "PewPew"
@@ -5304,7 +5327,7 @@ _CMDMain.Functions.CreateCommand("hover", 4, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("pwn", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("pwn", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5335,7 +5358,7 @@ _CMDMain.Functions.CreateCommand("pwn", 4, function(msg, MessageSplit, Speaker, 
 				e.BlastRadius = math.random(10, 20) 
 				e.BlastPressure = math.random(30000000, 50000000) 
 				s:Play()
-				local SpinScript = _CMDMain.Functions.CreateScript([[
+				local SpinScript = _C.Functions.CreateScript([[
 				wait(1)
 				script.Parent:Remove()
 				]],p,false)
@@ -5345,7 +5368,7 @@ _CMDMain.Functions.CreateCommand("pwn", 4, function(msg, MessageSplit, Speaker, 
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5363,7 +5386,7 @@ _CMDMain.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, Speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("superjump", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("superjump", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5393,17 +5416,17 @@ end, "None", "None", "None")
 
 
 
-_CMDMain.Functions.CreateCommand("notify", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("notify", 4, function(msg, MessageSplit, Speaker, Self)
 	message = string.sub(msg, 8) 
 	Notify(Speaker.Name.. ": " ..message)
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("glitch", 5, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("glitch", 5, function(msg, MessageSplit, Speaker, Self)
 	Workspace:MoveTo(Vector3.new(0, 100000000, 0))
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("rain", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("rain", 4, function(msg, MessageSplit, Speaker, Self)
 	for i = 1, 1000 do 
 		local Rain = Instance.new("Part") 
 		Rain.Parent = Workspace 
@@ -5426,7 +5449,7 @@ _CMDMain.Functions.CreateCommand("rain", 4, function(msg, MessageSplit, Speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("mountain", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("mountain", 4, function(msg, MessageSplit, Speaker, Self)
 	size = 30
 	bs = 15
 	curved = true
@@ -5526,7 +5549,7 @@ _CMDMain.Functions.CreateCommand("mountain", 4, function(msg, MessageSplit, Spea
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("darkness", 5, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("darkness", 5, function(msg, MessageSplit, Speaker, Self)
 	local T = Instance.new("Sound")
 	T.Parent = Workspace
 	T.Name = "Sound"
@@ -5538,7 +5561,7 @@ _CMDMain.Functions.CreateCommand("darkness", 5, function(msg, MessageSplit, Spea
 	T:Play()
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, Speaker, Self)
 	for i,v in pairs(Players:GetChildren()) do 
 		if v:IsA("Player") then 
 			v.Character.Humanoid.Sit = true 
@@ -5546,7 +5569,7 @@ _CMDMain.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, Speaker, 
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("laser", 5, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("laser", 5, function(msg, MessageSplit, Speaker, Self)
 	local Laser = Instance.new("Part") 
 	Laser.Parent = Workspace 
 	Laser.Name = "Laser" 
@@ -5565,7 +5588,7 @@ _CMDMain.Functions.CreateCommand("laser", 5, function(msg, MessageSplit, Speaker
 	Laser:Remove() 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5585,7 +5608,7 @@ _CMDMain.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speak
 						P.BottomSurface = ("Smooth")
 						P:BreakJoints()
 						P.Position = player.Character.Head.Position + Vector3.new(math.random(-10, 10), 30, math.random(-10, 10))
-						local SpinScript = _CMDMain.Functions.CreateScript([[
+						local SpinScript = _C.Functions.CreateScript([[
 						function onTouched(hit)
 							if hit.Parent:FindFirstChild("Humanoid") ~= nil then
 								hit.Parent:BreakJoints()
@@ -5610,7 +5633,7 @@ end, "None", "None", "None")
 
 
 
-_CMDMain.Functions.CreateCommand("fireworks", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("fireworks", 4, function(msg, MessageSplit, Speaker, Self)
 	fireworknum = 25
 	sparknum = 10
 	untilfireworks = 5
@@ -5660,7 +5683,7 @@ _CMDMain.Functions.CreateCommand("fireworks", 4, function(msg, MessageSplit, Spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("untorture", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("untorture", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5675,7 +5698,7 @@ _CMDMain.Functions.CreateCommand("untorture", 4, function(msg, MessageSplit, Spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("torture", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("torture", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5703,7 +5726,7 @@ _CMDMain.Functions.CreateCommand("torture", 4, function(msg, MessageSplit, Speak
 				S.archivable = false
 				S.Pitch = 2
 				S:Play()
-				local SpinScript = _CMDMain.Functions.CreateScript([[
+				local SpinScript = _C.Functions.CreateScript([[
 				Images = {"http://www.roblox.com/asset/?id=60457275", "http://www.roblox.com/asset/?id=60457295", "http://www.roblox.com/asset/?id=60457311", "http://www.roblox.com/asset/?id=60457338", "http://www.roblox.com/asset/?id=60457366"}
 
 				script.Parent.Parent.Trolololol:Play()
@@ -5726,7 +5749,7 @@ _CMDMain.Functions.CreateCommand("torture", 4, function(msg, MessageSplit, Speak
 				end
 				]],Image,false)
 				SpinScript.Name = "Script"
-				local SpinScript = _CMDMain.Functions.CreateScript([[
+				local SpinScript = _C.Functions.CreateScript([[
 				while true do
 					if script.Parent.Visible == true then
 						wait(1.5)
@@ -5741,7 +5764,7 @@ _CMDMain.Functions.CreateCommand("torture", 4, function(msg, MessageSplit, Speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("superhighspeed", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("superhighspeed", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5754,7 +5777,7 @@ _CMDMain.Functions.CreateCommand("superhighspeed", 4, function(msg, MessageSplit
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("delimber", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("delimber", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5766,14 +5789,14 @@ _CMDMain.Functions.CreateCommand("delimber", 4, function(msg, MessageSplit, Spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("randomword", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("randomword", 4, function(msg, MessageSplit, Speaker, Self)
 	Notify("And now a word from " ..Speaker.Name.. ".")
 	wait(6)
 	v = math.random(1, #phrase)
 	Notify(phrase[v])
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("smash", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("smash", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do
 		local player = matchPlayer(word)
 		if (player ~= nil) then
@@ -5790,7 +5813,7 @@ _CMDMain.Functions.CreateCommand("smash", 4, function(msg, MessageSplit, Speaker
 						p.Anchored = true 
 						p.Transparency = 1
 						p.CanCollide = false
-						local SpinScript = _CMDMain.Functions.CreateScript([[
+						local SpinScript = _C.Functions.CreateScript([[
 						function onTouched(hit)
 							if hit.Parent:FindFirstChild("Humanoid") ~= nil then
 								hit.Parent:BreakJoints()
@@ -5825,7 +5848,7 @@ _CMDMain.Functions.CreateCommand("smash", 4, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("giantchar", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("giantchar", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then
@@ -5836,7 +5859,7 @@ _CMDMain.Functions.CreateCommand("giantchar", 4, function(msg, MessageSplit, Spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("minichar", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("minichar", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then
@@ -5850,7 +5873,7 @@ end, "None", "None", "None")
 
 
 
-_CMDMain.Functions.CreateCommand("clone", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("clone", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5867,7 +5890,7 @@ _CMDMain.Functions.CreateCommand("clone", 4, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("re", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("re", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5889,7 +5912,7 @@ _CMDMain.Functions.CreateCommand("re", 4, function(msg, MessageSplit, Speaker, S
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("loopkill", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("loopkill", 4, function(msg, MessageSplit, Speaker, Self)
 	local number = msg:match("[%d%.]+")
 	if (number ~= nil) then 
 		for i = 1, number do
@@ -5908,7 +5931,7 @@ end, "None", "None", "None")
 
 
 
-_CMDMain.Functions.CreateCommand("meteorshower", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("meteorshower", 4, function(msg, MessageSplit, Speaker, Self)
 	meteornum = 200
 	time = 5
 	local S = Instance.new("Sound")
@@ -5967,7 +5990,7 @@ _CMDMain.Functions.CreateCommand("meteorshower", 4, function(msg, MessageSplit, 
 	T:Remove()
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("exshank", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("exshank", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5986,7 +6009,7 @@ _CMDMain.Functions.CreateCommand("exshank", 4, function(msg, MessageSplit, Speak
 					m.MeshId = "rbxasset://fonts/sword.mesh"
 					m.Scale = Vector3.new(2,2,2)
 					m.Parent = P
-					local SpinScript = _CMDMain.Functions.CreateScript([[
+					local SpinScript = _C.Functions.CreateScript([[
 					local Sound = Instance.new("Sound")
 					Sound.Pitch = 1.5
 					Sound.Volume = 1
@@ -6001,7 +6024,7 @@ _CMDMain.Functions.CreateCommand("exshank", 4, function(msg, MessageSplit, Speak
 					script:Remove()
 					]],player.Character,false)
 					SpinScript.Name = "PlaySound"
-					local SpinScript = _CMDMain.Functions.CreateScript([[
+					local SpinScript = _C.Functions.CreateScript([[
 					while true do
 						script.Parent.Sword.CFrame = CFrame.new(script.Parent.Head.Position)
 						wait()
@@ -6027,7 +6050,7 @@ _CMDMain.Functions.CreateCommand("exshank", 4, function(msg, MessageSplit, Speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("breakbase", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("breakbase", 4, function(msg, MessageSplit, Speaker, Self)
 	if Workspace:FindFirstChild("ABreakBase") == nil then
 		if Workspace:FindFirstChild("Base") ~= nil then
 			Workspace.Base:Remove()
@@ -6091,7 +6114,7 @@ _CMDMain.Functions.CreateCommand("breakbase", 4, function(msg, MessageSplit, Spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("shank", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("shank", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6110,7 +6133,7 @@ _CMDMain.Functions.CreateCommand("shank", 4, function(msg, MessageSplit, Speaker
 					m.MeshId = "rbxasset://fonts/sword.mesh"
 					m.Scale = Vector3.new(2,2,2)
 					m.Parent = P
-					local SpinScript = _CMDMain.Functions.CreateScript([[
+					local SpinScript = _C.Functions.CreateScript([[
 					while true do
 						script.Parent.Sword.CFrame = CFrame.new(script.Parent.Head.Position)
 						wait()
@@ -6132,7 +6155,7 @@ _CMDMain.Functions.CreateCommand("shank", 4, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("preserve", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("preserve", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6160,7 +6183,7 @@ _CMDMain.Functions.CreateCommand("preserve", 4, function(msg, MessageSplit, Spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("fling", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("fling", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6168,7 +6191,7 @@ _CMDMain.Functions.CreateCommand("fling", 4, function(msg, MessageSplit, Speaker
 				if player.Character:FindFirstChild("Torso") ~= nil then
 					Torso = player.Character.Torso
 					Torso.RotVelocity = Vector3.new(math.random(-500, 500), math.random(500, 600), 0)
-					local SpinScript = _CMDMain.Functions.CreateScript([[
+					local SpinScript = _C.Functions.CreateScript([[
 					wait(.5)
 					-----
 					function onTouched(hit)
@@ -6191,7 +6214,7 @@ _CMDMain.Functions.CreateCommand("fling", 4, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("bubble", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("bubble", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6230,7 +6253,7 @@ end, "None", "None", "None")
 
 --Orb Commands Start (ones with InsertService don't work)
 
-_CMDMain.Functions.CreateCommand("removeallmessages", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("removeallmessages", 4, function(msg, MessageSplit, Speaker, Self)
 	local dbg = game.Workspace:getChildren()
 	for i=1,#dbg do
 		if dbg[i].className == "Hint" or dbg[i].className == "Message" then
@@ -6239,7 +6262,7 @@ _CMDMain.Functions.CreateCommand("removeallmessages", 4, function(msg, MessageSp
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("control", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("control", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6249,7 +6272,7 @@ _CMDMain.Functions.CreateCommand("control", 4, function(msg, MessageSplit, Speak
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("flyup", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("flyup", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6262,7 +6285,7 @@ _CMDMain.Functions.CreateCommand("flyup", 4, function(msg, MessageSplit, Speaker
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("jumpup", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("jumpup", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6273,7 +6296,7 @@ _CMDMain.Functions.CreateCommand("jumpup", 4, function(msg, MessageSplit, Speake
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("launchup", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("launchup", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6286,7 +6309,7 @@ _CMDMain.Functions.CreateCommand("launchup", 4, function(msg, MessageSplit, Spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("punchith", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("punchith", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6299,7 +6322,7 @@ _CMDMain.Functions.CreateCommand("punchith", 4, function(msg, MessageSplit, Spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("skydive", 4, function(msg, MessageSplit, Speaker, Self)
+_C.Functions.CreateCommand("skydive", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6310,7 +6333,7 @@ end, "None", "None", "None")
 
 -- Person299 commands
 
-_CMDMain.Functions.CreateCommand("stripandcolor", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("stripandcolor", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(7, slash-1),speaker)
 	color = msg:sub(slash+1)
 	color = color:upper(color:sub(1,1)) .. color:sub(2)
@@ -6337,7 +6360,7 @@ _CMDMain.Functions.CreateCommand("stripandcolor", 4, function(msg, MessageSplit,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("platformstand", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("platformstand", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(15),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6348,7 +6371,7 @@ _CMDMain.Functions.CreateCommand("platformstand", 4, function(msg, MessageSplit,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unplatformstand", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unplatformstand", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(17),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6359,7 +6382,7 @@ _CMDMain.Functions.CreateCommand("unplatformstand", 4, function(msg, MessageSpli
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("wedge", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("wedge", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 7,100 do
@@ -6392,7 +6415,7 @@ _CMDMain.Functions.CreateCommand("wedge", 4, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("cylinder", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("cylinder", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 10,100 do
@@ -6426,7 +6449,7 @@ _CMDMain.Functions.CreateCommand("cylinder", 4, function(msg, MessageSplit, spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("block", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("block", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 7,100 do
@@ -6460,7 +6483,7 @@ _CMDMain.Functions.CreateCommand("block", 4, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("plate", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("plate", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 7,100 do
@@ -6494,7 +6517,7 @@ _CMDMain.Functions.CreateCommand("plate", 4, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("sphere", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("sphere", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 8,100 do
@@ -6529,7 +6552,7 @@ _CMDMain.Functions.CreateCommand("sphere", 4, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("burn", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("burn", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6548,7 +6571,7 @@ _CMDMain.Functions.CreateCommand("burn", 4, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("retools", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("retools", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6564,7 +6587,7 @@ _CMDMain.Functions.CreateCommand("retools", 4, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("savet", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("savet", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(7),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6579,7 +6602,7 @@ _CMDMain.Functions.CreateCommand("savet", 4, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("getgear", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("getgear", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6592,7 +6615,7 @@ _CMDMain.Functions.CreateCommand("getgear", 4, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("team", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("team", 4, function(msg, MessageSplit, speaker, Self)
 	local slash = msg:sub(6):find(""..key)+5
 	if slash then 
 		local team = upmsg:sub(6,slash-1)
@@ -6607,7 +6630,7 @@ _CMDMain.Functions.CreateCommand("team", 4, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("changeteam", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("changeteam", 4, function(msg, MessageSplit, speaker, Self)
 	local slash = msg:sub(12):find(""..key)+11
 	if slash then 
 		local player = findplayer(msg:sub(12,slash-1),speaker)
@@ -6623,7 +6646,7 @@ _CMDMain.Functions.CreateCommand("changeteam", 4, function(msg, MessageSplit, sp
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("setupteams", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("setupteams", 4, function(msg, MessageSplit, speaker, Self)
 	local Teams = game:GetService("Teams")
 	TeamChild = Teams:GetChildren()
 	if #TeamChild > 0 then
@@ -6640,7 +6663,7 @@ _CMDMain.Functions.CreateCommand("setupteams", 4, function(msg, MessageSplit, sp
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("reteam", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("reteam", 4, function(msg, MessageSplit, speaker, Self)
 	local Teams = game:GetService("Teams")
 	assignTeam = {}
 	local team = findteam(msg:sub(8),speaker)
@@ -6664,7 +6687,7 @@ _CMDMain.Functions.CreateCommand("reteam", 4, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("change", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("change", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 8,100 do
@@ -6707,7 +6730,7 @@ _CMDMain.Functions.CreateCommand("change", 4, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("ungod", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("ungod", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,7),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6744,7 +6767,7 @@ _CMDMain.Functions.CreateCommand("ungod", 4, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("god", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("god", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,5),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6777,7 +6800,7 @@ _CMDMain.Functions.CreateCommand("god", 4, function(msg, MessageSplit, speaker, 
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("sparkles", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("sparkles", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,10),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6793,7 +6816,7 @@ _CMDMain.Functions.CreateCommand("sparkles", 4, function(msg, MessageSplit, spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unsparkles", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unsparkles", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,12),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6812,7 +6835,7 @@ _CMDMain.Functions.CreateCommand("unsparkles", 4, function(msg, MessageSplit, sp
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("heal", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("heal", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6826,7 +6849,7 @@ _CMDMain.Functions.CreateCommand("heal", 4, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("sit", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("sit", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,5),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6840,7 +6863,7 @@ _CMDMain.Functions.CreateCommand("sit", 4, function(msg, MessageSplit, speaker, 
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("jump", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("jump", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6854,7 +6877,7 @@ _CMDMain.Functions.CreateCommand("jump", 4, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("stand", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("stand", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,7),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6869,7 +6892,7 @@ _CMDMain.Functions.CreateCommand("stand", 4, function(msg, MessageSplit, speaker
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("givebtools", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("givebtools", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,12),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6888,13 +6911,13 @@ end, "None", "None", "None")
 
 
 
-_CMDMain.Functions.CreateCommand("time", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("time", 4, function(msg, MessageSplit, speaker, Self)
 	game.Lighting.TimeOfDay = string.sub(msg,6)
 end, "None", "None", "None")
 
 
 
-_CMDMain.Functions.CreateCommand("zombify", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("zombify", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -6981,7 +7004,7 @@ end
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("rocket", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("rocket", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7023,7 +7046,7 @@ _CMDMain.Functions.CreateCommand("rocket", 4, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("ambient", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("ambient", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 9,100 do
@@ -7047,7 +7070,7 @@ _CMDMain.Functions.CreateCommand("ambient", 4, function(msg, MessageSplit, speak
 	game.Lighting.Ambient = Color3.new(-string.sub(msg,9,danumber1 - 1),-string.sub(msg,danumber1 + 1,danumber2 - 1),-string.sub(msg,danumber2 + 1))
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("part", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("part", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 6,100 do
@@ -7080,7 +7103,7 @@ _CMDMain.Functions.CreateCommand("part", 4, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("control", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("control", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		if #player > 1 then
@@ -7094,7 +7117,7 @@ _CMDMain.Functions.CreateCommand("control", 4, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("trip", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("trip", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7108,7 +7131,7 @@ end
 end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("setgrav", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("setgrav", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =9,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -7147,7 +7170,7 @@ _CMDMain.Functions.CreateCommand("setgrav", 4, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("walkspeed", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("walkspeed", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =11,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -7172,7 +7195,7 @@ _CMDMain.Functions.CreateCommand("walkspeed", 4, function(msg, MessageSplit, spe
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("damage", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("damage", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =8,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -7196,7 +7219,7 @@ _CMDMain.Functions.CreateCommand("damage", 4, function(msg, MessageSplit, speake
 		end 
 	end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("health", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("health", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =8,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -7226,7 +7249,7 @@ _CMDMain.Functions.CreateCommand("health", 4, function(msg, MessageSplit, speake
 		end 
 	end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("teleport", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("teleport", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i = 10,100 do
 		if string.sub(msg,i,i) == " " then
@@ -7266,7 +7289,7 @@ _CMDMain.Functions.CreateCommand("teleport", 4, function(msg, MessageSplit, spea
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("merge", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("merge", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =7,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -7297,7 +7320,7 @@ _CMDMain.Functions.CreateCommand("merge", 4, function(msg, MessageSplit, speaker
 		end 
 	end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("clearscripts", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("clearscripts", 4, function(msg, MessageSplit, speaker, Self)
 	local c = game.Workspace:GetChildren()
 	for i =1,#c do
 		if c[i].className == "Script" then
@@ -7316,7 +7339,7 @@ _CMDMain.Functions.CreateCommand("clearscripts", 4, function(msg, MessageSplit, 
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("respawn", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("respawn", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7337,7 +7360,7 @@ _CMDMain.Functions.CreateCommand("respawn", 4, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,11),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7366,7 +7389,7 @@ _CMDMain.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, spe
 									end end end end end end end 
 								end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7402,7 +7425,7 @@ _CMDMain.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("freeze", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("freeze", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7418,7 +7441,7 @@ _CMDMain.Functions.CreateCommand("freeze", 4, function(msg, MessageSplit, speake
 					end end end end end 
 				end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("thaw", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("thaw", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7435,7 +7458,7 @@ _CMDMain.Functions.CreateCommand("thaw", 4, function(msg, MessageSplit, speaker,
 					end end end end end 
 				end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("nograv", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("nograv", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7458,7 +7481,7 @@ _CMDMain.Functions.CreateCommand("nograv", 4, function(msg, MessageSplit, speake
 						end end end end end end 
 					end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("antigrav", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("antigrav", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,10),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7481,7 +7504,7 @@ _CMDMain.Functions.CreateCommand("antigrav", 4, function(msg, MessageSplit, spea
 						end end end end end end 
 					end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("highgrav", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("highgrav", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,10),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7504,7 +7527,7 @@ _CMDMain.Functions.CreateCommand("highgrav", 4, function(msg, MessageSplit, spea
 						end end end end end end 
 					end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("grav", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("grav", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7517,7 +7540,7 @@ _CMDMain.Functions.CreateCommand("grav", 4, function(msg, MessageSplit, speaker,
 					end end end end end 
 				end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unlock", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unlock", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7529,7 +7552,7 @@ _CMDMain.Functions.CreateCommand("unlock", 4, function(msg, MessageSplit, speake
 					end end end end end 
 				end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("lock", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("lock", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -7545,17 +7568,17 @@ _CMDMain.Functions.CreateCommand("lock", 4, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("time", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("time", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 6 then
 		game.Lighting.TimeOfDay = string.sub(msg,6)
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("resetmp", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("resetmp", 4, function(msg, MessageSplit, speaker, Self)
 	game.Players.MaxPlayers = MaxPlayers
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("color", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("color", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 7 then
 		Add = nil
 		for i=7,10000 do
@@ -7581,7 +7604,7 @@ _CMDMain.Functions.CreateCommand("color", 4, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("rcolor", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("rcolor", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		Plr = findplr(string.sub(msg,8),player)
 		if Plr ~= 0 then
@@ -7596,7 +7619,7 @@ _CMDMain.Functions.CreateCommand("rcolor", 4, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("launch", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("launch", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		plr = findplr(string.sub(msg,8),player)
 		if plr ~= 0 then
@@ -7635,7 +7658,7 @@ _CMDMain.Functions.CreateCommand("launch", 4, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("flip", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("flip", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 6 then
 		plr = findplr(string.sub(msg,6),player)
 		if plr ~= 0 then
@@ -7647,7 +7670,7 @@ _CMDMain.Functions.CreateCommand("flip", 4, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("bighead", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("bighead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -7658,7 +7681,7 @@ _CMDMain.Functions.CreateCommand("bighead", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("smallhead", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("smallhead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 11 then
 		stop = findplr(string.sub(msg,11),player)
 		if stop ~= 0 then
@@ -7669,7 +7692,7 @@ _CMDMain.Functions.CreateCommand("smallhead", 4, function(msg, MessageSplit, spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("normhead", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("normhead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 10 then
 		stop = findplr(string.sub(msg,10),player)
 		if stop ~= 0 then
@@ -7680,7 +7703,7 @@ _CMDMain.Functions.CreateCommand("normhead", 4, function(msg, MessageSplit, spea
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("sethead", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("sethead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		Add = nil
 		Num = nil
@@ -7706,7 +7729,7 @@ _CMDMain.Functions.CreateCommand("sethead", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("hide", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("hide", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 6 then
 		stop = findplr(string.sub(msg,6))
 		if stop ~= 0 then
@@ -7725,7 +7748,7 @@ _CMDMain.Functions.CreateCommand("hide", 4, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unhide", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unhide", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		stop = findplr(string.sub(msg,8))
 		if stop ~= 0 then
@@ -7739,7 +7762,7 @@ _CMDMain.Functions.CreateCommand("unhide", 4, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unsmoke", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unsmoke", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -7753,7 +7776,7 @@ _CMDMain.Functions.CreateCommand("unsmoke", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("smoke", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("smoke", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -7772,7 +7795,7 @@ _CMDMain.Functions.CreateCommand("smoke", 4, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("shadcol", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("shadcol", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		I = nil
 		C = nil
@@ -7796,7 +7819,7 @@ _CMDMain.Functions.CreateCommand("shadcol", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("awardbadge", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("awardbadge", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 3 then
 		I = nil
 		for i=3,9999 do
@@ -7819,7 +7842,7 @@ _CMDMain.Functions.CreateCommand("awardbadge", 4, function(msg, MessageSplit, sp
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("amb", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("amb", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 5 then
 		I = nil
 		C = nil
@@ -7843,14 +7866,14 @@ _CMDMain.Functions.CreateCommand("amb", 4, function(msg, MessageSplit, speaker, 
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("brightness", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("brightness", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 12 then
 		print(string.sub(msg,12))
 		game.Lighting.Brightness = tonumber(string.sub(msg,12))
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("gettool", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("gettool", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		Plr = nil
 		Tool = nil
@@ -7878,7 +7901,7 @@ _CMDMain.Functions.CreateCommand("gettool", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("give", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("give", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		AAA = nil
 		for sa=6,1000 do
@@ -7907,7 +7930,7 @@ _CMDMain.Functions.CreateCommand("give", 4, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("ice", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("ice", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=5 then
 		stop = findplr(string.sub(msg,5),player)
 		if stop ~= 0 then
@@ -7923,7 +7946,7 @@ _CMDMain.Functions.CreateCommand("ice", 4, function(msg, MessageSplit, speaker, 
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("grass", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("grass", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -7939,7 +7962,7 @@ _CMDMain.Functions.CreateCommand("grass", 4, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("foil", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("foil", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~= 0 then
@@ -7955,7 +7978,7 @@ _CMDMain.Functions.CreateCommand("foil", 4, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("corrmetal", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("corrmetal", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=11 then
 		stop = findplr(string.sub(msg,11),player)
 		if stop ~= 0 then
@@ -7971,7 +7994,7 @@ _CMDMain.Functions.CreateCommand("corrmetal", 4, function(msg, MessageSplit, spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("slate", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("slate", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -7987,7 +8010,7 @@ _CMDMain.Functions.CreateCommand("slate", 4, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("concrete", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("concrete", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=10 then
 		stop = findplr(string.sub(msg,10),player)
 		if stop ~= 0 then
@@ -8003,7 +8026,7 @@ _CMDMain.Functions.CreateCommand("concrete", 4, function(msg, MessageSplit, spea
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("dimpl", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("dimpl", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -8019,7 +8042,7 @@ _CMDMain.Functions.CreateCommand("dimpl", 4, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("plastic", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("plastic", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -8035,7 +8058,7 @@ _CMDMain.Functions.CreateCommand("plastic", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("wood", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("wood", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~= 0 then
@@ -8051,7 +8074,7 @@ _CMDMain.Functions.CreateCommand("wood", 4, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("stealh", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("stealh", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -8073,7 +8096,7 @@ _CMDMain.Functions.CreateCommand("stealh", 4, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("cloneh", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("cloneh", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -8095,7 +8118,7 @@ _CMDMain.Functions.CreateCommand("cloneh", 4, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~= 0 then
@@ -8114,7 +8137,7 @@ _CMDMain.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unspin", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unspin", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -8129,7 +8152,7 @@ _CMDMain.Functions.CreateCommand("unspin", 4, function(msg, MessageSplit, speake
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=11 then
 		stop = findplr(string.sub(msg,11),player)
 		if stop ~= 0 then
@@ -8150,7 +8173,7 @@ _CMDMain.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, spe
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -8171,7 +8194,7 @@ _CMDMain.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("trans", 5, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("trans", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		Add = nil
 		for i=7,1000 do
@@ -8200,7 +8223,7 @@ _CMDMain.Functions.CreateCommand("trans", 5, function(msg, MessageSplit, speaker
 end, "None", "None", "None")
 
 
-_CMDMain.Functions.CreateCommand("ws", 5, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("ws", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=4 then
 		Add = nil
 		for i=4,1000 do
@@ -8220,7 +8243,7 @@ _CMDMain.Functions.CreateCommand("ws", 5, function(msg, MessageSplit, speaker, S
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("hang", 5, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("hang", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~=0 then
@@ -8246,7 +8269,7 @@ _CMDMain.Functions.CreateCommand("hang", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("unhang", 5, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("unhang", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop=findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -8281,7 +8304,7 @@ _CMDMain.Functions.CreateCommand("unhang", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-_CMDMain.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speaker, Self)
+_C.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -8305,26 +8328,14 @@ end, "None", "None", "None")
 
 --uyjulian's custom commands
 
-_CMDMain.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg) >= 8 then
-		stop = findplr(string.sub(msg,8),player)
-		if stop ~= 0 then
-			for x=1,#stop do
-				bp = stop[x].Character
-				if bp then
-					Fire = Instance.new("Smoke",bp.Torso)
-					Fire.Size = 10
-					Fire.Opacity = 0.5
-					Fire.Color=Color3.new(0,1,0)
-					repeat
-						wait(0.2)
-						bp.Humanoid:TakeDamage(2)
-					until bp.Humanoid.Health <= 0
-					Fire:remove()
-				end
-			end
-		end
-	end
+_C.Functions.CreateCommand("askplayeritem", 5, function(msg, MessageSplit, speaker, Self)
+	local player = findplayer(MessageSplit[1],speaker)
+	local numb = tonumber(MessageSplit[2])
+	if player ~= 0 then
+		for i = 1,#player do
+			game:GetService("MarketplaceService"):PromptPurchase(player[i],numb)
+		end 
+	end 
 end, "None", "None", "None")
 
-_CMDMain.Functions.RunAtBottomOfScript() -- DO NOT DELETE!
+_C.Functions.RunAtBottomOfScript() -- DO NOT DELETE!
