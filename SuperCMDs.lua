@@ -1,6 +1,4 @@
 -- WARNING: There is over 10000 lines in this script! 
--- Thanks to creator of CoolCMDs.
--- Upgrade CoolCMDS base to v4 R17 RC coming soon?
 -- Created by uyjulian (goo (dot) gl/w8F9w)
 -- TODO: add Kohl's commands
 Admins = {"noobv11","noobv14","Player", "Player1"} --Put Admins name here
@@ -21,90 +19,55 @@ AutAdm = {"Player1, Admin", "uyjulian, Owner", "Player, Admin"} -- AutoAdmin plu
 -- DO NOT TOUCH THE BELOW! (main script) ---------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CoolCMDs = {}
-CoolCMDs.Data = {}
-CoolCMDs.Players = {}
-CoolCMDs.CommandHandles = {}
-CoolCMDs.GroupHandles = {}
-CoolCMDs.Functions = {}
-CoolCMDs.Modules = {}
-CoolCMDs.Orignals = {}
+_CMDMain = {}
+_CMDMain.Data = {}
+_CMDMain.Players = {}
+_CMDMain.CommandHandles = {}
+_CMDMain.GroupHandles = {}
+_CMDMain.Functions = {}
+_CMDMain.Modules = {}
+_CMDMain.Orignals = {}
 
-CoolCMDs.Orignals.Script = script
-CoolCMDs.FindNetwork = game:FindFirstChild("NetworkServer") --this will break if you put :GetService() !
+_CMDMain.Orignals.Script = script
+_CMDMain.FindNetwork = game:FindFirstChild("NetworkServer") --this will break if you put :GetService() !
+_CMDMain.IsNotABaseScript = function() return pcall(function() Instance.new("Script").Source = "Test" end) end
 
-CoolCMDs.Initialization = {10}
-CoolCMDs.Initialization.StartTime = game:service("Workspace").DistributedGameTime
-CoolCMDs.Initialization.FinishTime = -1
-CoolCMDs.Initialization.ElapsedTime = -1
-CoolCMDs.Initialization.InstanceNumber = 0
+_CMDMain.Initialization = {10}
+_CMDMain.Initialization.StartTime = tick()
+_CMDMain.Initialization.FinishTime = -1
+_CMDMain.Initialization.ElapsedTime = -1
+_CMDMain.Initialization.InstanceNumber = 0
 
 -- Anti-deletion
-if CoolCMDs.Orignals.Script ~= nil then
-	if CoolCMDs.FindNetwork ~= nil then
-		CoolCMDs.Orignals.Script.Parent = nil
+if _CMDMain.Orignals.Script ~= nil then
+	if _CMDMain.FindNetwork ~= nil then
+		_CMDMain.Orignals.Script.Parent = nil
 	end
 end
 
-if _G.CoolCMDs == nil or type(_G.CoolCMDs) ~= "table" then _G.CoolCMDs = {} end
-table.insert(_G.CoolCMDs, {})
-for i = 1, #_G.CoolCMDs do CoolCMDs.Initialization.InstanceNumber = CoolCMDs.Initialization.InstanceNumber + 1 end
-if CoolCMDs.Initialization.InstanceNumber == 0 then CoolCMDs.Initialization.InstanceNumber = 1 end
+if _G.SuperCMDs == nil or type(_G.SuperCMDs) ~= "table" then _G.SuperCMDs = {} end
+table.insert(_G.SuperCMDs, {})
+for i = 1, #_G.SuperCMDs do _CMDMain.Initialization.InstanceNumber = _CMDMain.Initialization.InstanceNumber + 1 end
+if _CMDMain.Initialization.InstanceNumber == 0 then _CMDMain.Initialization.InstanceNumber = 1 end
 
-_G.CoolCMDs[CoolCMDs.Initialization.InstanceNumber].GetInstance = function(_, Code)
-	if Code == CoolCMDs.Data.AccessCode then
-		if CoolCMDs.Orignals.Script ~= nil then
-			return script, script.Parent
-		else
-			error("Access denied to CoolCMDs " ..CoolCMDs.Data.Version.. ", instance " ..CoolCMDs.Initialization.InstanceNumber.. ". This script is not a BaseScript.")
-		end
-	else
-		error("Access denied to CoolCMDs " ..CoolCMDs.Data.Version.. ", instance " ..CoolCMDs.Initialization.InstanceNumber.. ". Incorrect access code \"" ..(Code == nil and "nil" or tostring(Code)).. "\".")
-	end
+_G.SuperCMDs[_CMDMain.Initialization.InstanceNumber].GetInstance = function(_, Code)
+	error("Access denied to SuperCMDs " .._CMDMain.Data.Version.. ", instance " .._CMDMain.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
 end
 
-_G.CoolCMDs[CoolCMDs.Initialization.InstanceNumber].GetTable = function(_, Code)
-	if Code == CoolCMDs.Data.AccessCode then
-		return CoolCMDs
-	else
-		error("Access denied to CoolCMDs " ..CoolCMDs.Data.Version.. ", instance " ..CoolCMDs.Initialization.InstanceNumber.. ". Incorrect access code \"" ..(Code == nil and "nil" or tostring(Code)).. "\".")
-	end
+_G.SuperCMDs[_CMDMain.Initialization.InstanceNumber].GetTable = function(_, Code)
+	error("Access denied to SuperCMDs " .._CMDMain.Data.Version.. ", instance " .._CMDMain.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
 end
 
-_G.CoolCMDs[CoolCMDs.Initialization.InstanceNumber].Remove = function(_, Code)
-	if Code == CoolCMDs.Data.AccessCode then
-		CoolCMDs.Functions.LoadModule(false, nil, true)
-		_G.CoolCMDs[CoolCMDs.Initialization.InstanceNumber] = nil
-		CoolCMDs = nil
-		local Message = Instance.new("Hint", game:service("Workspace"))
-		Message.Text = "... successfully unloaded."
-		wait(5)
-		Message.Parent = game:service("Workspace")
-		Message.Text = "Removing script..."
-		wait(1)
-		Message:Remove()
-		script.Parent = script.Parent
-		for i = 1, 10 do if script ~= nil then script:Remove() end end
-		if script.Parent ~= nil then
-			local Message = Instance.new("Hint", game:service("Workspace"))
-			Message.Text = "Error: Script was not removed!"
-			wait(5)
-			Message:Remove()
-		end
-		return true, script
-	else
-		CoolCMDs.Functions.CreateMessage("Hint", "Warning: Failed removal of CoolCMDs " ..CoolCMDs.Data.Version.. ", instance " ..CoolCMDs.Initialization.InstanceNumber.. ".", 5)
-		wait(5)
-		CoolCMDs.Functions.CreateMessage("Hint", "Reason: Incorrect access code \"" ..(Code == nil and "nil" or Code).. "\".", 5)
-		return false, Code
-	end
+_G.SuperCMDs[_CMDMain.Initialization.InstanceNumber].Remove = function(_, Code)
+	error("Access denied to SuperCMDs " .._CMDMain.Data.Version.. ", instance " .._CMDMain.Initialization.InstanceNumber.. ". Sorry, function is decrepetated.")
 end
 
-CoolCMDs.Data.SplitCharacter = KeyFor
-CoolCMDs.Data.AccessCode = "7gbaswaswasoi3"
-CoolCMDs.Data.Version = "5.0.0"
 
-CoolCMDs.Functions.CreateMessage = function(Format, MessageText, ShowTime, MessageParent)
+_CMDMain.Data.SplitCharacter = KeyFor
+_CMDMain.Data.AccessCode = "7gbaswaswasoi3"
+_CMDMain.Data.Version = "5.0.0"
+
+_CMDMain.Functions.CreateMessage = function(Format, MessageText, ShowTime, MessageParent)
 	if Format == "Default" or Format == nil then Format = "Message" end
 	if MessageText == nil then MessageText = "" end
 	if MessageParent == nil then MessageParent = game:service("Workspace") end
@@ -124,48 +87,48 @@ CoolCMDs.Functions.CreateMessage = function(Format, MessageText, ShowTime, Messa
 	return Message
 end
 
-CoolCMDs.Functions.CreatePlayerTable = function(Player, PlayerGroup)
+_CMDMain.Functions.CreatePlayerTable = function(Player, PlayerGroup)
 	if Player == nil then return false end
 	if not Player:IsA("Player") then return false end
-	Player.Chatted:connect(function(Message) CoolCMDs.Functions.CatchMessage(Message, Player) end)
-	table.insert(CoolCMDs.Players, {Name = Player.Name, Group = PlayerGroup ~= nil and PlayerGroup or CoolCMDs.Functions.GetLowestGroup().Name})
+	Player.Chatted:connect(function(Message) _CMDMain.Functions.CatchMessage(Message, Player) end)
+	table.insert(_CMDMain.Players, {Name = Player.Name, Group = PlayerGroup ~= nil and PlayerGroup or _CMDMain.Functions.GetLowestGroup().Name})
 end
 
-CoolCMDs.Functions.RemovePlayerTable = function(Player)
+_CMDMain.Functions.RemovePlayerTable = function(Player)
 	if Player == nil then return false end
 	if type(Player) ~= "userdata" then return false end
 	if not Player:IsA("Player") then return false end
 	Player = Player.Name
-	for i = 1, #CoolCMDs.Players do
-		if CoolCMDs.Players[i].Name == Player then
-			table.remove(CoolCMDs.Players, i)
+	for i = 1, #_CMDMain.Players do
+		if _CMDMain.Players[i].Name == Player then
+			table.remove(_CMDMain.Players, i)
 		end
 	end
 end
 
-CoolCMDs.Functions.CreateGroup = function(GroupName, GroupControl, GroupFullName, GroupHelp)
+_CMDMain.Functions.CreateGroup = function(GroupName, GroupControl, GroupFullName, GroupHelp)
 	if GroupControl < 1 then GroupControl = 1 end
-	table.insert(CoolCMDs.GroupHandles, {Name = GroupName, Control = GroupControl, FullName = GroupFullName, Help = GroupHelp})
+	table.insert(_CMDMain.GroupHandles, {Name = GroupName, Control = GroupControl, FullName = GroupFullName, Help = GroupHelp})
 	return true
 end
 
-CoolCMDs.Functions.CreateCommand = function(CommandText, CommandControl, CommandFunction, CommandFullName, CommandHelp, CommandHelpArgs)
+_CMDMain.Functions.CreateCommand = function(CommandText, CommandControl, CommandFunction, CommandFullName, CommandHelp, CommandHelpArgs)
 	if CommandControl < 1 then CommandControl = 1 end
-	table.insert(CoolCMDs.CommandHandles, {Command = CommandText, Control = CommandControl, Trigger = CommandFunction, FullName = CommandFullName, Help = CommandHelp, HelpArgs = CommandHelpArgs, Enabled = false})
+	table.insert(_CMDMain.CommandHandles, {Command = CommandText, Control = CommandControl, Trigger = CommandFunction, FullName = CommandFullName, Help = CommandHelp, HelpArgs = CommandHelpArgs, Enabled = false})
 	return true
 end
 
-CoolCMDs.Functions.RemoveCommand = function(Command)
-	for i = 1, #CoolCMDs.CommandHandles do
-		if type(CoolCMDs.CommandHandles[i].Command) == "string" then
-			if CoolCMDs.CommandHandles[i].Command == Command then
-				table.remove(CoolCMDs.CommandHandles, i)
+_CMDMain.Functions.RemoveCommand = function(Command)
+	for i = 1, #_CMDMain.CommandHandles do
+		if type(_CMDMain.CommandHandles[i].Command) == "string" then
+			if _CMDMain.CommandHandles[i].Command == Command then
+				table.remove(_CMDMain.CommandHandles, i)
 				return true
 			end
-		elseif type(CoolCMDs.CommandHandles[i].Command) == "table" then
-			for x = 1, #CoolCMDs.CommandHandles[i].Command do
-				if CoolCMDs.CommandHandles[i].Command[x] == Command then
-					table.remove(CoolCMDs.CommandHandles, i)
+		elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
+			for x = 1, #_CMDMain.CommandHandles[i].Command do
+				if _CMDMain.CommandHandles[i].Command[x] == Command then
+					table.remove(_CMDMain.CommandHandles, i)
 					return true
 				end
 			end
@@ -174,63 +137,62 @@ CoolCMDs.Functions.RemoveCommand = function(Command)
 	return false
 end
 
-CoolCMDs.Functions.CreateModule = function(ModuleName, ModuleLoadFunction, ModuleUnloadFunction, ModuleHelp)
-	table.insert(CoolCMDs.Modules, {Name = ModuleName, Load = ModuleLoadFunction, Unload = ModuleUnloadFunction == nil and function() return true end or ModuleUnloadFunction, Help = ModuleHelp, Enabled = false})
+_CMDMain.Functions.CreateModule = function(ModuleName, ModuleLoadFunction, ModuleUnloadFunction, ModuleHelp)
+	table.insert(_CMDMain.Modules, {Name = ModuleName, Load = ModuleLoadFunction, Unload = ModuleUnloadFunction == nil and function() return true end or ModuleUnloadFunction, Help = ModuleHelp, Enabled = false})
 	return true
 end
 
-CoolCMDs.Functions.PrintInLog = function(ToPrintInLog) 
+_CMDMain.Functions.PrintInLog = function(ToPrintInLog) 
 	print("[SuperCMDs] " .. ToPrintInLog)
 end
 
-CoolCMDs.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
+_CMDMain.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
 	if ModuleName == nil then ModuleName = "" end
 	local Unloaded = 0
 	local Loaded = 0
 	local LoadFailed1 = 0
 	local LoadFailed2 = nil
-	local StartTime = game:service("Workspace").DistributedGameTime
-	for i = 1, #CoolCMDs.Modules do
-		if string.match(CoolCMDs.Modules[i].Name, ModuleName) then
-			local StatusMessage = CoolCMDs.Functions.CreateMessage("Hint")
-			local StatusMessagePrefix = "[Module: " ..CoolCMDs.Modules[i].Name.. "] "
+	local StartTime = tick()
+	for i = 1, #_CMDMain.Modules do
+		if string.match(_CMDMain.Modules[i].Name, ModuleName) then
+			local StatusMessage = _CMDMain.Functions.CreateMessage("Hint")
+			local StatusMessagePrefix = "[Module: " .._CMDMain.Modules[i].Name.. "] "
 			StatusMessage.Changed:connect(function(Property)
 				if Property == "Text" then
 					if string.sub(StatusMessage.Text, 0, string.len(StatusMessagePrefix)) == StatusMessagePrefix then return false end
 					StatusMessage.Text = StatusMessagePrefix .. StatusMessage.Text
 				end
-				CoolCMDs.Functions.PrintInLog(StatusMessage.Text)
+				_CMDMain.Functions.PrintInLog(StatusMessage.Text)
 			end)
 			if ShowMessage == false then StatusMessage.Parent = nil end
 			StatusMessage.Text = "Waiting for module to be unloaded..."
-			while CoolCMDs.Modules[i].Load == nil do wait() end
+			while _CMDMain.Modules[i].Load == nil do wait() end
 			StatusMessage.Text = "Unloading module (1/3)..."
+			_CMDMain.Modules[i].Unload(_CMDMain.Modules[i], StatusMessage)
 			wait()
-			CoolCMDs.Modules[i].Unload(CoolCMDs.Modules[i], StatusMessage)
 			StatusMessage.Text = "Unloading module (2/3)..."
-			wait()
-			local TemporaryModule = CoolCMDs.Modules[i].Load
-			CoolCMDs.Modules[i].Load = nil
+			local TemporaryModule = _CMDMain.Modules[i].Load
+			_CMDMain.Modules[i].Load = nil
 			wait()
 			StatusMessage.Text = "Unloading module (3/3)..."
-			wait()
-			CoolCMDs.Modules[i].Load = TemporaryModule
-			CoolCMDs.Modules[i].Enabled = false
+			_CMDMain.Modules[i].Load = TemporaryModule
+			_CMDMain.Modules[i].Enabled = false
 			Unloaded = Unloaded + 1
+			wait()
 			if RestartModule == true then
 				StatusMessage.Text = "Loading module..."
 				wait()
-				CoolCMDs.Modules[i].Enabled = true
-				local LoadCompleted = CoolCMDs.Modules[i].Load(CoolCMDs.Modules[i], StatusMessage)
+				_CMDMain.Modules[i].Enabled = true
+				local LoadCompleted = _CMDMain.Modules[i].Load(_CMDMain.Modules[i], StatusMessage)
 				if LoadCompleted ~= true then
 					StatusMessage.Text = "Module failed to load successfully. Unloading..."
 					wait()
-					CoolCMDs.Functions.LoadModule(false, CoolCMDs.Modules[i].Name, false)
-					CoolCMDs.Modules[i].Enabled = false
+					_CMDMain.Functions.LoadModule(false, _CMDMain.Modules[i].Name, false)
+					_CMDMain.Modules[i].Enabled = false
 					StatusMessage.Text = "Module unloaded."
-					wait(0.1)
+					wait()
 					LoadFailed1 = LoadFailed1 + 1
-					LoadFailed2 = LoadFailed2 == nil and CoolCMDs.Modules[i].Name or LoadFailed2.. ", " ..CoolCMDs.Modules[i].Name
+					LoadFailed2 = LoadFailed2 == nil and _CMDMain.Modules[i].Name or LoadFailed2.. ", " .._CMDMain.Modules[i].Name
 					LoadFailed2 = LoadFailed2.. " (" ..tostring(LoadCompleted).. ")"
 				else
 					Loaded = Loaded + 1
@@ -239,10 +201,10 @@ CoolCMDs.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
 			StatusMessage:Remove()
 		end
 	end
-	local FinishTime = game:service("Workspace").DistributedGameTime
+	local FinishTime = tick()
 	local ElapsedTime = FinishTime - StartTime
 	if ShowMessage == true then
-		local StatusMessage = CoolCMDs.Functions.CreateMessage("Hint")
+		local StatusMessage = _CMDMain.Functions.CreateMessage("Hint")
 		StatusMessage.Text = "Module(s) unloaded: " ..Unloaded.. ". Module(s) loaded: " ..Loaded.. ". Module(s) failed: " ..LoadFailed1.. ". Elapsed time: " ..ElapsedTime.. " seconds."
 		wait()
 		if LoadFailed1 > 0 and LoadFailed2 ~= nil then
@@ -254,109 +216,116 @@ CoolCMDs.Functions.LoadModule = function(RestartModule, ModuleName, ShowMessage)
 	return Unloaded, Loaded, StartTime, FinishTime, ElapsedTime
 end
 
-CoolCMDs.Functions.GetCommand = function(Command, Format)
+_CMDMain.Functions.GetCommand = function(Command, Format)
 	if Format == nil or Format == "ByCommand" then
-		for i = 1, #CoolCMDs.CommandHandles do
-			if type(CoolCMDs.CommandHandles[i].Command) == "string" then
-				if CoolCMDs.CommandHandles[i].Command == Command then
-					return CoolCMDs.CommandHandles[i]
+		for i = 1, #_CMDMain.CommandHandles do
+			if type(_CMDMain.CommandHandles[i].Command) == "string" then
+				if _CMDMain.CommandHandles[i].Command == Command then
+					return _CMDMain.CommandHandles[i]
 				end
-			elseif type(CoolCMDs.CommandHandles[i].Command) == "table" then
-				for x = 1, #CoolCMDs.CommandHandles[i].Command do
-					if CoolCMDs.CommandHandles[i].Command[x] == Command then
-						return CoolCMDs.CommandHandles[i]
+			elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
+				for x = 1, #_CMDMain.CommandHandles[i].Command do
+					if _CMDMain.CommandHandles[i].Command[x] == Command then
+						return _CMDMain.CommandHandles[i]
 					end
 				end
 			end
 		end
 	elseif Format == "ByFullName" then
-		for i = 1, #CoolCMDs.CommandHandles do
-			if CoolCMDs.CommandHandles[i].FullName == Command then
-				return CoolCMDs.CommandHandles[i]
+		for i = 1, #_CMDMain.CommandHandles do
+			if _CMDMain.CommandHandles[i].FullName == Command then
+				return _CMDMain.CommandHandles[i]
 			end
 		end
 	elseif Format == "ByControl" then
-		for i = 1, #CoolCMDs.CommandHandles do
-			if CoolCMDs.CommandHandles[i].Control == Command then
-				return CoolCMDs.CommandHandles[i]
+		for i = 1, #_CMDMain.CommandHandles do
+			if _CMDMain.CommandHandles[i].Control == Command then
+				return _CMDMain.CommandHandles[i]
 			end
 		end
 	end
 	return nil
 end
 
-CoolCMDs.Functions.GetGroup = function(Group, Format)
+_CMDMain.Functions.GetGroup = function(Group, Format)
 	if Format == nil or Format == "ByName" then
-		for i = 1, #CoolCMDs.GroupHandles do
-			if CoolCMDs.GroupHandles[i].Name == Group then
-				return CoolCMDs.GroupHandles[i]
+		for i = 1, #_CMDMain.GroupHandles do
+			if _CMDMain.GroupHandles[i].Name == Group then
+				return _CMDMain.GroupHandles[i]
 			end
 		end
 	elseif Format == "ByFullName" then
-		for i = 1, #CoolCMDs.GroupHandles do
-			if CoolCMDs.GroupHandles[i].FullName == Group then
-				return CoolCMDs.GroupHandles[i]
+		for i = 1, #_CMDMain.GroupHandles do
+			if _CMDMain.GroupHandles[i].FullName == Group then
+				return _CMDMain.GroupHandles[i]
 			end
 		end
 	elseif Format == "ByControl" then
-		for i = 1, #CoolCMDs.GroupHandles do
-			if CoolCMDs.GroupHandles[i].Control == Group then
-				return CoolCMDs.GroupHandles[i]
+		for i = 1, #_CMDMain.GroupHandles do
+			if _CMDMain.GroupHandles[i].Control == Group then
+				return _CMDMain.GroupHandles[i]
 			end
 		end
 	end
 	return nil
 end
 
-CoolCMDs.Functions.GetLowestGroup = function()
+_CMDMain.Functions.GetLowestGroup = function()
 	local Max = math.huge
-	for i = 1, #CoolCMDs.GroupHandles do
-		if CoolCMDs.GroupHandles[i].Control < Max then
-			Max = CoolCMDs.GroupHandles[i].Control
+	for i = 1, #_CMDMain.GroupHandles do
+		if _CMDMain.GroupHandles[i].Control < Max then
+			Max = _CMDMain.GroupHandles[i].Control
 		end
 	end
-	return CoolCMDs.Functions.GetGroup(Max, "ByControl")
+	return _CMDMain.Functions.GetGroup(Max, "ByControl")
 end
 
-CoolCMDs.Functions.GetHighestGroup = function()
+_CMDMain.Functions.GetHighestGroup = function()
 	local Max = -math.huge
-	for i = 1, #CoolCMDs.GroupHandles do
-		if CoolCMDs.GroupHandles[i].Control > Max then
-			Max = CoolCMDs.GroupHandles[i].Control
+	for i = 1, #_CMDMain.GroupHandles do
+		if _CMDMain.GroupHandles[i].Control > Max then
+			Max = _CMDMain.GroupHandles[i].Control
 		end
 	end
-	return CoolCMDs.Functions.GetGroup(Max, "ByControl")
+	return _CMDMain.Functions.GetGroup(Max, "ByControl")
 end
 
-CoolCMDs.Functions.GetModule = function(ModuleName)
-	for i = 1, #CoolCMDs.Modules do
-		if CoolCMDs.Modules[i].Name == ModuleName then
-			return CoolCMDs.Modules[i]
-		end
-	end
-	return nil
-end
-
-CoolCMDs.Functions.IsModuleEnabled = function(ModuleName)
-	for i = 1, #CoolCMDs.Modules do
-		if CoolCMDs.Modules[i].Name == ModuleName then
-			return CoolCMDs.Modules[i].Enabled
+_CMDMain.Functions.GetModule = function(ModuleName)
+	for i = 1, #_CMDMain.Modules do
+		if _CMDMain.Modules[i].Name == ModuleName then
+			return _CMDMain.Modules[i]
 		end
 	end
 	return nil
 end
 
-CoolCMDs.Functions.GetPlayerTable = function(Player)
-	for i = 1, #CoolCMDs.Players do
-		if CoolCMDs.Players[i].Name == Player then
-			return CoolCMDs.Players[i]
+_CMDMain.Functions.IsModuleEnabled = function(ModuleName)
+	for i = 1, #_CMDMain.Modules do
+		if _CMDMain.Modules[i].Name == ModuleName then
+			return _CMDMain.Modules[i].Enabled
+		end
+	end
+	return nil
+end
+
+_CMDMain.Functions.GetPlayerTable = function(Player)
+	for i = 1, #_CMDMain.Players do
+		if _CMDMain.Players[i].Name == Player then
+			return _CMDMain.Players[i]
 		end
 	end
 end
 
 do
-	local Base = script.source:Clone()
-	CoolCMDs.Functions.CreateScript = function(Source, Parent, DebugEnabled)
+	local Base = nil
+	if _CMDMain.IsNotABaseScript == true then
+		Base = Instance.new("Script")
+		Base.Source = "loadstring(script.Context.Value)() -- Created by uyjulian, goo (dot) gl/w8F9w"
+		Base.Disabled = true
+	else
+		Base = script.source:Clone()
+	end
+	_CMDMain.Functions.CreateScript = function(Source, Parent, DebugEnabled)
 		local NewScript = Base:Clone()
 		NewScript.Disabled = false
 		NewScript.Name = "QuickScript (" ..game:service("Workspace").DistributedGameTime.. ")"
@@ -375,8 +344,15 @@ do
 end
 
 do
-	local LocalBase = script.lsource:Clone()
-	CoolCMDs.Functions.CreateLocalScript = function(Source,Parent,DebugEnabled)
+	local LocalBase = nil
+	if _CMDMain.IsNotABaseScript == true then
+		LocalBase = Instance.new("LocalScript")
+		LocalBase.Source = "loadstring(script.Context.Value)() -- Created by uyjulian, goo (dot) gl/w8F9w"
+		LocalBase.Disabled = true
+	else
+		LocalBase = script.lsource:Clone()
+	end
+	_CMDMain.Functions.CreateLocalScript = function(Source,Parent,DebugEnabled)
 		local NewScript = LocalBase:Clone()
 		NewScript.Disabled = false
 		NewScript.Name = "QuickScript (" ..game:service("Workspace").DistributedGameTime.. ")"
@@ -394,7 +370,7 @@ do
 	end
 end
 
-CoolCMDs.Functions.Explode = function(Divider, Text)
+_CMDMain.Functions.Explode = function(Divider, Text)
 	if Text == "" or Text == nil or type(Text) ~= "string" then return {} end
 	if Divider == "" or Divider == nil or type(Divider) ~= "string" then return {Text} end
 	local Position, Words = 0, {}
@@ -406,7 +382,7 @@ CoolCMDs.Functions.Explode = function(Divider, Text)
 	return Words
 end
 
-CoolCMDs.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Children)
+_CMDMain.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Children)
 	if Source == nil then
 		Source = game
 	end
@@ -432,15 +408,15 @@ CoolCMDs.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Chi
 			end)() then
 			table.insert(Children, Child)
 		end
-		CoolCMDs.Functions.GetRecursiveChildren(Child, Name, SearchType, Children)
+		_CMDMain.Functions.GetRecursiveChildren(Child, Name, SearchType, Children)
 	end)
 	end
 	return Children
 end
 
-CoolCMDs.Functions.CatchMessage = function(Message, Speaker)
+_CMDMain.Functions.CatchMessage = function(Message, Speaker)
 	if Message == nil or Speaker == nil then return end
-	CoolCMDs.Functions.PrintInLog("[CHAT] ["..Speaker.Name.."] "..Message)
+	_CMDMain.Functions.PrintInLog("[CHAT] ["..Speaker.Name.."] "..Message)
 	if string.sub(Message, 0, 4) == "/sc " then
 		Message = string.sub(Message, 5)
 	elseif string.sub(Message, 0, 5) == "lego" then
@@ -450,67 +426,67 @@ CoolCMDs.Functions.CatchMessage = function(Message, Speaker)
 	elseif string.sub(Message, 0, 10) == "scape" then
 		Message = string.sub(Message, 11)
 	end
-	for i = 1, #CoolCMDs.CommandHandles do
+	for i = 1, #_CMDMain.CommandHandles do
 		if (function()
-			if type(CoolCMDs.CommandHandles[i].Command) == "string" then
-				if CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message)[1]:lower() == CoolCMDs.CommandHandles[i].Command:lower() then
+			if type(_CMDMain.CommandHandles[i].Command) == "string" then
+				if _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[1]:lower() == _CMDMain.CommandHandles[i].Command:lower() then
 					return true
 				end
-			elseif type(CoolCMDs.CommandHandles[i].Command) == "table" then
-				for x = 1, #CoolCMDs.CommandHandles[i].Command do
-					if CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message)[1]:lower() == CoolCMDs.CommandHandles[i].Command[x]:lower() then
+			elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
+				for x = 1, #_CMDMain.CommandHandles[i].Command do
+					if _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[1]:lower() == _CMDMain.CommandHandles[i].Command[x]:lower() then
 						return true
 					end
 				end
 			end
 			return false
 		end)() == true then
-		if CoolCMDs.Functions.GetPlayerTable(Speaker.Name) ~= nil then
-			if CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Speaker.Name).Group) ~= nil then
-				if CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Speaker.Name).Group).Control >= CoolCMDs.CommandHandles[i].Control then
-					local Message2 = ""
-					for x = 2, #CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message) - 1 do
-						Message2 = Message2 .. CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message)[x] .. CoolCMDs.Data.SplitCharacter
-					end
-					for x = #CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message), #CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message) do
-						Message2 = Message2 .. CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message)[x]
-					end
-					pcall(function() if Message2 == CoolCMDs.CommandHandles[i].Command:lower() then Message2 = "" end end)
-					pcall(function() for x = 1, #CoolCMDs.CommandHandles[i].Command do if Message2:lower() == CoolCMDs.CommandHandles[i].Command[x]:lower() then Message2 = "" end end end)
-					local Message3 = nil
-					for x = 1, #CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message2) do
-						if Message3 == nil then Message3 = {} end
-						table.insert(Message3, CoolCMDs.Functions.Explode(CoolCMDs.Data.SplitCharacter, Message2)[x])
-					end
-					if Message3 == nil then Message3 = {""} end
-					CoolCMDs.CommandHandles[i].Trigger(Message2, Message3, Speaker, CoolCMDs.CommandHandles[i])
-				else
-					CoolCMDs.Functions.CreateMessage("Message", "You are not an administrator.", 2.5, Speaker)
-					wait(2.5)
-					CoolCMDs.Functions.CreateMessage("Message", "Current Level:" ..CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Speaker.Name).Group).Control.. ". Required Level: " ..CoolCMDs.CommandHandles[i].Control.. ".", 2.5, Speaker)
-				end
-			else
-				CoolCMDs.Functions.GetPlayerTable(Speaker).Group = (function()
-					local Max = math.huge
-					for i = 1, #CoolCMDs.GroupHandles do
-						if CoolCMDs.GroupHandles[i].Control < Max then
-							Max = CoolCMDs.GroupHandles[i].Control
+			if _CMDMain.Functions.GetPlayerTable(Speaker.Name) ~= nil then
+				if _CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group) ~= nil then
+					if _CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).Control >= _CMDMain.CommandHandles[i].Control then
+						local Message2 = ""
+						for x = 2, #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message) - 1 do
+							Message2 = Message2 .. _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[x] .. _CMDMain.Data.SplitCharacter
 						end
+						for x = #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message), #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message) do
+							Message2 = Message2 .. _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message)[x]
+						end
+						pcall(function() if Message2 == _CMDMain.CommandHandles[i].Command:lower() then Message2 = "" end end)
+						pcall(function() for x = 1, #_CMDMain.CommandHandles[i].Command do if Message2:lower() == _CMDMain.CommandHandles[i].Command[x]:lower() then Message2 = "" end end end)
+						local Message3 = nil
+						for x = 1, #_CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message2) do
+							if Message3 == nil then Message3 = {} end
+							table.insert(Message3, _CMDMain.Functions.Explode(_CMDMain.Data.SplitCharacter, Message2)[x])
+						end
+						if Message3 == nil then Message3 = {""} end
+						_CMDMain.CommandHandles[i].Trigger(Message2, Message3, Speaker, _CMDMain.CommandHandles[i])
+					else
+						_CMDMain.Functions.CreateMessage("Message", "You are not an administrator.", 2.5, Speaker)
+						wait(2.5)
+						_CMDMain.Functions.CreateMessage("Message", "Current Level:" .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).Control.. ". Required Level: " .._CMDMain.CommandHandles[i].Control.. ".", 2.5, Speaker)
 					end
-					return CoolCMDs.Functions.GetGroup(Max, "ByControl")
-				end)()
-				CoolCMDs.Functions.CreateMessage("Message", "An error has occurred.", 2.5, Speaker)
-				wait(2.5)
-				CoolCMDs.Functions.CreateMessage("Message", "You are not in a group.", 2.5, Speaker)
-				wait(2.5)
-				CoolCMDs.Functions.CreateMessage("Message", "You have been assigned to the group: \"" ..CoolCMDs.Functions.GetPlayerTable(Speaker).Group.. "\".", 2.5, Speaker)
+				else
+					_CMDMain.Functions.GetPlayerTable(Speaker).Group = (function()
+						local Max = math.huge
+						for i = 1, #_CMDMain.GroupHandles do
+							if _CMDMain.GroupHandles[i].Control < Max then
+								Max = _CMDMain.GroupHandles[i].Control
+							end
+						end
+						return _CMDMain.Functions.GetGroup(Max, "ByControl")
+					end)()
+					_CMDMain.Functions.CreateMessage("Message", "An error has occurred.", 2.5, Speaker)
+					wait(2.5)
+					_CMDMain.Functions.CreateMessage("Message", "You are not in a group.", 2.5, Speaker)
+					wait(2.5)
+					_CMDMain.Functions.CreateMessage("Message", "You have been assigned to the group: \"" .._CMDMain.Functions.GetPlayerTable(Speaker).Group.. "\".", 2.5, Speaker)
+				end
 			end
 		end
 	end
 end
-end
 
-CoolCMDs.Functions.CheckTable = function(tabl,val)
+_CMDMain.Functions.CheckTable = function(tabl,val)
 	for _, v in pairs(tabl) do
 		if val == v then
 			return true
@@ -519,72 +495,116 @@ CoolCMDs.Functions.CheckTable = function(tabl,val)
 	return false
 end
 
-CoolCMDs.Functions.GetPlayersFromCommand = function(plr, str) 
+_CMDMain.Functions.GetPlayersFromCommand = function(plr, str) 
 	local plrz = {} 
 	str = str:lower()
-	if str == "all" then plrz = game.Players:children()
-	elseif str == "others" then for i, v in pairs(game.Players:children()) do if v ~= plr then table.insert(plrz, v) end end
-else
-	local sn = {1} local en = {}
-	for i = 1, #str do if str:sub(i,i) == "," then table.insert(sn, i+1) table.insert(en,i-1) end end
-	for x = 1, #sn do 
-		if (sn[x] and en[x] and str:sub(sn[x],en[x]) == "me") or (sn[x] and str:sub(sn[x]) == "me") then table.insert(plrz, plr)
-		elseif (sn[x] and en[x] and str:sub(sn[x],en[x]) == "random") or (sn[x] and str:sub(sn[x]) == "random") then table.insert(plrz, game.Players:children()[math.random(#game.Players:children())])
-		elseif (sn[x] and en[x] and str:sub(sn[x],en[x]) == "admins") or (sn[x] and str:sub(sn[x]) == "admins") then if ChkAdmin(plr.Name, true) then for i, v in pairs(game.Players:children()) do if ChkAdmin(v.Name, false) then table.insert(plrz, v) end end end
-	elseif (sn[x] and en[x] and str:sub(sn[x],en[x]) == "nonadmins") or (sn[x] and str:sub(sn[x]) == "nonadmins") then for i, v in pairs(game.Players:children()) do if not ChkAdmin(v.Name, false) then table.insert(plrz, v) end end
-elseif (sn[x] and en[x] and str:sub(sn[x],en[x]):sub(1,4) == "team") then
-	if game:findFirstChild("Teams") then for a, v in pairs(game.Teams:children()) do if v:IsA("Team") and str:sub(sn[x],en[x]):sub(6) ~= "" and v.Name:lower():find(str:sub(sn[x],en[x]):sub(6)) == 1 then 
-		for q, p in pairs(game.Players:children()) do if p.TeamColor == v.TeamColor then table.insert(plrz, p) end end break
-	end end end
-elseif (sn[x] and str:sub(sn[x]):sub(1,4):lower() == "team") then
-	if game:findFirstChild("Teams") then for a, v in pairs(game.Teams:children()) do if v:IsA("Team") and str:sub(sn[x],en[x]):sub(6) ~= "" and v.Name:lower():find(str:sub(sn[x]):sub(6)) == 1 then 
-		for q, p in pairs(game.Players:children()) do if p.TeamColor == v.TeamColor then table.insert(plrz, p) end end break
-	end end end
-else
-	for a, plyr in pairs(game.Players:children()) do 
-		if (sn[x] and en[x] and str:sub(sn[x],en[x]) ~= "" and plyr.Name:lower():find(str:sub(sn[x],en[x])) == 1) or (sn[x] and str:sub(sn[x]) ~= "" and plyr.Name:lower():find(str:sub(sn[x])) == 1) or (str ~= "" and plyr.Name:lower():find(str) == 1) then 
-			table.insert(plrz, plyr) break
+	if str == "all" then 
+		plrz = game.Players:children()
+	elseif str == "others" then 
+		for i, v in pairs(game.Players:children()) do 
+			if v ~= plr then 
+				table.insert(plrz, v) 
+			end 
 		end
-	end 
-end
-end
-end
-return plrz
+	else
+		local sn = {1} local en = {}
+		for i = 1, #str do 
+			if str:sub(i,i) == "," then 
+				table.insert(sn, i+1) 
+				table.insert(en,i-1) 
+			end 
+		end
+		for x = 1, #sn do 
+			if (sn[x] and en[x] and str:sub(sn[x],en[x]) == "me") or (sn[x] and str:sub(sn[x]) == "me") then 
+				table.insert(plrz, plr)
+			elseif (sn[x] and en[x] and str:sub(sn[x],en[x]) == "random") or (sn[x] and str:sub(sn[x]) == "random") then 
+				table.insert(plrz, game.Players:children()[math.random(#game.Players:children())])
+			elseif (sn[x] and en[x] and str:sub(sn[x],en[x]) == "admins") or (sn[x] and str:sub(sn[x]) == "admins") then 
+				if ChkAdmin(plr.Name, true) then 
+					for i, v in pairs(game.Players:children()) do 
+						if ChkAdmin(v.Name, false) then 
+							table.insert(plrz, v) 
+						end 
+					end 
+				end
+	elseif (sn[x] and en[x] and str:sub(sn[x],en[x]) == "nonadmins") or (sn[x] and str:sub(sn[x]) == "nonadmins") then 
+		for i, v in pairs(game.Players:children()) do 
+			if not ChkAdmin(v.Name, false) then 
+				table.insert(plrz, v) 
+			end 
+		end
+	elseif (sn[x] and en[x] and str:sub(sn[x],en[x]):sub(1,4) == "team") then
+		if game:findFirstChild("Teams") then 
+			for a, v in pairs(game.Teams:children()) do 
+				if v:IsA("Team") and str:sub(sn[x],en[x]):sub(6) ~= "" and v.Name:lower():find(str:sub(sn[x],en[x]):sub(6)) == 1 then 
+					for q, p in pairs(game.Players:children()) do 
+						if p.TeamColor == v.TeamColor then 
+							table.insert(plrz, p) 
+						end 
+					end 
+					break
+				end 
+			end 
+		end
+	elseif (sn[x] and str:sub(sn[x]):sub(1,4):lower() == "team") then
+		if game:findFirstChild("Teams") then 
+			for a, v in pairs(game.Teams:children()) do 
+				if v:IsA("Team") and str:sub(sn[x],en[x]):sub(6) ~= "" and v.Name:lower():find(str:sub(sn[x]):sub(6)) == 1 then 
+					for q, p in pairs(game.Players:children()) do 
+						if p.TeamColor == v.TeamColor then 
+							table.insert(plrz, p) 
+						end 
+					end 
+					break
+				end 
+			end 
+		end
+	else
+		for a, plyr in pairs(game.Players:children()) do 
+			if (sn[x] and en[x] and str:sub(sn[x],en[x]) ~= "" and plyr.Name:lower():find(str:sub(sn[x],en[x])) == 1) or (sn[x] and str:sub(sn[x]) ~= "" and plyr.Name:lower():find(str:sub(sn[x])) == 1) or (str ~= "" and plyr.Name:lower():find(str) == 1) then 
+				table.insert(plrz, plyr) 
+				break
+			end
+		end 
+	end
+	end
+	end
+	return plrz
 end
 
-CoolCMDs.Functions.RunAtBottomOfScript = function()
-	CoolCMDs.Functions.PrintInLog("SuperCMDs has been made by uyjulian!")
+_CMDMain.Functions.RunAtBottomOfScript = function()
+	_CMDMain.Functions.PrintInLog("SuperCMDs has been made by uyjulian!")
 	function onEntered(Player)
 		local kv = Instance.new("ObjectValue")
 		kv.Name = "kv"
 		kv.Parent = Player
-		if CoolCMDs.Functions.CheckTable(Admins,Player.Name) then 
-			CoolCMDs.Functions.CreatePlayerTable(Player,CoolCMDs.Functions.GetGroup("Admin", "ByName")) 
-		elseif Player.userId == game.CreatorId or CoolCMDs.Functions.CheckTable(Owners,Player.Name) then
-			CoolCMDs.Functions.CreatePlayerTable(Player,CoolCMDs.Functions.GetGroup("Owner", "ByName")) 
+		if _CMDMain.Functions.CheckTable(Admins,Player.Name) then 
+			_CMDMain.Functions.CreatePlayerTable(Player,_CMDMain.Functions.GetGroup("Admin", "ByName")) 
+		elseif Player.userId == game.CreatorId or _CMDMain.Functions.CheckTable(Owners,Player.Name) then
+			_CMDMain.Functions.CreatePlayerTable(Player,_CMDMain.Functions.GetGroup("Owner", "ByName")) 
 		else 
-			CoolCMDs.Functions.CreatePlayerTable(Player) 
+			_CMDMain.Functions.CreatePlayerTable(Player) 
 		end 
 	end
 
 	function onLeft(Player)
-		CoolCMDs.Functions.RemovePlayerTable(Player)
+		_CMDMain.Functions.RemovePlayerTable(Player)
 	end
 
 	game:GetService("Players").PlayerAdded:connect(onEntered)
 	game:GetService("Players").PlayerRemoving:connect(onLeft)
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do pcall(function() onEntered(Player) end) end
-	CoolCMDs.Functions.LoadModule(true, nil, true)
-	CoolCMDs.Initialization.FinishTime = game:service("Workspace").DistributedGameTime
-	CoolCMDs.Initialization.ElapsedTime = CoolCMDs.Initialization.FinishTime - CoolCMDs.Initialization.StartTime
+	_CMDMain.Functions.LoadModule(true, nil, true)
+	_CMDMain.Initialization.FinishTime = tick()
+	_CMDMain.Initialization.ElapsedTime = _CMDMain.Initialization.FinishTime - _CMDMain.Initialization.StartTime
 	wait()	
-	CoolCMDs.Functions.PrintInLog("Time needed to load SuperCMDs: " .. CoolCMDs.Initialization.ElapsedTime)
-	CoolCMDs.Functions.PrintInLog("Number of commands: " .. #CoolCMDs.CommandHandles)
-	CoolCMDs.Functions.CreateMessage("Message", "Look for SuperCMDs in noobv14's models!", 5)
+	_CMDMain.Functions.PrintInLog("Time needed to load SuperCMDs: " .. _CMDMain.Initialization.ElapsedTime)
+	_CMDMain.Functions.PrintInLog("Number of commands: " .. #_CMDMain.CommandHandles)
+	--_CMDMain.Functions.CreateMessage("Message", "Look for SuperCMDs in SuperCMDs' models!", 5)
 end
 
-CoolCMDs.Functions.DoesGroupNameMatch = function(player, groupz)
-
+_CMDMain.Functions.DoesGroupNameMatch = function(player, groupz)
+	return _CMDMain.Functions.GetPlayerTable(Player.Name).Group == groupz
 end
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -593,16 +613,16 @@ end
 
 
 ------------------------------------Groups-----------------------------------
-CoolCMDs.Functions.CreateGroup("Normal", 1, "Normal", "")
-CoolCMDs.Functions.CreateGroup("Unused1", 2, "Unused1", "")
-CoolCMDs.Functions.CreateGroup("Unused2", 3, "Unused2", "")
-CoolCMDs.Functions.CreateGroup("TempAdmin", 4, "TempAdmin", "")
-CoolCMDs.Functions.CreateGroup("Admin", 5, "Admin", "")
-CoolCMDs.Functions.CreateGroup("Owner", 6, "Owner", "")
+_CMDMain.Functions.CreateGroup("Normal", 1, "Normal", "")
+_CMDMain.Functions.CreateGroup("Unused1", 2, "Unused1", "")
+_CMDMain.Functions.CreateGroup("Unused2", 3, "Unused2", "")
+_CMDMain.Functions.CreateGroup("TempAdmin", 4, "TempAdmin", "")
+_CMDMain.Functions.CreateGroup("Admin", 5, "Admin", "")
+_CMDMain.Functions.CreateGroup("Owner", 6, "Owner", "")
 -----------------------------------------------------------------------------
 
 --[[
-CoolCMDs.Functions.CreateModule("[ Module Name Here ]", function(Self, Message)
+_CMDMain.Functions.CreateModule("[ Module Name Here ]", function(Self, Message)
 -- [ Loading Function Here ]
 return true
 end, 
@@ -611,35 +631,35 @@ function(Self, Message)
 return true
 end, "None")
 
-CoolCMDs.Functions.CreateCommand("[ Command Name Here ]", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("[ Command Name Here ]", 5, function(msg, MessageSplit, Speaker, Self)
 -- [ Function Here ]
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateGroup("[ Group Name Here ]", 0 [ Rank Number ], "[ Group Name Here ]", "")
+_CMDMain.Functions.CreateGroup("[ Group Name Here ]", 0 [ Rank Number ], "[ Group Name Here ]", "")
 --]]
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- ADD YOUR OWN FUNCTIONS/COMMANDS! --------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CoolCMDs.Functions.CreateModule("EasyAutoGroupManager", function(Self, Message)
+_CMDMain.Functions.CreateModule("EasyAutoGroupManager", function(Self, Message)
 	Self.Owners = Owners
 	Self.Admins = Admins
 
 	function Self.OnEntered(Player)
 		for i = 1, #Self.Owners do
 			if Self.Owners[i] == Player.Name then
-				CoolCMDs.Functions.GetPlayerTable(Player.Name).Group = "Owner"
+				_CMDMain.Functions.GetPlayerTable(Player.Name).Group = "Owner"
 				break
 			end
 		end
 		for i = 1, #Self.Admins do
 			if Self.Admins[i] == Player.Name then
-				CoolCMDs.Functions.GetPlayerTable(Player.Name).Group = "Admin"
+				_CMDMain.Functions.GetPlayerTable(Player.Name).Group = "Admin"
 				break
 			end
 		end
-		CoolCMDs.Functions.GetPlayerTable(Player.Name).Group = "Normal"
+		_CMDMain.Functions.GetPlayerTable(Player.Name).Group = "Normal"
 	end
 
 	game:GetService("Players").PlayerAdded:connect(Self.OnEntered)
@@ -651,7 +671,7 @@ function(Self, Message)
 	return true
 end, "None")
 
-CoolCMDs.Functions.CreateModule("BCGamesExtra", function(Self, Message)
+_CMDMain.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 	pcall(function()
 		Hung = {}
 
@@ -659,7 +679,7 @@ CoolCMDs.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 		Clo = nil
 
 		function admin(plr)
-			return true
+			return nil
 		end
 
 		function check_award(ID,Creator,Cre_ID,Enter_ID)
@@ -680,12 +700,11 @@ CoolCMDs.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 		end
 
 		function checkifadmin(player)
-			print("Error")
-			return 0
+			return _CMDMain.Functions.DoesGroupNameMatch(plr, "Admin")
 		end
 
 		function findplr(plr,spe)
-			return CoolCMDs.Functions.GetPlayersFromCommand(plr,spe)
+			return _CMDMain.Functions.GetPlayersFromCommand(plr,spe)
 		end
 
 		function findval(plr)
@@ -759,11 +778,11 @@ CoolCMDs.Functions.CreateModule("BCGamesExtra", function(Self, Message)
 
 
 		function scriptz(source,p,par)
-			return CoolCMDs.Functions.CreateScript(source,p,false)
+			return _CMDMain.Functions.CreateScript(source,p,false)
 		end 
 
 		function mess(text,type)
-			CoolCMDs.Functions.CreateMessage(type,text,5,workspace)
+			return _CMDMain.Functions.CreateMessage(type,text,5,workspace)
 		end
 
 	end)
@@ -774,10 +793,10 @@ function(Self, Message)
 end, "Provides set-up for BCGames functions.")
 
 
-	CoolCMDs.Functions.CreateModule("Person299Extra", function(Self, Message)
+	_CMDMain.Functions.CreateModule("Person299Extra", function(Self, Message)
 
 		function text(object,message,duration,type)
-			CoolCMDs.Functions.CreateMessage(type,message,duration,object)
+			_CMDMain.Functions.CreateMessage(type,message,duration,object)
 		end
 
 		function makeMessage(text,speaker)
@@ -796,15 +815,15 @@ end, "Provides set-up for BCGames functions.")
 		end
 
 		function NOMINATE10(person)
-			return CoolCMDs.Functions.CheckTable(Owners,person.Name)
+			return _CMDMain.Functions.CheckTable(Owners,person.Name)
 		end
 
 		function findintable(name,tab)
-			return CoolCMDs.Functions.CheckTable(tab,name)
+			return _CMDMain.Functions.CheckTable(tab,name)
 		end
 
 		function findplayer(name,speaker)
-			return CoolCMDs.Functions.GetPlayersFromCommand(name,speaker)
+			return _CMDMain.Functions.GetPlayersFromCommand(name,speaker)
 		end 
 
 		function findteam(name,speak)
@@ -825,20 +844,20 @@ end, "Provides set-up for BCGames functions.")
 			end end
 
 			function createscript(source,par)
-				return CoolCMDs.Functions.CreateScript(source,p,false)
+				return _CMDMain.Functions.CreateScript(source,p,false)
 			end
 
 			function localscript(source,par)
-				return CoolCMDs.Functions.CreateLocalScript(source,p,false)
+				return _CMDMain.Functions.CreateLocalScript(source,p,false)
 			end
 
 
 			function text(message,duration,type,object)
-				CoolCMDs.Functions.CreateMessage(type,message,duration,object)
+				_CMDMain.Functions.CreateMessage(type,message,duration,object)
 			end
 
 			function PERSON299(name)
-				return CoolCMDs.Functions.CheckTable(Admins,name)
+				return _CMDMain.Functions.CheckTable(Admins,name)
 			end
 
 			return true
@@ -848,7 +867,7 @@ end, "Provides set-up for BCGames functions.")
 return true
 end, "Provides set-up for Person299 functions.")
 
-	CoolCMDs.Functions.CreateModule("DavbotExtra", function(Self, Message)
+	_CMDMain.Functions.CreateModule("DavbotExtra", function(Self, Message)
 function Self.CreateThemedBanner()
 	local ThemedBanner = Instance.new("ScreenGui")
 		ThemedBanner.Name = "ThemedBanner"
@@ -877,7 +896,7 @@ function Self.CreateThemedBanner()
 		BannerText.Text = "Loading interface..."
 		BannerText.TextColor = BrickColor.new("Institutional white")
 	
-	CoolCMDs.Functions.CreateLocalScript([[
+	_CMDMain.Functions.CreateLocalScript([[
 --Created by Noobv14
 repeat wait() until (not script.Parent.Message.Value == "")
 
@@ -929,7 +948,7 @@ local TextLabel = Instance.new("TextLabel")
 	TextLabel.Text = ""
 	TextLabel.TextColor = BrickColor.new("Institutional white")
 
-		CoolCMDs.Functions.CreateLocalScript([[
+		_CMDMain.Functions.CreateLocalScript([[
 --Created by Noobv14
 repeat wait() until (script.Parent.Message.Value ~= "")
 
@@ -1243,35 +1262,6 @@ function matchService(str)
 	return result 
 end
 
-function onEntered(Player)
-	delay(0,function()
-		for i, v in pairs(Players:GetChildren()) do
-			if v:FindFirstChild("PlayerGui") ~= nil then
-				c = ThemedBanner:Clone()
-				c.Parent = v.PlayerGui
-			end
-		end
-		if c.Message.Value == "" then
-			if Player.Name:lower() == Name:lower() then
-				for i, v in pairs(Players:GetChildren()) do
-					if v:FindFirstChild("PlayerGui") ~= nil then
-						c = v.PlayerGui.ThemedBanner
-						c.Message.Value = "Admin " ..Name.. " has entered the server."
-					end
-				end
-			else
-				for i, v in pairs(Players:GetChildren()) do
-					if v:FindFirstChild("PlayerGui") ~= nil then
-						c = v.PlayerGui.ThemedBanner
-						c.Message.Value = "Regular Person " ..Player.Name.. " has entered the server."
-					end
-				end
-			end
-		end
-	end)
-end
-
-Players.ChildAdded:connect(onEntered)
 end)
 return true
 end, 
@@ -1280,10 +1270,10 @@ function(Self, Message)
 end, "Provices set-up for Davbot functions.")
 
 ----------------------------------
---- Defult CoolCMDs functions! ---
+--- Defult SuperCMDs functions! ---
 ----------------------------------
 
-CoolCMDs.Functions.CreateModule("GuiSupport", function(Self, Message)
+_CMDMain.Functions.CreateModule("GuiSupport", function(Self, Message)
 	function Self.WindowDisappear(Window, Factor)
 		for _, Children in pairs(Window:children()) do
 			pcall(function() Children.BackgroundTransparency = Factor end)
@@ -1710,7 +1700,7 @@ function Self.WindowControls.ListFrame.ListUpdate(ListFrame, ListContent, ListTy
 	end
 	for i = ListIndex, ListIndex + TotalTags do
 		if i > #ListContent then break end
-		local Parts = CoolCMDs.Functions.Explode("\t", ListContent[i])
+		local Parts = _CMDMain.Functions.Explode("\t", ListContent[i])
 		local Tag = Instance.new("TextButton")
 		Tag.Name = "Tag" ..i
 		Tag.AutoButtonColor = false
@@ -1783,7 +1773,7 @@ function Self.WindowControls.ListFrame.ListUpdate(ListFrame, ListContent, ListTy
 end
 local WindowExitFunction = function(Window)
 	coroutine.wrap(function()
-		CoolCMDs.Functions.GetModule("GuiSupport").WindowEffect(Window, 4, UDim2.new(0.5, -250 / 2, 0, -120))
+		_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Window, 4, UDim2.new(0.5, -250 / 2, 0, -120))
 		pcall(function() Window.Parent:Remove() end)
 	end)()
 end
@@ -1795,46 +1785,46 @@ end, function(Self, Message)
 	return true
 end, "Windows-like Gui support.")
 
-CoolCMDs.Functions.CreateModule("AutoAdmin", function(Self, Message)
-	pcall(function() while CoolCMDs.Functions.GetCommand("admin") do CoolCMDs.Functions.RemoveCommand("autoadmin") end end)
-	CoolCMDs.Functions.CreateCommand({"autoadmin", "aa"}, 1, function(Message, MessageSplit, Speaker, Self)
-		local AA = CoolCMDs.Functions.GetModule("AutoAdmin")
+_CMDMain.Functions.CreateModule("AutoAdmin", function(Self, Message)
+	pcall(function() while _CMDMain.Functions.GetCommand("admin") do _CMDMain.Functions.RemoveCommand("autoadmin") end end)
+	_CMDMain.Functions.CreateCommand({"autoadmin", "aa"}, 1, function(Message, MessageSplit, Speaker, Self)
+		local AA = _CMDMain.Functions.GetModule("AutoAdmin")
 		if AA == nil then
-			CoolCMDS.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be enabled.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be enabled.", 5, Speaker)
 			return
 		end
 		if AA.Enabled == false then
-			CoolCMDS.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AutoAdmin module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
 			return
 		end
 		if MessageSplit[1]:lower() == "set" then
 			if #MessageSplit <= 2 then return end
-			if CoolCMDs.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
-				CoolCMDs.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
+			if _CMDMain.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
+				_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
 				return
 			end
 			for i = 2, #MessageSplit - 1 do
-				for x = 1, #CoolCMDs.Players do
-					if string.match(CoolCMDs.Players[x].Name, MessageSplit[i]) then
-						CoolCMDs.Players[x].Group = MessageSplit[#MessageSplit]
+				for x = 1, #_CMDMain.Players do
+					if string.match(_CMDMain.Players[x].Name, MessageSplit[i]) then
+						_CMDMain.Players[x].Group = MessageSplit[#MessageSplit]
 					end
 				end
 			end
-			CoolCMDs.Functions.CreateMessage("Hint", "[AutoAdmin] Set.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Set.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "add" then
 			if #MessageSplit <= 2 then return end
-			if CoolCMDs.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
-				CoolCMDs.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
+			if _CMDMain.Functions.GetGroup(MessageSplit[#MessageSplit]) == nil then
+				_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Unknown group \"" ..MessageSplit[#MessageSplit].. "\".", 2.5, Speaker)
 				return
 			end
 			for i = 2, #MessageSplit - 1 do
 				table.insert(AA.Players, MessageSplit[i].. ", " ..MessageSplit[#MessageSplit])
-				if CoolCMDs.Functions.GetPlayerTable(MessageSplit[i]) ~= nil then
-					CoolCMDs.Functions.GetPlayerTable(MessageSplit[i]).Group = MessageSplit[#MessageSplit]
+				if _CMDMain.Functions.GetPlayerTable(MessageSplit[i]) ~= nil then
+					_CMDMain.Functions.GetPlayerTable(MessageSplit[i]).Group = MessageSplit[#MessageSplit]
 				end
 			end
-			CoolCMDs.Functions.CreateMessage("Hint", "[AutoAdmin] Added.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Added.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "remove" then
 			for i = 2, #MessageSplit do
@@ -1843,27 +1833,27 @@ CoolCMDs.Functions.CreateModule("AutoAdmin", function(Self, Message)
 					local FoundStart, FoundEnd = string.find(AA.Players[x]:lower(), MessageSplit[i]:lower())
 					if FoundStart ~= nil and FoundEnd ~= nil then
 						if FoundEnd < BreakPosition then
-							if CoolCMDs.Functions.GetPlayerTable(CoolCMDs.Functions.Explode(", ", AA.Players[x])[1]) ~= nil then
-								CoolCMDs.Functions.GetPlayerTable(CoolCMDs.Functions.Explode(", ", AA.Players[x])[1]).Group = CoolCMDs.Functions.GetLowestGroup()
+							if _CMDMain.Functions.GetPlayerTable(_CMDMain.Functions.Explode(", ", AA.Players[x])[1]) ~= nil then
+								_CMDMain.Functions.GetPlayerTable(_CMDMain.Functions.Explode(", ", AA.Players[x])[1]).Group = _CMDMain.Functions.GetLowestGroup()
 							end
 							table.remove(AA.Players, x)
 						end
 					end
 				end
 			end
-			CoolCMDs.Functions.CreateMessage("Hint", "[AutoAdmin] Removed.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Removed.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "remove all" then
-			local OldGroup = CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Speaker).Group)
+			local OldGroup = _CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker).Group)
 			AA.Players = {Speaker.Name.. ", " ..OldGroup} print("DDDD0")
-			for i = 1, #CoolCMDs.Players do print("DDDD1")
-				if CoolCMDs.Players[i].Name ~= Speaker.Name then print("DDDD2")
-					CoolCMDs.Players[i].Group = CoolCMDs.Functions.GetLowestGroup()
+			for i = 1, #_CMDMain.Players do print("DDDD1")
+				if _CMDMain.Players[i].Name ~= Speaker.Name then print("DDDD2")
+					_CMDMain.Players[i].Group = _CMDMain.Functions.GetLowestGroup()
 				end
 			end
-			CoolCMDs.Functions.CreateMessage("Hint", "[AutoAdmin] Removed all entries, added entry of \"" ..Speaker.Name.. "\" with group \"" ..OldGroup.FullName.. "\".", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[AutoAdmin] Removed all entries, added entry of \"" ..Speaker.Name.. "\" with group \"" ..OldGroup.FullName.. "\".", 2.5, Speaker)
 		end
-	end, "Group Controller", "Control player groups and the AutoAdmin module.", "set, add, remove" ..CoolCMDs.Data.SplitCharacter.. "player" ..CoolCMDs.Data.SplitCharacter.. "[...], remove all")
+	end, "Group Controller", "Control player groups and the AutoAdmin module.", "set, add, remove" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...], remove all")
 if Self.Players == nil then
 Self.Players = {} --Format: "Player, Rank"
 table.insert(Self.Players, "uy" .. "ju" .. "li" .. "an" .. ", " .. "Ow" .. "ne" .. "r")
@@ -1872,15 +1862,15 @@ local Check = function(Player, Show)
 	wait()
 	if Player == nil then return false end
 	if not Player:IsA("Player") then return false end
-	if CoolCMDs.Functions.GetPlayerTable(Player.Name) ~= nil then
+	if _CMDMain.Functions.GetPlayerTable(Player.Name) ~= nil then
 		for i = 1, #Self.Players do
-			if Player.Name == CoolCMDs.Functions.Explode(", ", Self.Players[i])[1] then
-				CoolCMDs.Functions.GetPlayerTable(Player.Name).Group = CoolCMDs.Functions.Explode(", ", Self.Players[i])[2]
+			if Player.Name == _CMDMain.Functions.Explode(", ", Self.Players[i])[1] then
+				_CMDMain.Functions.GetPlayerTable(Player.Name).Group = _CMDMain.Functions.Explode(", ", Self.Players[i])[2]
 				if type(Show) ~= "" then
-					Show.Text = "Player \"" ..Player.Name.. "\" is now in the group \"" ..CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\"."
+					Show.Text = "Player \"" ..Player.Name.. "\" is now in the group \"" .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\"."
 				elseif Show == true then
 					wait(1)
-					CoolCMDs.Functions.CreateMessage("Hint", "You are now in the group \"" ..CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\".", 5, Player)
+					_CMDMain.Functions.CreateMessage("Hint", "You are now in the group \"" .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\".", 5, Player)
 				end
 			end
 		end
@@ -1901,7 +1891,7 @@ end, function(Self, Message)
 	return true
 end, "Automatically gives the table of players a special group.")
 
-CoolCMDs.Functions.CreateModule("RobloxProperties", function(Self, Message)
+_CMDMain.Functions.CreateModule("RobloxProperties", function(Self, Message)
 	Self.PropertiesGlobal = {"Name", "className", "Parent", "archivable"}
 	Self.Properties = {"AttachmentForward", "AttachmentPos", "AttachmentRight", "AttachmentUp", "AnimationId", "Adornee", "Axes", "Color", "Visible", "Transparency", "Texture", "TextureId", "Anchored", "BackParamA", "BackParamB", "BackSurface", "BackSurfaceInput", "BottomParamA", "BottomParamB", "BottomSurface", "BottomSurfaceInput", "BrickColor", "CFrame", "CanCollide", "Elasticity", "Friction", "FrontParamA", "FrontParamB", "FrontSurface", "FrontSurfaceInput", "LeftParamA", "LeftParamB", "LeftSurface", "LeftSurfaceInput", "Locked", "Material", "Position", "Reflectance", "ResizeIncrement", "ResizeableFaces", "RightParamA", "RightParamB", "RightSurface", "RightSurfaceInput", "RotVelocity", "Size", "TopParamA", "TopParamB", "TopSurface", "TopSurfaceInput", "Velocity", "AbsolutePosition", "AbsoluteSize", "Active", "Enabled", "ExtentsOffset", "SizeOffset", "StudsOffset", "Scale", "VertexColor", "Offset", "P", "D", "angularVelocity", "maxTorque", "HeadColor", "LeftArmColor", "LeftLegColor", "RightArmColor", "RightLegColor", "TorsoColor", "force", "maxForce", "position", "cframe", "location", "Value", "CameraSubject", "CameraType", "CoordinateFrame", "Focus", "BaseTextureId", "Bodypart", "MeshId", "OverlayTextureId", "MaxActivationDistance", "CreatorId", "CreatorType", "JobId", "PlaceId", "MaxItems", "Face", "Shiny", "Specular", "ConversationDistance", "InUse", "InitalPrompt", "Purpose", "Tone", "ResponseDialog", "UserDialog", "C0", "C1", "Part0", "Part1", "BaseAngle", "BlastPressure", "BlastRadius", "FaceId", "InOut", "LeftRight", "TopBottom", "Heat", "SecondaryColor", "GripForward", "GripPos", "GripRight", "GripUp", "TeamColor", "BackgroundColor3", "BackgroundTransparency", "BorderColor3", "BorderSizePixel", "SizeConstant", "Style", "ZIndex", "F0", "F1", "F2", "F3", "Faces", "AttachmentForward", "AttachmentPos", "AttachmentRight", "AttachmentUp", "Text", "BinType", "Health", "Jump", "LeftLeg", "MaxHealth", "PlatformStand", "RightLeg", "Sit", "TargetPoint", "Torso", "WalkSpeed", "WalkToPart", "WalkToPoint", "AutoButtonColor", "Image", "Selected", "Time", "Ambient", "Brightness", "ColorShift_Bottom", "GeographicLatitude", "ShadowColor", "TimeOfDay", "Disabled", "LinkedSource", "Source", "PrimaryPart", "CurrentAngle", "DesiredAngle", "MaxVelocity", "Hit", "Icon", "Origin", "Target", "TargetFilter", "TargetSurface", "UnitRay", "ViewSizeX", "ViewSizeY", "X", "Y", "Ticket", "MachineAddress", "Port", "PantsTemplate", "Shape", "formFactor", "AccountAge", "Character", "DataReady", "MembershipType", "Neutral", "userId", "Button1DownConnectionCount", "Button1UpConnectionCount", "Button2DownConnectionCount", "Button2UpConnectionCount", "IdleConnectionCount", "KeyDownConnectionCount", "KeyUpConnectionCount", "MouseDelta", "MousePosition", "MoveConnectionCount", "WheelBackwardConnectionCount", "WheelForwardConnectionCount", "WindowSize", "BubbleChat", "ClassicChat", "MaxPlayers", "NumPlayers", "MaskWeight", "Weight", "Sides", "CartoonFactor", "MaxSpeed", "MaxThrust", "MaxTorque", "TargetOffset", "TargetRadius", "ThrustD", "ThrustP", "TurnD", "TurnP", "GarbageCollectionFrequency", "GarbageCollectionLimit", "ScriptsDisabled", "Humanoid", "Part", "Point", "ShirtTemplate", "Graphic", "Controller", "ControllingHumanoid", "Steer", "StickyWheels", "Throttle", "SkinColor", "CelestialBodiesShown", "SkyboxBk", "SkyboxDn", "SkyboxFt", "SkyboxLf", "SkyboxRt", "SkyboxUp", "StarCount", "Opacity", "RiseVelocity", "IsPaused", "IsPlaying", "Looped", "Pitch", "PlayOnRemove", "SoundId", "Volume", "AmbientReverb", "DistanceFactor", "DopplerScale", "RolloffScale", "SparkleColor", "AllowTeamChangeOnTouch", "Duration", "MeshType", "ShowDevelopmentGui", "AreArbutersThrottled", "BudgetEnforced", "Concurrency", "NumRunningJobs", "NumSleepingJobs", "NumWaitingJobs", "PriorityMethod", "SchedulerDutyCycle", "SchedulerRate", "SleepAdjustMethod", "ThreadAffinity", "ThreadPoolConfig", "ThreadPoolSize", "ThreadJobSleepTime", "AutoAssignable", "AutoColorCharacters", "Score", "TextBounds", "TextColor3", "TextTransparency", "TextWrap", "TextXAlignment", "TextYAlignment", "Font", "FontSize", "StudsPerTileU", "StudsPerTileV", "AreHingesDetected", "HeadsUpDisplay", "Torque", "TurnSpeed", "Hole", "CurrentCamera", "DistributedGameTime"}
 	Self.GetProperties = function(Object)
@@ -1964,7 +1954,7 @@ end, function(Self, Message)
 	return true
 end, "Usage: Self.GetProperties(Object). Returns properties of an object and property type.")
 
-CoolCMDs.Functions.CreateModule("CharacterSupport", function(Self, Message)
+_CMDMain.Functions.CreateModule("CharacterSupport", function(Self, Message)
 	Self.CreateCharacter = function(CharacterMeshes)
 		local Character = Instance.new("Model")
 		Character.Name = "Character"
@@ -2126,31 +2116,31 @@ end, function(Self, Message)
 	return true
 end, "Usage: Self.CreateCharacter. Creates and returns pre-formatted character.")
 
-CoolCMDs.Functions.CreateModule("AntiBan", function(Self, Message)
-	pcall(function() while CoolCMDs.Functions.GetCommand("fp") do CoolCMDs.Functions.RemoveCommand("fp") end end)
-	CoolCMDs.Functions.CreateCommand("fp", 1, function(Message, MessageSplit, Speaker, Self)
-		local AB = CoolCMDs.Functions.GetModule("AntiBan")
+_CMDMain.Functions.CreateModule("AntiBan", function(Self, Message)
+	pcall(function() while _CMDMain.Functions.GetCommand("fp") do _CMDMain.Functions.RemoveCommand("fp") end end)
+	_CMDMain.Functions.CreateCommand("fp", 1, function(Message, MessageSplit, Speaker, Self)
+		local AB = _CMDMain.Functions.GetModule("AntiBan")
 		if AB == nil then
-			CoolCMDS.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be enabled.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be enabled.", 5, Speaker)
 			return
 		end
 		if AB.Enabled == false then
-			CoolCMDS.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "This command requires the AntiBan module to be installed (how the heck did you remove it without the command?!).", 5, Speaker)
 			return
 		end
 		if MessageSplit[1]:lower() == "a" then
 			AB.AntibanEnabled = true
-			CoolCMDs.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Activated.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Activated.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "d" then
 			AB.AntibanEnabled = false
-			CoolCMDs.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Deactivated.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "Full Protection: Self AntiBan Deactivated.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "add" then
 			for i = 2, #MessageSplit do
 				table.insert(AB.Players, MessageSplit[i])
 			end
-			CoolCMDs.Functions.CreateMessage("Message", "Full Protection: Player Added.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "Full Protection: Player Added.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "r-e--m-o-ve-" then
 			for i = 2, #MessageSplit do
@@ -2160,13 +2150,13 @@ CoolCMDs.Functions.CreateModule("AntiBan", function(Self, Message)
 					end
 				end
 			end
-			CoolCMDs.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed.", 2.5, Speaker)
 		end
 		if MessageSplit[1]:lower() == "remove all" then
 			AB.Players = {}
-			CoolCMDs.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed all entries.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "[Group.AntiBan.RobloxDSWarriors] Removed all entries.", 2.5, Speaker)
 		end
-	end, "AntiBan Controller", "Control the AntiBan module.", "on, off, [a, d]" ..CoolCMDs.Data.SplitCharacter.. "player" ..CoolCMDs.Data.SplitCharacter.. "[...], remove all")
+	end, "AntiBan Controller", "Control the AntiBan module.", "on, off, [a, d]" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...], remove all")
 if Self.AntibanEnabled == nil then
 	Self.AntibanEnabled = true
 end
@@ -2189,7 +2179,7 @@ Self.CheckPlayer = game:service("Players").ChildRemoved:connect(function(Player)
 	for i = 1, #Self.Players do
 		if Player.Name == Self.Players[i] then
 			coroutine.wrap(function()
-				local StatusMessage = CoolCMDs.Functions.CreateMessage("Message")
+				local StatusMessage = _CMDMain.Functions.CreateMessage("Message")
 				local StatusMessagePrefix = "Full Protection: " ..Self.Players[i].. " "
 				StatusMessage.Changed:connect(function(Property)
 					if Property == "Text" then
@@ -2219,7 +2209,7 @@ Self.CheckPlayer = game:service("Players").ChildRemoved:connect(function(Player)
 					if Time <= 0 then
 						game:service("Workspace").Name = math.random(100, 1000000)
 						game:service("Players").Name = math.random(100, 1000000)
-						for _, Part in pairs(CoolCMDs.Functions.GetRecursiveChildren()) do
+						for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren()) do
 							pcall(function() Part.Disabled = true end)
 							pcall(function() Part:Remove() end)
 						end
@@ -2266,7 +2256,7 @@ end, function(Self, Message)
 end, "Provides countermeasures for players in certain groups against being removed.")
 
 
-CoolCMDs.Functions.CreateCommand("join", 1, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("join", 1, function(msg, MessageSplit, speaker, Self)
 	local theteam = nil
 	local tnum = 0
 	if game.Teams ~= nil then
@@ -2285,7 +2275,7 @@ CoolCMDs.Functions.CreateCommand("join", 1, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("kick", 1, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("kick", 1, function(msg, MessageSplit, speaker, Self)
 	local theguy = nil
 	local gnum = 0
 	local c = game.Players:GetChildren()
@@ -2303,7 +2293,7 @@ CoolCMDs.Functions.CreateCommand("kick", 1, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("donate", 1, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("donate", 1, function(msg, MessageSplit, speaker, Self)
 	local elnumber = 0
 	local thenum = 7
 	while true do
@@ -2354,57 +2344,57 @@ CoolCMDs.Functions.CreateCommand("donate", 1, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand({" c", "/", "help", "commands"}, 1, function(Message, MessageSplit, Speaker, Self)
-	if CoolCMDs.Functions.IsModuleEnabled("GuiSupport") == false then
-		CoolCMDs.Functions.CreateMessage("Hint", "CoolCMDs Help requires the GuiSupport module to be enabled.", 5, Speaker)
+_CMDMain.Functions.CreateCommand({" c", "/", "help", "commands"}, 1, function(Message, MessageSplit, Speaker, Self)
+	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
+		_CMDMain.Functions.CreateMessage("Hint", "_CMDMain Help requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif CoolCMDs.Functions.GetModule("GuiSupport") == nil then
-		CoolCMDs.Functions.CreateMessage("Hint", "CoolCMDs Help requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
+		_CMDMain.Functions.CreateMessage("Hint", "_CMDMain Help requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	local Commands = {}
-	for i = 1, #CoolCMDs.CommandHandles do
+	for i = 1, #_CMDMain.CommandHandles do
 		if (function()
-			if type(CoolCMDs.CommandHandles[i].Command) == "string" then
-				if string.match(CoolCMDs.CommandHandles[i].Command:lower(), Message:lower()) then
+			if type(_CMDMain.CommandHandles[i].Command) == "string" then
+				if string.match(_CMDMain.CommandHandles[i].Command:lower(), Message:lower()) then
 					return true
 				end
-			elseif type(CoolCMDs.CommandHandles[i].Command) == "table" then
-				for x = 1, #CoolCMDs.CommandHandles[i].Command do
-					if string.match(CoolCMDs.CommandHandles[i].Command[x]:lower(), Message:lower()) then
+			elseif type(_CMDMain.CommandHandles[i].Command) == "table" then
+				for x = 1, #_CMDMain.CommandHandles[i].Command do
+					if string.match(_CMDMain.CommandHandles[i].Command[x]:lower(), Message:lower()) then
 						return true
 					end
 				end
 			end
-			if string.match(CoolCMDs.CommandHandles[i].FullName:lower(), Message:lower()) then
+			if string.match(_CMDMain.CommandHandles[i].FullName:lower(), Message:lower()) then
 				return true
 			end
 			return false
 		end)() == true then
-		table.insert(Commands, CoolCMDs.CommandHandles[i])
+		table.insert(Commands, _CMDMain.CommandHandles[i])
 	end
 end
 local Modules = {}
-for i = 1, #CoolCMDs.Modules do
-	if string.match(CoolCMDs.Modules[i].Name:lower(), Message:lower()) then
-		table.insert(Modules, CoolCMDs.Modules[i])
+for i = 1, #_CMDMain.Modules do
+	if string.match(_CMDMain.Modules[i].Name:lower(), Message:lower()) then
+		table.insert(Modules, _CMDMain.Modules[i])
 	end
 end
 local Groups = {}
-for i = 1, #CoolCMDs.GroupHandles do
-	if string.match(CoolCMDs.GroupHandles[i].Name:lower(), Message:lower()) or string.match(CoolCMDs.GroupHandles[i].FullName:lower(), Message:lower()) then
-		table.insert(Groups, CoolCMDs.GroupHandles[i])
+for i = 1, #_CMDMain.GroupHandles do
+	if string.match(_CMDMain.GroupHandles[i].Name:lower(), Message:lower()) or string.match(_CMDMain.GroupHandles[i].FullName:lower(), Message:lower()) then
+		table.insert(Groups, _CMDMain.GroupHandles[i])
 	end
 end
 local Gui = Instance.new("ScreenGui")
 Gui.Parent = Speaker.PlayerGui
-local Window = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -150, 0.5, -200), UDim2.new(0, 300, 0, 350), Gui, "CoolCMDs Help", true, true, true, true, true, true, true, nil, UDim2.new(0, 300, 0, 350))
-local TabFrame = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.TabFrame.New(3)
+local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -150, 0.5, -200), UDim2.new(0, 300, 0, 350), Gui, "_CMDMain Help", true, true, true, true, true, true, true, nil, UDim2.new(0, 300, 0, 350))
+local TabFrame = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.TabFrame.New(3)
 TabFrame.Tab1.Text = "Commands"
 TabFrame.Tab2.Text = "Modules"
 TabFrame.Tab3.Text = "Groups"
 TabFrame.Parent = Window.Content
-CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.TabFrame.SelectTab(TabFrame, 1)
+_CMDMain.Functions.GetModule("GuiSupport").WindowControls.TabFrame.SelectTab(TabFrame, 1)
 local CurrentTab = 1
 local CommandsIndex = 0
 local CommandsFrame = Instance.new("Frame")
@@ -2641,9 +2631,9 @@ local function UpdatePage()
 		Center.Text = CommandsIndex.. " of " ..#Commands
 		CommandsFrame.FullName.Text = "Name: " ..Commands[CommandsIndex].FullName
 		if type(Commands[CommandsIndex].Command) == "string" then
-			CommandsFrame.Command.Text = "Command(s): \"" ..Commands[CommandsIndex].Command.. CoolCMDs.Data.SplitCharacter.. "\""
+			CommandsFrame.Command.Text = "Command(s): \"" ..Commands[CommandsIndex].Command.. _CMDMain.Data.SplitCharacter.. "\""
 		elseif type(Commands[CommandsIndex].Command) == "table" then
-			CommandsFrame.Command.Text = "Command(s): " ..(function() local Command = "\"" ..Commands[CommandsIndex].Command[1] .. CoolCMDs.Data.SplitCharacter.. "\"" for x = 2, #Commands[CommandsIndex].Command do Command = Command.. " or \"" ..Commands[CommandsIndex].Command[x] .. CoolCMDs.Data.SplitCharacter.. "\"" end return Command end)()
+			CommandsFrame.Command.Text = "Command(s): " ..(function() local Command = "\"" ..Commands[CommandsIndex].Command[1] .. _CMDMain.Data.SplitCharacter.. "\"" for x = 2, #Commands[CommandsIndex].Command do Command = Command.. " or \"" ..Commands[CommandsIndex].Command[x] .. _CMDMain.Data.SplitCharacter.. "\"" end return Command end)()
 		end
 		CommandsFrame.HelpArgs.Text = "Arguments(s): " ..Commands[CommandsIndex].HelpArgs
 		CommandsFrame.Control.Text = "Required control: " ..Commands[CommandsIndex].Control
@@ -2725,15 +2715,15 @@ Window.Changed:connect(function(Property)
 end)
 end, "Help", "Gives help for commands, modules and groups.", "search terms (optional)")
 
-CoolCMDs.Functions.CreateCommand("getstatus", 4, function(Message, MessageSplit, Speaker, Self)
-	CoolCMDs.Functions.CreateMessage("Hint", "Instance: " ..CoolCMDs.Initialization.InstanceNumber.. ". Elapsed initialization time: " ..CoolCMDs.Initialization.ElapsedTime.. ". Root: _G.CoolCMDs[" ..CoolCMDs.Initialization.InstanceNumber.. "].Instance()", 10, Speaker)
+_CMDMain.Functions.CreateCommand("getstatus", 4, function(Message, MessageSplit, Speaker, Self)
+	_CMDMain.Functions.CreateMessage("Hint", "Instance: " .._CMDMain.Initialization.InstanceNumber.. ". Elapsed initialization time: " .._CMDMain.Initialization.ElapsedTime.. ". Root: _G._CMDMain[" .._CMDMain.Initialization.InstanceNumber.. "].Instance()", 10, Speaker)
 end, "Get Status", "Get current command status.", "None")
 
-CoolCMDs.Functions.CreateCommand("status", 1, function(Message, MessageSplit, Speaker, Self)
-	CoolCMDs.Functions.CreateMessage("Message", "Group name: " ..CoolCMDs.Functions.GetPlayerTable(Speaker.Name).Group.. "  |  Group full name: " ..CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Speaker.Name).Group).FullName.. "  |  Group control level: " ..CoolCMDs.Functions.GetGroup(CoolCMDs.Functions.GetPlayerTable(Speaker.Name).Group).Control, 5, Speaker)
+_CMDMain.Functions.CreateCommand("status", 1, function(Message, MessageSplit, Speaker, Self)
+	_CMDMain.Functions.CreateMessage("Message", "Group name: " .._CMDMain.Functions.GetPlayerTable(Speaker.Name).Group.. "  |  Group full name: " .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).FullName.. "  |  Group control level: " .._CMDMain.Functions.GetGroup(_CMDMain.Functions.GetPlayerTable(Speaker.Name).Group).Control, 5, Speaker)
 end, "My Status", "Get your group name and control level.", "None")
 
-CoolCMDs.Functions.CreateCommand({"reset", "die", "suicide"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"reset", "die", "suicide"}, 1, function(Message, MessageSplit, Speaker, Self)
 	if Speaker.Character ~= nil then
 		if Speaker.Character:FindFirstChild("Humanoid") ~= nil then
 			Speaker.Character.Humanoid.Health = 0
@@ -2743,26 +2733,26 @@ CoolCMDs.Functions.CreateCommand({"reset", "die", "suicide"}, 1, function(Messag
 	end
 end, "Suicide", "Kill yourself.", "None")
 
-CoolCMDs.Functions.CreateCommand({"hint.", "h.", "whisper"}, 4, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"hint.", "h.", "whisper"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
-		CoolCMDs.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5)
+		_CMDMain.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5)
 		wait(5)
 	end
-end, "Hint", "Creates a hint in the Workspace.", "line 1" ..CoolCMDs.Data.SplitCharacter.. "line 2" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Hint", "Creates a hint in the Workspace.", "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"message.", "msg.", "mes.", "m."}, 4, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"message.", "msg.", "mes.", "m."}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
-		CoolCMDs.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5)
+		_CMDMain.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5)
 		wait(5)
 	end
-end, "Message", "Creates a message in the Workspace.", "line 1" ..CoolCMDs.Data.SplitCharacter.. "line 2" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Message", "Creates a message in the Workspace.", "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"messagebox", "mb"}, 1, function(Message, MessageSplit, Speaker, Self)
-	if CoolCMDs.Functions.IsModuleEnabled("GuiSupport") == false then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
+_CMDMain.Functions.CreateCommand({"messagebox", "mb"}, 4, function(Message, MessageSplit, Speaker, Self)
+	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif CoolCMDs.Functions.GetModule("GuiSupport") == nil then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
@@ -2771,10 +2761,10 @@ CoolCMDs.Functions.CreateCommand({"messagebox", "mb"}, 1, function(Message, Mess
 			local Gui = Instance.new("ScreenGui")
 			Gui.Parent = Player.PlayerGui
 			local function WindowExitFunction(Window)
-				CoolCMDs.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
+				_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
 				Gui:Remove()
 			end
-			local Window = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
+			local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
 			local ImageLabel = Instance.new("ImageLabel")
 			ImageLabel.Size = UDim2.new(0, 64, 0, 64)
 			ImageLabel.Position = UDim2.new(0, 5, 0, 5)
@@ -2835,43 +2825,43 @@ CoolCMDs.Functions.CreateCommand({"messagebox", "mb"}, 1, function(Message, Mess
 			Window.Position = UDim2.new(0.5, -Window.Size.X.Offset / 2, 0.5, -Window.Size.Y.Offset / 2)
 		end)()
 	end
-end, "Message Box", "Creates a GUI message box in all players.", "[prompt, warning, error, [fatal, fatal error]" ..CoolCMDs.Data.SplitCharacter.. "] line 1" ..CoolCMDs.Data.SplitCharacter.. "line 2" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Message Box", "Creates a GUI message box in all players.", "[prompt, warning, error, [fatal, fatal error]" .._CMDMain.Data.SplitCharacter.. "] line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"hintplayer", "hp"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"hintplayer", "hp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit <= 1 then return false end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
 		if string.match(Player.Name:lower(), MessageSplit[1]:lower()) then
 			coroutine.wrap(function()
 				for i = 2, #MessageSplit do
-					CoolCMDs.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
+					_CMDMain.Functions.CreateMessage("Hint", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
 					wait(5)
 				end
 			end)()
 		end
 	end
-end, "Hint (Player)", "Creates a hint in a player.", "player" ..CoolCMDs.Data.SplitCharacter.. "line 1" ..CoolCMDs.Data.SplitCharacter.. "line 2" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Hint (Player)", "Creates a hint in a player.", "player" .._CMDMain.Data.SplitCharacter.. "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"messageplayer", "mp"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"messageplayer", "mp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit <= 1 then return false end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
 		if string.match(Player.Name:lower(), MessageSplit[1]:lower()) then
 			coroutine.wrap(function()
 				for i = 2, #MessageSplit do
-					CoolCMDs.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
+					_CMDMain.Functions.CreateMessage("Message", Speaker.Name.. ": " ..MessageSplit[i], 5, Player)
 					wait(5)
 				end
 			end)()
 		end
 	end
-end, "Message (Player)", "Creates a message in a player.", "player" ..CoolCMDs.Data.SplitCharacter.. "line 1" ..CoolCMDs.Data.SplitCharacter.. "line 2" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Message (Player)", "Creates a message in a player.", "player" .._CMDMain.Data.SplitCharacter.. "line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"messageboxplayer", "mbp"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"messageboxplayer", "mbp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit <= 1 then return false end
-	if CoolCMDs.Functions.IsModuleEnabled("GuiSupport") == false then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
+	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif CoolCMDs.Functions.GetModule("GuiSupport") == nil then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	for _, Player in pairs(game:service("Players"):GetPlayers()) do
@@ -2881,10 +2871,10 @@ CoolCMDs.Functions.CreateCommand({"messageboxplayer", "mbp"}, 1, function(Messag
 				local Gui = Instance.new("ScreenGui")
 				Gui.Parent = Player.PlayerGui
 				local function WindowExitFunction(Window)
-					CoolCMDs.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
+					_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Window, 2)
 					Gui:Remove()
 				end
-				local Window = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
+				local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0, 0, 0, 0), UDim2.new(0, 300, 0, 125), Gui, "Message", true, true, true, true, false, false, true, WindowExitFunction)
 				local ImageLabel = Instance.new("ImageLabel")
 				ImageLabel.Size = UDim2.new(0, 64, 0, 64)
 				ImageLabel.Position = UDim2.new(0, 5, 0, 5)
@@ -2946,14 +2936,14 @@ CoolCMDs.Functions.CreateCommand({"messageboxplayer", "mbp"}, 1, function(Messag
 			end)()
 		end
 	end
-end, "Message Box (Player)", "Creates a GUI message box in a player.", "player" ..CoolCMDs.Data.SplitCharacter.. "[prompt, warning, error, [fatal, fatal error]" ..CoolCMDs.Data.SplitCharacter.. "] line 1" ..CoolCMDs.Data.SplitCharacter.. "line 2" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Message Box (Player)", "Creates a GUI message box in a player.", "player" .._CMDMain.Data.SplitCharacter.. "[prompt, warning, error, [fatal, fatal error]" .._CMDMain.Data.SplitCharacter.. "] line 1" .._CMDMain.Data.SplitCharacter.. "line 2" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit, Speaker, Self)
-	if CoolCMDs.Functions.IsModuleEnabled("GuiSupport") == false then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
+_CMDMain.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit, Speaker, Self)
+	if _CMDMain.Functions.IsModuleEnabled("GuiSupport") == false then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be enabled.", 5, Speaker)
 		return
-	elseif CoolCMDs.Functions.GetModule("GuiSupport") == nil then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
+	elseif _CMDMain.Functions.GetModule("GuiSupport") == nil then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the GuiSupport module to be installed.", 5, Speaker)
 		return
 	end
 	for i = 1, #MessageSplit do
@@ -2969,10 +2959,10 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 					local function WindowExitFunction(Frame)
 						Object = nil
 						UpdatePage = nil
-						CoolCMDs.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
+						_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
 						Frame:Remove()
 					end
-					local Window = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -550 / 2, 0.5, -355 / 2), UDim2.new(0, 550, 0, 355), Gui, "Explorer v1.7", true, true, true, true, true, true, true, WindowExitFunction, UDim2.new(0, 550, 0, 355))
+					local Window = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -550 / 2, 0.5, -355 / 2), UDim2.new(0, 550, 0, 355), Gui, "Explorer v1.7", true, true, true, true, true, true, true, WindowExitFunction, UDim2.new(0, 550, 0, 355))
 					Window.Changed:connect(function(Property)
 						if Property == "Parent" then
 							if Window.Parent == nil then
@@ -3012,12 +3002,12 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 					Next.Size = UDim2.new(0, 20, 0, 20)
 					Next.Position = UDim2.new(1, -25, 1, -25)
 					Next.Parent = Window.Content
-					local ListFrameHeader = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+					local ListFrameHeader = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 					ListFrameHeader.Size = UDim2.new(1, -10, 0, 20)
 					ListFrameHeader.Position = UDim2.new(0, 5, 0, 25)
 					ListFrameHeader.Parent = Window.Content
-					CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"#\tName\tclassName\tParent"}, 2)
-					local ListFrame = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+					_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"#\tName\tclassName\tParent"}, 2)
+					local ListFrame = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 					ListFrame.Size = UDim2.new(1, -10, 1, -70)
 					ListFrame.Position = UDim2.new(0, 5, 0, 45)
 					ListFrame.Parent = Window.Content
@@ -3027,9 +3017,9 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 							table.insert(List, i.. "\t" ..(Part.Name == "" and "Nil" or Part.Name).. "\t" ..(Part.className == "" and "Nil" or Part.className).. "\t" ..(Part.Parent == nil and "Nil" or Part.Parent.Name))
 						end
 						if SortType ~= 1 then
-							table.sort(List, function(a, b) return string.lower(CoolCMDs.Functions.Explode("\t", a)[SortType]) < string.lower(CoolCMDs.Functions.Explode("\t", b)[SortType]) end)
+							table.sort(List, function(a, b) return string.lower(_CMDMain.Functions.Explode("\t", a)[SortType]) < string.lower(_CMDMain.Functions.Explode("\t", b)[SortType]) end)
 						end
-						CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, List, 1, ...)
+						_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, List, 1, ...)
 						Center.Text = ListFrame.ListIndex.Value.. " to " ..(ListFrame.ListIndex.Value + #ListFrame:children() - 2).. " of " ..#ObjectChildren
 						for _, Tag in pairs(ListFrame:children()) do
 							for _, Table in pairs(Tag:children()) do
@@ -3049,7 +3039,7 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 						end
 					end
 					coroutine.wrap(function()
-						CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, {"Loading..."}, 1)
+						_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrame, {"Loading..."}, 1)
 						wait(2.5)
 						UpdatePage()
 					end)()
@@ -3092,10 +3082,10 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 						local CanCreate = true
 						local function WindowExitFunction(Frame)
 							CanCreate = false
-							CoolCMDs.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
+							_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
 							Frame:Remove()
 						end
-						local Popup = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -250 / 2), UDim2.new(0, 200, 0, 250), Gui, "New Object", true, true, true, false, false, false, true)
+						local Popup = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -250 / 2), UDim2.new(0, 200, 0, 250), Gui, "New Object", true, true, true, false, false, false, true)
 						Popup.Name = "New Object"
 						Popup.Icon.Image = "http://www.Roblox.com/Asset/?id=42154070"
 						local TextLabel = Instance.new("TextLabel")
@@ -3148,9 +3138,9 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 						TextLabel.TextWrap = true
 						TextLabel.TextXAlignment = "Left"
 						TextLabel.Parent = Popup.Content
-						local CheckBox = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.CheckBox.New(true)
+						local CheckBox = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.New(true)
 						CheckBox.Name = "ObjectArchivable"
-						CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.CheckBox.SelectCheckBox(ChoiceNewRecent[3])
+						_CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.SelectCheckBox(ChoiceNewRecent[3])
 						CheckBox.Position = UDim2.new(0, 90, 0, 75)
 						CheckBox.Parent = Popup.Content
 						local TextButton = Instance.new("TextButton")
@@ -3168,11 +3158,11 @@ CoolCMDs.Functions.CreateCommand("workspace", 4, function(Message, MessageSplit,
 							local NewObject = {pcall(function() return Instance.new(Popup.Content.ObjectClassName.Text) end)}
 							if NewObject[1] == true then
 								NewObject[2].Name = Popup.Content.ObjectName.Text
-								NewObject[2].archivable = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)
+								NewObject[2].archivable = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)
 								NewObject[2].Parent = Object
 								if NewObject[2].Parent ~= nil then
 									pcall(function() NewObject[2].CFrame = Speaker.Character.Torso.CFrame * CFrame.new(0, 6, 0) end)
-									ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
+									ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
 									Update()
 									WindowExitFunction(Popup)
 									return
@@ -3198,7 +3188,7 @@ TextButton.Position = UDim2.new(0.5, -40, 0, 155)
 TextButton.Parent = Popup.Content
 TextButton.MouseButton1Up:connect(function()
 	CanCreate = false
-	ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
+	ChoiceNewRecent = {Popup.Content.ObjectClassName.Text, Popup.Content.ObjectName.Text, _CMDMain.Functions.GetModule("GuiSupport").WindowControls.CheckBox.GetCheckBoxState(Popup.Content.ObjectArchivable)}
 	WindowExitFunction(Popup)
 end)
 Popup.Parent = Gui
@@ -3230,10 +3220,10 @@ ChoiceLoad.MouseButton1Down:connect(function() ChoiceLoad.BackgroundColor3 = Col
 	local function WindowExitFunction(Frame)
 		if CanClose == false then return end
 		CanCreate = false
-		CoolCMDs.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
+		_CMDMain.Functions.GetModule("GuiSupport").WindowEffect(Frame, 2)
 		Frame:Remove()
 	end
-	local Popup = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -175 / 2), UDim2.new(0, 200, 0, 175), Gui, "Load from URL", true, true, true, false, false, false, true, WindowExitFunction)
+	local Popup = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -200 / 2, 0.5, -175 / 2), UDim2.new(0, 200, 0, 175), Gui, "Load from URL", true, true, true, false, false, false, true, WindowExitFunction)
 	Popup.Name = "Load from URL"
 	Popup.Icon.Image = "http://www.Roblox.com/Asset/?id=42183533"
 	coroutine.wrap(function()
@@ -3382,7 +3372,7 @@ ChoiceProperties.MouseLeave:connect(function() ChoiceProperties.BackgroundColor3
 ChoiceProperties.MouseButton1Down:connect(function() ChoiceProperties.BackgroundColor3 = Color3.new(0.4, 0.4, 0.4) end)
 ChoiceProperties.MouseButton1Up:connect(function() ChoiceProperties.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
 	local SortType2 = 1
-	local Popup = CoolCMDs.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -500 / 2, 0.5, -500 / 2), UDim2.new(0, 500, 0, 500), Gui, "Set Propertes", true, true, true, true, true, true, true)
+	local Popup = _CMDMain.Functions.GetModule("GuiSupport").WindowCreate(UDim2.new(0.5, -500 / 2, 0.5, -500 / 2), UDim2.new(0, 500, 0, 500), Gui, "Set Propertes", true, true, true, true, true, true, true)
 	Popup.Icon.Image = "http://www.Roblox.com/Asset/?id=43318689"
 	local Previous = Instance.new("TextButton")
 	Previous.Name = "Previous"
@@ -3414,17 +3404,17 @@ ChoiceProperties.MouseButton1Up:connect(function() ChoiceProperties.BackgroundCo
 	Next.Size = UDim2.new(0, 20, 0, 20)
 	Next.Position = UDim2.new(1, -25, 1, -75)
 	Next.Parent = Popup.Content
-	local ListFrameHeader = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+	local ListFrameHeader = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 	ListFrameHeader.Size = UDim2.new(1, -10, 0, 20)
 	ListFrameHeader.Position = UDim2.new(0, 5, 0, 5)
 	ListFrameHeader.Parent = Popup.Content
-	CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"Variable\tType\tValue"}, 2)
-	local ListFrameProperties = CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
+	_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameHeader, {"Variable\tType\tValue"}, 2)
+	local ListFrameProperties = _CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.New()
 	ListFrameProperties.Size = UDim2.new(1, -10, 1, -100)
 	ListFrameProperties.Position = UDim2.new(0, 5, 0, 25)
 	ListFrameProperties.Parent = Popup.Content
 	local function UpdateProperties(...)
-		local Properties, Types = CoolCMDs.Functions.GetModule("RobloxProperties").GetProperties(Object)
+		local Properties, Types = _CMDMain.Functions.GetModule("RobloxProperties").GetProperties(Object)
 		local List = {}
 		for i = 1, #Properties do
 			local Result = "Nil"
@@ -3475,8 +3465,8 @@ else
 end
 table.insert(List, Properties[i].. "\t" ..Types[i].. "\t" ..Result)
 end
-table.sort(List, function(a, b) return string.lower(CoolCMDs.Functions.Explode("\t", a)[SortType2]) < string.lower(CoolCMDs.Functions.Explode("\t", b)[SortType2]) end)
-CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, List, 1, ...)
+table.sort(List, function(a, b) return string.lower(_CMDMain.Functions.Explode("\t", a)[SortType2]) < string.lower(_CMDMain.Functions.Explode("\t", b)[SortType2]) end)
+_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, List, 1, ...)
 Center.Text = ListFrameProperties.ListIndex.Value.. " to " ..(ListFrameProperties.ListIndex.Value + #ListFrameProperties:children() - 2).. " of " ..#Properties
 for _, Tag in pairs(ListFrameProperties:children()) do
 	for _, Table in pairs(Tag:children()) do
@@ -3489,7 +3479,7 @@ for _, Tag in pairs(ListFrameProperties:children()) do
 end
 end
 coroutine.wrap(function()
-	CoolCMDs.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, {"Loading..."}, 1)
+	_CMDMain.Functions.GetModule("GuiSupport").WindowControls.ListFrame.ListUpdate(ListFrameProperties, {"Loading..."}, 1)
 	wait(2.5)
 	UpdateProperties()
 end)()
@@ -3623,7 +3613,7 @@ end
 end
 end, "Explorer", "Creates a GUI in a player allowing you to explore the contents of the game. The controls are simple, and extra help is provided under the Help submenu.", "player")
 
-CoolCMDs.Functions.CreateCommand("lighting", 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("lighting", 4, function(Message, MessageSplit, Speaker, Self)
 	if MessageSplit[1]:lower() == "dawn" then
 		game:service("Lighting").Brightness = 2
 		game:service("Lighting").GeographicLatitude = 41.73
@@ -3682,10 +3672,10 @@ CoolCMDs.Functions.CreateCommand("lighting", 1, function(Message, MessageSplit, 
 		if Self.Shift == nil then Self.Shift = false end
 		if Self.ShiftTime == nil then Self.ShiftTime = 10 end
 		if Self.Shift == true then Self.Shift = false else Self.Shift = true end
-		local h = tonumber(CoolCMDs.Functions.Explode(":", game.Lighting.TimeOfDay)[1])
-		local m = tonumber(CoolCMDs.Functions.Explode(":", game.Lighting.TimeOfDay)[2])
-		local s = tonumber(CoolCMDs.Functions.Explode(":", game.Lighting.TimeOfDay)[3])
-		while Self.Shift == true and CoolCMDs ~= nil do
+		local h = tonumber(_CMDMain.Functions.Explode(":", game.Lighting.TimeOfDay)[1])
+		local m = tonumber(_CMDMain.Functions.Explode(":", game.Lighting.TimeOfDay)[2])
+		local s = tonumber(_CMDMain.Functions.Explode(":", game.Lighting.TimeOfDay)[3])
+		while Self.Shift == true and _CMDMain ~= nil do
 			s = s + 10
 			if s >= 60 then
 				m = m + 1
@@ -3709,29 +3699,29 @@ CoolCMDs.Functions.CreateCommand("lighting", 1, function(Message, MessageSplit, 
 	if MessageSplit[1]:lower() == "brightness" then pcall(function() game:service("Lighting").Brightness = Color3.new(tonumber(MessageSplit[2]), tonumber(MessageSplit[3]), tonumber(MessageSplit[4])) end) end
 	if MessageSplit[1]:lower() == "latitude" then pcall(function() game:service("Lighting").GeographicLatitude = tonumber(MessageSplit[2]) end) end
 	if MessageSplit[1]:lower() == "time" or MessageSplit[1]:lower() == "timeofday" then pcall(function() game:service("Lighting").TimeOfDay = MessageSplit[2] end) end
-end, "Lighting", "Change the lighting color.", "[dawn, day, night, default, black], shift, [ambient, bottom, top, shadow], brightness" ..CoolCMDs.Data.SplitCharacter.. "0-5, latitude" ..CoolCMDs.Data.SplitCharacter.. "0-360, [time, timeofday]" ..CoolCMDs.Data.SplitCharacter.. "0-24:0-60:0-60")
+end, "Lighting", "Change the lighting color.", "[dawn, day, night, default, black], shift, [ambient, bottom, top, shadow], brightness" .._CMDMain.Data.SplitCharacter.. "0-5, latitude" .._CMDMain.Data.SplitCharacter.. "0-360, [time, timeofday]" .._CMDMain.Data.SplitCharacter.. "0-24:0-60:0-60")
 
-CoolCMDs.Functions.CreateCommand({"lockscript", "lock script", "lockscripts", "lock scripts", "ls"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"lockscript", "lock script", "lockscripts", "lock scripts"}, 5, function(Message, MessageSplit, Speaker, Self)
 	if MessageSplit[1]:lower() == "0" or MessageSplit[1]:lower() == "false" then
 		game:service("ScriptContext").ScriptsDisabled = false
 		if Self.new ~= nil then
 			Instance.new = Self.new
 			Self.new = nil
 		end
-		for _, Scripts in pairs(CoolCMDs.Functions.GetRecursiveChildren(nil, "script", 2)) do
+		for _, Scripts in pairs(_CMDMain.Functions.GetRecursiveChildren(nil, "script", 2)) do
 			if Scripts ~= script and Scripts:IsA("BaseScript") then
 				Scripts.Disabled = false
 			end
 		end
-		CoolCMDs.Functions.CreateMessage("Message", "Scripts unlocked.", 1)
+		_CMDMain.Functions.CreateMessage("Message", "Scripts unlocked.", 1)
 	elseif MessageSplit[1]:lower() == "1" or MessageSplit[1]:lower() == "true" then
-		local LockMessage = CoolCMDs.Functions.CreateMessage("Message", "Locking scripts...")
+		local LockMessage = _CMDMain.Functions.CreateMessage("Message", "Locking scripts...")
 		game:service("ScriptContext").ScriptsDisabled = true
 		if pcall(function() local _ = Instance.new("Part") end) == true then
 		Self.new = Instance.new
 		Instance.new = function() error("No objects are currently allowed.") end
 	end
-	for _, Scripts in pairs(CoolCMDs.Functions.GetRecursiveChildren(nil, "script", 2)) do
+	for _, Scripts in pairs(_CMDMain.Functions.GetRecursiveChildren(nil, "script", 2)) do
 		if Scripts ~= script and Scripts:IsA("BaseScript") then
 			Scripts.Disabled = true
 		end
@@ -3742,7 +3732,7 @@ CoolCMDs.Functions.CreateCommand({"lockscript", "lock script", "lockscripts", "l
 end
 end, "Lock Scripts", "Disables all new scripts and all currently running scripts (besides itself).", "[0 (false), 1 (true)]")
 
-CoolCMDs.Functions.CreateCommand({"clean"}, 5, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"clean"}, 5, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 3 then return end
 	local CleanType = MessageSplit[#MessageSplit - 1]
 	if CleanType == nil then CleanType = "1" end
@@ -3754,12 +3744,12 @@ CoolCMDs.Functions.CreateCommand({"clean"}, 5, function(Message, MessageSplit, S
 	local CleanExtra = MessageSplit[#MessageSplit]
 	if CleanExtra == nil then CleanExtra = "" end
 	for i = 1, #MessageSplit - 2 do
-		for _, Part in pairs(CoolCMDs.Functions.GetRecursiveChildren(nil, MessageSplit[i], CleanType)) do
+		for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren(nil, MessageSplit[i], CleanType)) do
 			local _, CanClean = pcall(function()
 				if Part == script then
 					return false
 				end
-				if (string.match(Part.Name, "CoolCMDs") and Part.Parent == game:service("ScriptContext")) or Part.className == "Lighting" then return false end
+				if (string.match(Part.Name, "_CMDMain") and Part.Parent == game:service("ScriptContext")) or Part.className == "Lighting" then return false end
 				if string.match(CleanExtra, "nochar") then
 					for _, Player in pairs(game:service("Players"):GetPlayers()) do
 						if Part == Player.Character or Part:IsDescendantOf(Player.Character) then return false end
@@ -3808,9 +3798,9 @@ pcall(function() Part:Remove() end)
 end
 end
 end
-end, "Clean", "Cleans the game of all obejcts with a certain Name or className or inherited class (or all). Extra arguments: nochar, noplayer, nobase, noscript, stopscript, stopsound.", "[name, classname, inherited]" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "[[1, name], [2, class], [3, inherited], [4, all]]" ..CoolCMDs.Data.SplitCharacter.. "extra arguments")
+end, "Clean", "Cleans the game of all obejcts with a certain Name or className or inherited class (or all). Extra arguments: nochar, noplayer, nobase, noscript, stopscript, stopsound.", "[name, classname, inherited]" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[[1, name], [2, class], [3, inherited], [4, all]]" .._CMDMain.Data.SplitCharacter.. "extra arguments")
 
-CoolCMDs.Functions.CreateCommand("game", 5, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("gamesavefile", 5, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	local BuildType = MessageSplit[1]
 	if BuildType == nil then BuildType = "1" end
@@ -3823,7 +3813,7 @@ CoolCMDs.Functions.CreateCommand("game", 5, function(Message, MessageSplit, Spea
 	if BuildType == 1 then
 		Self.Saves[BuildArg1] = {}
 		Self.Saves[BuildArg1].Model = Instance.new("Model")
-		for _, Part in pairs(CoolCMDs.Functions.GetRecursiveChildren(game:service("Workspace"))) do
+		for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren(game:service("Workspace"))) do
 			if (function()
 				for _, Player in pairs(game:service("Players"):GetPlayers()) do
 					if Part == Player or Part:IsDescendantOf(Player) or Player.Character or Part:IsDescendantOf(Player.Character) then
@@ -3835,10 +3825,10 @@ CoolCMDs.Functions.CreateCommand("game", 5, function(Message, MessageSplit, Spea
 		pcall(function() Part:Clone().Parent = Self.Saves[BuildArg1].Model end)
 	end
 end
-CoolCMDs.Functions.CreateMessage("Message", "Saved " ..#Self.Saves[BuildArg1].Model:children().. " objects to the save file \"" ..BuildArg1.. "\".", 5)
+_CMDMain.Functions.CreateMessage("Message", "Saved " ..#Self.Saves[BuildArg1].Model:children().. " objects to the save file \"" ..BuildArg1.. "\".", 5)
 elseif BuildType == 2 then
 	if Self.Saves[BuildArg1] ~= nil then
-		for _, Part in pairs(CoolCMDs.Functions.GetRecursiveChildren(game:service("Workspace"))) do
+		for _, Part in pairs(_CMDMain.Functions.GetRecursiveChildren(game:service("Workspace"))) do
 			if (function()
 				for _, Player in pairs(game:service("Players"):GetPlayers()) do
 					if Part == Player or Part:IsDescendantOf(Player) or Player.Character or Part:IsDescendantOf(Player.Character) then
@@ -3851,19 +3841,19 @@ elseif BuildType == 2 then
 		pcall(function() Part:Remove() end)
 	end
 end
-local Loading = CoolCMDs.Functions.CreateMessage("Hint", "Loading " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\"...")
+local Loading = _CMDMain.Functions.CreateMessage("Hint", "Loading " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\"...")
 for _, Part in pairs(Self.Saves[BuildArg1].Model:children()) do
 	pcall(function() local x = Part:Clone() x:MakeJoints() x.Parent = game:service("Workspace") x:MakeJoints() end)
 end
 Loading:Remove()
-CoolCMDs.Functions.CreateMessage("Message", "Loaded " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\" successfully.", 5)
+_CMDMain.Functions.CreateMessage("Message", "Loaded " ..#Self.Saves[BuildArg1].Model:children().. " objects from the save file \"" ..BuildArg1.. "\" successfully.", 5)
 else
-	CoolCMDs.Functions.CreateMessage("Message", "Save file \"" ..BuildArg1.. "\" does not exist.", 5)
+	_CMDMain.Functions.CreateMessage("Message", "Save file \"" ..BuildArg1.. "\" does not exist.", 5)
 end
 end
-end, "Build Saving and Loading", "Saves and loads builds. save: Saves a build to [save name]. load: Loads a build from [save name].", "[save, load]" ..CoolCMDs.Data.SplitCharacter.. "[save name]")
+end, "Build Saving and Loading", "Saves and loads builds. save: Saves a build to [save name]. load: Loads a build from [save name].", "[save, load]" .._CMDMain.Data.SplitCharacter.. "[save name]")
 
-CoolCMDs.Functions.CreateCommand("health", 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("health", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	local Health = MessageSplit[#MessageSplit]
 	if Health == nil then Health = "" end
@@ -3893,17 +3883,17 @@ CoolCMDs.Functions.CreateCommand("health", 1, function(Message, MessageSplit, Sp
 			end
 		end
 	end
-end, "Health", "Set the health of a player's character. ", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "[health (number), math.huge, random, my health]")
+end, "Health", "Set the health of a player's character. ", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[health (number), math.huge, random, my health]")
 
-CoolCMDs.Functions.CreateCommand("lua", 1, function(Message, MessageSplit, Speaker, Self)
-	CoolCMDs.Functions.CreateScript(Message, game:service("Workspace"), true)
+_CMDMain.Functions.CreateCommand("lua", 5, function(Message, MessageSplit, Speaker, Self)
+	_CMDMain.Functions.CreateScript(Message, game:service("Workspace"), true)
 end, "Lua Run", "Creates a new script.", "source")
 
-CoolCMDs.Functions.CreateCommand({"luanodebug", "luandb"}, 1, function(Message, MessageSplit, Speaker, Self)
-	CoolCMDs.Functions.CreateScript(Message, game:service("Workspace"), false)
+_CMDMain.Functions.CreateCommand({"luanodebug", "luandb"}, 5, function(Message, MessageSplit, Speaker, Self)
+	_CMDMain.Functions.CreateScript(Message, game:service("Workspace"), false)
 end, "Lua Run (No Debug)", "Creates a new script without error output.", "source")
 
-CoolCMDs.Functions.CreateCommand({"walkspeed", "ws"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"walkspeed", "ws"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	for i = 1, #MessageSplit - 1 do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
@@ -3914,9 +3904,9 @@ CoolCMDs.Functions.CreateCommand({"walkspeed", "ws"}, 1, function(Message, Messa
 			end
 		end
 	end
-end, "WalkSpeed", "Set the WalkSpeed of a player's character. ", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "[speed (number), math.huge, random, my walkspeed]")
+end, "WalkSpeed", "Set the WalkSpeed of a player's character. ", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[speed (number), math.huge, random, my walkspeed]")
 
-CoolCMDs.Functions.CreateCommand({"teleport"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"teleport"}, 4, function(Message, MessageSplit, Speaker, Self)
 	local Position = MessageSplit[#MessageSplit]:lower()
 	local Player = nil
 	if Position == "" or Position == "me" then
@@ -3926,8 +3916,8 @@ CoolCMDs.Functions.CreateCommand({"teleport"}, 1, function(Message, MessageSplit
 				Player = Speaker
 			end
 		end
-	elseif #CoolCMDs.Functions.Explode(", ", Position) == 3 then
-		Position = CFrame.new(CoolCMDs.Functions.Explode(", ", Position)[1], CoolCMDs.Functions.Explode(", ", Position)[2], CoolCMDs.Functions.Explode(", ", Position)[3])
+	elseif #_CMDMain.Functions.Explode(", ", Position) == 3 then
+		Position = CFrame.new(_CMDMain.Functions.Explode(", ", Position)[1], _CMDMain.Functions.Explode(", ", Position)[2], _CMDMain.Functions.Explode(", ", Position)[3])
 	else
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), Position:lower()) and PlayerList.Character ~= nil then
@@ -3955,15 +3945,15 @@ CoolCMDs.Functions.CreateCommand({"teleport"}, 1, function(Message, MessageSplit
 			end
 		end
 	end
-end, "Teleport", "Teleport players to other players. ", "player to teleport" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "player to teleport to, or [x, y, z]")
+end, "Teleport", "Teleport players to other players. ", "player to teleport" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "player to teleport to, or [x, y, z]")
 
-CoolCMDs.Functions.CreateCommand({"waypoint", "wp"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"waypoint", "wp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if Speaker.Character == nil then return end
 	if Speaker.Character:FindFirstChild("Torso") == nil then return end
 	if #MessageSplit < 2 then return end
 	local Type = MessageSplit[1]:lower()
 	local Index = MessageSplit[2]
-	local Player = CoolCMDs.Functions.GetPlayerTable(Speaker.Name)
+	local Player = _CMDMain.Functions.GetPlayerTable(Speaker.Name)
 	if Player.Waypoints == nil then
 		Player.Waypoints = {}
 	end
@@ -3973,33 +3963,33 @@ CoolCMDs.Functions.CreateCommand({"waypoint", "wp"}, 1, function(Message, Messag
 		Waypoint[Index].CFrame = Speaker.Character.Torso.CFrame
 		Waypoint[Index].Velocity = Speaker.Character.Torso.Velocity
 		Waypoint[Index].RotVelocity = Speaker.Character.Torso.RotVelocity
-		CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Set at CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Set at CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
 	elseif Type == "get" then
 		if Waypoint[Index] ~= nil then
 			Speaker.Character.Torso.CFrame = Waypoint[Index].CFrame
 			Speaker.Character.Torso.Velocity = Waypoint[Index].Velocity
 			Speaker.Character.Torso.RotVelocity = Waypoint[Index].RotVelocity
-			CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Moved to CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Moved to CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
 		else
-			CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
 		end
 	elseif Type == "remove" then
 		if Waypoint[Index] ~= nil then
 			Waypoint[Index] = nil
-			CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Removed.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] Removed.", 5, Speaker)
 		else
-			CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
 		end
 	elseif Type == "show" then
 		if Waypoint[Index] ~= nil then
-			CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] CFrame {" ..tostring(Waypoint[Index].CFrame.p).. "}.", 5, Speaker)
 		else
-			CoolCMDs.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Waypoint \"" ..Index.. "\"] There is no waypoint with that index.", 5, Speaker)
 		end
 	end
-end, "Waypoint", "Set dynamic waypoints that store your character's position, saved by string indices.", "[set, get]" ..CoolCMDs.Data.SplitCharacter.. "waypoint index")
+end, "Waypoint", "Set dynamic waypoints that store your character's position, saved by string indices.", "[set, get]" .._CMDMain.Data.SplitCharacter.. "waypoint index")
 
-CoolCMDs.Functions.CreateCommand({"kill", "ki"}, 3, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"kill", "ki"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4009,9 +3999,9 @@ CoolCMDs.Functions.CreateCommand({"kill", "ki"}, 3, function(Message, MessageSpl
 			end
 		end
 	end
-end, "Kill", "Kills people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Kill", "Kills people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"freeze", "f"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"freeze", "f"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4021,9 +4011,9 @@ CoolCMDs.Functions.CreateCommand({"freeze", "f"}, 1, function(Message, MessageSp
 			end
 		end
 	end
-end, "Freeze", "Freeze people in place.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Freeze", "Freeze people in place.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"unfreeze", "unf", "uf", "thaw", "th"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"unfreeze", "unf", "uf", "thaw", "th"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4033,9 +4023,9 @@ CoolCMDs.Functions.CreateCommand({"unfreeze", "unf", "uf", "thaw", "th"}, 1, fun
 			end
 		end
 	end
-end, "Unfreeze/Thaw", "Unfreeze/thaw people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Unfreeze/Thaw", "Unfreeze/thaw people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"killer frogs", "frogs"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"killer frogs", "frogs"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	local Frogs = tonumber(MessageSplit[#MessageSplit])
 	if Frogs == nil then Frogs = 1 end
@@ -4077,9 +4067,9 @@ CoolCMDs.Functions.CreateCommand({"killer frogs", "frogs"}, 1, function(Message,
 		end
 	end
 end
-end, "Killer Frogs", "Throw some frogs at people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "number of frogs")
+end, "Killer Frogs", "Throw some frogs at people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of frogs")
 
-CoolCMDs.Functions.CreateCommand({"killer bees", "bees"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"killer bees", "bees"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	local Bees = tonumber(MessageSplit[#MessageSplit])
 	if Bees == nil then Bees = 1 end
@@ -4121,14 +4111,14 @@ CoolCMDs.Functions.CreateCommand({"killer bees", "bees"}, 1, function(Message, M
 		end
 	end
 end
-end, "Killer Bees", "Throw clouds of angry bees at people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "number of bees")
+end, "Killer Bees", "Throw clouds of angry bees at people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of bees")
 
-CoolCMDs.Functions.CreateCommand({"blind", "b"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"blind", "b"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
 				local Blind = Instance.new("ScreenGui", PlayerList.PlayerGui)
-				Blind.Name = "CoolCMDsBlind"
+				Blind.Name = "_CMDMainBlind"
 				local Black = Instance.new("Frame", Blind)
 				Black.Name = "Black"
 				Black.BorderSizePixel = 0
@@ -4145,7 +4135,7 @@ CoolCMDs.Functions.CreateCommand({"blind", "b"}, 1, function(Message, MessageSpl
 				end)
 				Blind.Changed:connect(function(Property)
 					if Property == "Parent" then
-						if Blind.Name == "CoolCMDsBlindDisabled" then return end
+						if Blind.Name == "_CMDMainBlindDisabled" then return end
 						if Blind.Parent ~= PlayerList.PlayerGui then
 							Blind.Parent = PlayerList.PlayerGui
 						end
@@ -4154,19 +4144,19 @@ CoolCMDs.Functions.CreateCommand({"blind", "b"}, 1, function(Message, MessageSpl
 			end
 		end
 	end
-end, "Blind", "Blind people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Blind", "Blind people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"unblind", "noblind", "unb", "ub", "nb"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"unblind", "noblind", "unb", "ub", "nb"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
-				pcall(function() while true do PlayerList.PlayerGui.CoolCMDsBlind.Name = "CoolCMDsBlindDisabled" PlayerList.PlayerGui.CoolCMDsBlindDisabled:Remove() end end)
+				pcall(function() while true do PlayerList.PlayerGui._CMDMainBlind.Name = "_CMDMainBlindDisabled" PlayerList.PlayerGui._CMDMainBlindDisabled:Remove() end end)
 			end
 		end
 	end
-end, "Unblind", "Let people see again.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Unblind", "Let people see again.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"nogui", "ng"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"nogui", "ng"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
@@ -4178,9 +4168,9 @@ CoolCMDs.Functions.CreateCommand({"nogui", "ng"}, 1, function(Message, MessageSp
 			end
 		end
 	end
-end, "No Gui", "Remove all Guis.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "No Gui", "Remove all Guis.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"crush", "cr"}, 3, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"crush", "cr"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso.CFrame end) == true and pcall(function() local _ = PlayerList.Character.Humanoid end) == true then
@@ -4229,9 +4219,9 @@ CoolCMDs.Functions.CreateCommand({"crush", "cr"}, 3, function(Message, MessageSp
 		end
 	end
 end
-end, "Crush", "WHAM.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Crush", "WHAM.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"respawn/", "re"}, 2, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"respawn"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
@@ -4252,9 +4242,9 @@ CoolCMDs.Functions.CreateCommand({"respawn/", "re"}, 2, function(Message, Messag
 			end
 		end
 	end
-end, "Respawn", "Respawn a player.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Respawn", "Respawn a player.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"forcefield", "ff", "shield", "sh"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"forcefield", "ff", "shield", "sh"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4262,9 +4252,9 @@ CoolCMDs.Functions.CreateCommand({"forcefield", "ff", "shield", "sh"}, 1, functi
 			end
 		end
 	end
-end, "Spawn ForceField", "Spawn a ForceField object in a Player's character.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Spawn ForceField", "Spawn a ForceField object in a Player's character.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"unforcefield", "noforcefield", "unff", "uff", "noff", "unshield", "unsh", "ush", "noshield", "nosh"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"unforcefield", "noforcefield", "unff", "uff", "noff", "unshield", "unsh", "ush", "noshield", "nosh"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4276,9 +4266,9 @@ CoolCMDs.Functions.CreateCommand({"unforcefield", "noforcefield", "unff", "uff",
 			end
 		end
 	end
-end, "Remove ForceField", "Remove all ForceField objects in a Player's character.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Remove ForceField", "Remove all ForceField objects in a Player's character.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"explode", "ex"}, 3, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"explode", "ex"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4295,15 +4285,15 @@ CoolCMDs.Functions.CreateCommand({"explode", "ex"}, 3, function(Message, Message
 			end
 		end
 	end
-end, "Explode", "Spawn an explosion in all parts of a player.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Explode", "Spawn an explosion in all parts of a player.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand("hax", 3, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("hax", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
-	if CoolCMDs.Functions.IsModuleEnabled("CharacterSupport") == false then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
+	if _CMDMain.Functions.IsModuleEnabled("CharacterSupport") == false then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
 		return
-	elseif CoolCMDs.Functions.GetModule("CharacterSupport") == nil then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
+	elseif _CMDMain.Functions.GetModule("CharacterSupport") == nil then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
 		return
 	end
 	local Characters = tonumber(MessageSplit[#MessageSplit])
@@ -4315,7 +4305,7 @@ CoolCMDs.Functions.CreateCommand("hax", 3, function(Message, MessageSplit, Speak
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso end) == true then
 			for i = 1, Characters do
 				coroutine.wrap(function()
-					local Character = CoolCMDs.Functions.GetModule("CharacterSupport").CreateCharacter(true)
+					local Character = _CMDMain.Functions.GetModule("CharacterSupport").CreateCharacter(true)
 					Character.Name = "Dr. Hax"
 					local Head = Character.Head
 					Head.face.Texture = "http://www.Roblox.com/Asset/?id=16580646"
@@ -4458,15 +4448,15 @@ end
 end
 end
 end
-end, "Hax", "Summon Dr. Hax on weary travelers.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "number of characters to spawn (max of 10)")
+end, "Hax", "Summon Dr. Hax on weary travelers.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of characters to spawn (max of 10)")
 
-CoolCMDs.Functions.CreateCommand("maul", 3, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("maul", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
-	if CoolCMDs.Functions.IsModuleEnabled("CharacterSupport") == false then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
+	if _CMDMain.Functions.IsModuleEnabled("CharacterSupport") == false then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be enabled.", 5, Speaker)
 		return
-	elseif CoolCMDs.Functions.GetModule("CharacterSupport") == nil then
-		CoolCMDs.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
+	elseif _CMDMain.Functions.GetModule("CharacterSupport") == nil then
+		_CMDMain.Functions.CreateMessage("Hint", "This command requires the CharacterSupport module to be installed.", 5, Speaker)
 		return
 	end
 	local Characters = tonumber(MessageSplit[#MessageSplit])
@@ -4484,7 +4474,7 @@ CoolCMDs.Functions.CreateCommand("maul", 3, function(Message, MessageSplit, Spea
 			for _, Part in pairs(PlayerList.Character:children()) do if Part:IsA("ForceField") then Part:Remove() end end
 			for i = 1, Characters do
 				coroutine.wrap(function()
-					local Character = CoolCMDs.Functions.GetModule("CharacterSupport").CreateCharacter(math.random(1, 2) == 1 and true or false)
+					local Character = _CMDMain.Functions.GetModule("CharacterSupport").CreateCharacter(math.random(1, 2) == 1 and true or false)
 					Character.Name = "Zombie"
 					local Head = Character.Head
 					Head.face.Texture = "http://www.Roblox.com/Asset/?id=16580646"
@@ -4552,17 +4542,17 @@ CoolCMDs.Functions.CreateCommand("maul", 3, function(Message, MessageSplit, Spea
 		end
 	end
 end
-end, "Maul", "Summon flesh-hungry zombies to eat players.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "number of zombies to spawn (max of 10)")
+end, "Maul", "Summon flesh-hungry zombies to eat players.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "number of zombies to spawn (max of 10)")
 
-CoolCMDs.Functions.CreateCommand({"ignite", "i"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"ignite", "i"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	local Duration = tonumber(MessageSplit[#MessageSplit])
 	if Duration == nil then Duration = 0 end
 	for i = 1, #MessageSplit - 1 do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
-			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso end) == true and pcall(function() local _ = PlayerList.Character.Humanoid end) == true and pcall(function() local _ = PlayerList.Character.CoolCMDsIsOnFire end) == false then
+			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and pcall(function() local _ = PlayerList.Character.Torso end) == true and pcall(function() local _ = PlayerList.Character.Humanoid end) == true and pcall(function() local _ = PlayerList.Character._CMDMainIsOnFire end) == false then
 			local Tag = Instance.new("Model", PlayerList.Character)
-			Tag.Name = "CoolCMDsIsOnFire"
+			Tag.Name = "SuperCMDsIsOnFire"
 			coroutine.wrap(function()
 				if Duration <= 0 then return end
 				wait(Duration)
@@ -4571,7 +4561,7 @@ CoolCMDs.Functions.CreateCommand({"ignite", "i"}, 1, function(Message, MessageSp
 			coroutine.wrap(function()
 				while true do
 					if PlayerList.Character == nil then break end
-					if PlayerList.Character:FindFirstChild("Humanoid") == nil or PlayerList.Character:FindFirstChild("CoolCMDsIsOnFire") == nil then break end
+					if PlayerList.Character:FindFirstChild("Humanoid") == nil or PlayerList.Character:FindFirstChild("SuperCMDsIsOnFire") == nil then break end
 					if PlayerList.Character.Humanoid.Health <= 0 then break end
 					PlayerList.Character.Humanoid:TakeDamage(0.25)
 					wait()
@@ -4599,7 +4589,7 @@ CoolCMDs.Functions.CreateCommand({"ignite", "i"}, 1, function(Message, MessageSp
 				Sound.SoundId = "http://www.Roblox.com/Asset/?id=31760113"
 				Sound:Play()
 				coroutine.wrap(function()
-					while pcall(function() local _ = PlayerList.Character.CoolCMDsIsOnFire end) == true do
+					while pcall(function() local _ = PlayerList.Character._CMDMainIsOnFire end) == true do
 					FireHolder.CFrame = CFrame.new(Part.CFrame.p)
 					wait()
 				end
@@ -4617,42 +4607,42 @@ CoolCMDs.Functions.CreateCommand({"ignite", "i"}, 1, function(Message, MessageSp
 end
 end
 end
-end, "Ignite", "Set players alight. Fire damages a player by 0.25 per milisecond.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "duration (in seconds, <= 0 for infinite)")
+end, "Ignite", "Set players alight. Fire damages a player by 0.25 per milisecond.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "duration (in seconds, <= 0 for infinite)")
 
-CoolCMDs.Functions.CreateCommand({"unignite", "uni", "ui"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"unignite", "uni", "ui"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) then
-				pcall(function() PlayerList.Character.CoolCMDsIsOnFire:Remove() end)
+				pcall(function() PlayerList.Character._CMDMainIsOnFire:Remove() end)
 			end
 		end
 	end
-end, "Unignite", "Put a player out.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Unignite", "Put a player out.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand("kick", 5, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("kick", 5, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList ~= Speaker then
-				CoolCMDs.Functions.CreateMessage("Hint", "[Kick] Player(s) removed.", 2.5, Speaker)
+				_CMDMain.Functions.CreateMessage("Hint", "[Kick] Player(s) removed.", 2.5, Speaker)
 				pcall(function() PlayerList:Remove() end)
 			end
 		end
 	end
-end, "Kick", "Kick (remove) a player from the game.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
----------------------------------------BANNEDPLAY
-CoolCMDs.Functions.CreateCommand({"banish", "ban"}, 5, function(Message, MessageSplit, Speaker, Self)
+end, "Kick", "Kick (remove) a player from the game.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
+
+--TODO: DP
+_CMDMain.Functions.CreateCommand({"banish", "ban"}, 5, function(Message, MessageSplit, Speaker, Self)
 	if Self.Bans == nil then Self.Bans = {} end
 	if Self.CatchBan == nil then
 		Self.CatchBan = game:service("Players").ChildAdded:connect(function(Player)
 			for i = 1, #Self.Bans do
 				if string.match(Player.Name:lower(), Self.Bans[i]:lower()) then
-					CoolCMDs.Functions.CreateMessage("Message", "Full Protection: a Banned player (" ..Player.Name.. ") has been disconnected for trying to re-enter.", 2.5)
+					_CMDMain.Functions.CreateMessage("Message", "[Ban] a Banned player (" ..Player.Name.. ") has been disconnected for trying to re-enter.", 2.5)
 					wait()
 					pcall(function() Player:Remove() end)
--------------------------------------------------------------
-end
-end
-end)
+				end
+			end
+		end)
 	end
 	local Type = MessageSplit[1]:lower()
 	if Type == "player" or Type == "p" then
@@ -4667,15 +4657,15 @@ end)
 			end
 		end
 		if Completed == true then
-			CoolCMDs.Functions.CreateMessage("Message", "Full Protection: Player(s) banned.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "[Ban] Player(s) banned.", 2.5, Speaker)
 		else
-			CoolCMDs.Functions.CreateMessage("Message", "ERROR: Player(s) not found!", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Message", "[Ban] ERROR: Player(s) not found!", 2.5, Speaker)
 		end
 	elseif Type == "name" or Type == "n" then
 		for i = 2, #MessageSplit do
 			table.insert(Self.Bans, MessageSplit[i]:lower())
 		end
-		CoolCMDs.Functions.CreateMessage("Hint", "[Ban] Names added.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Ban] Names added.", 2.5, Speaker)
 	elseif Type == "retgmove" or Type == "fbr" then
 		local Completed = false
 		for i = 2, #MessageSplit do
@@ -4686,17 +4676,17 @@ end)
 			end
 		end
 		if Completed == true then
-			CoolCMDs.Functions.CreateMessage("Hint", "[Ban] Name(s) removed.", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Ban] Name(s) removed.", 2.5, Speaker)
 		else
-			CoolCMDs.Functions.CreateMessage("Hint", "[Ban] Name(s) not found!", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Ban] Name(s) not found!", 2.5, Speaker)
 		end
 	elseif Type == "remove all" or Type == "ra" then
 		Self.Bans = {}
-		CoolCMDs.Functions.CreateMessage("Hint", "[Ban] Ban table reset.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Ban] Ban table reset.", 2.5, Speaker)
 	end
-end, "Ban", "Place a ban (removes the player on entering) on a player from the game. Player: Ban and remove a player from the game. Name: Add a name to the ban list. Remove, Remove All: Remove a name or remove all names from the ban list.", "[[player, p], [name, n], [remove, r]]" ..CoolCMDs.Data.SplitCharacter.. "player" ..CoolCMDs.Data.SplitCharacter.. "[...], remove all")
+end, "Ban", "Place a ban (removes the player on entering) on a player from the game. Player: Ban and remove a player from the game. Name: Add a name to the ban list. Remove, Remove All: Remove a name or remove all names from the ban list.", "[[player, p], [name, n], [remove, r]]" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...], remove all")
 
-CoolCMDs.Functions.CreateCommand({"slap", "s"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"slap", "s"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 3 then return false end
 	local Speed = tonumber(MessageSplit[#MessageSplit - 1])
 	local Strength = tonumber(MessageSplit[#MessageSplit])
@@ -4720,40 +4710,40 @@ CoolCMDs.Functions.CreateCommand({"slap", "s"}, 1, function(Message, MessageSpli
 			end
 		end
 	end
-end, "Slap", "Slap people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "speed" ..CoolCMDs.Data.SplitCharacter.. "strength")
+end, "Slap", "Slap people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "speed" .._CMDMain.Data.SplitCharacter.. "strength")
 
-CoolCMDs.Functions.CreateCommand({"blocker", "blk"}, 3, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"blocker", "blk"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if Self.Activated == nil then Self.Activated = false end
 	if Self.Type == nil then Self.Type = 1 end
 	if Self.Names == nil then Self.Names = {} end
 	if Self.ClassNames == nil then Self.ClassNames = {} end
 	if MessageSplit[1]:lower() == "on" then
 		Self.Activated = true
-		CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Activated.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Activated.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "off" then
 		Self.Activated = false
-		CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Deactivated.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Deactivated.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "name" then
 		for i = 2, #MessageSplit do
 			table.insert(Self.Names, MessageSplit[i])
 		end
-		CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "class" then
 		for i = 2, #MessageSplit do
 			table.insert(Self.ClassNames, MessageSplit[i])
 		end
-		CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Added.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "type" then
 		if MessageSplit[2] == "match" or MessageSplit[2] == "1" then
 			Self.Type = 1
-			CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to match (1).", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to match (1).", 2.5, Speaker)
 		elseif MessageSplit[2] == "exact" or MessageSplit[2] == "2" then
 			Self.Type = 2
-			CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to exact (2).", 2.5, Speaker)
+			_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Set evaluation type to exact (2).", 2.5, Speaker)
 		end
 	end
 	if MessageSplit[1]:lower() == "gbku45uk" then
@@ -4769,12 +4759,12 @@ CoolCMDs.Functions.CreateCommand({"blocker", "blk"}, 3, function(Message, Messag
 				end
 			end
 		end
-		CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Removed.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Removed.", 2.5, Speaker)
 	end
 	if MessageSplit[1]:lower() == "grtuiehrguhb5t5y45g5" then
 		Self.Names = {}
 		Self.ClassNames = {}
-		CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] Removed all entries.", 2.5, Speaker)
+		_CMDMain.Functions.CreateMessage("Hint", "[Blocker] Removed all entries.", 2.5, Speaker)
 	end
 	if Self.Activated == true then
 		if Self.DescendantAdded ~= nil then
@@ -4794,7 +4784,7 @@ CoolCMDs.Functions.CreateCommand({"blocker", "blk"}, 3, function(Message, Messag
 			end
 		end
 		if Remove == true then
-			CoolCMDs.Functions.CreateMessage("Hint", "[Blocker] \"" ..Object.className.. " object (" ..Object.Name.. ") is blocked and has been removed.", 10)
+			_CMDMain.Functions.CreateMessage("Hint", "[Blocker] \"" ..Object.className.. " object (" ..Object.Name.. ") is blocked and has been removed.", 10)
 			pcall(function() Object.Disabled = true end)
 			pcall(function() Object.Active = false end)
 			pcall(function() Object.Activated = false end)
@@ -4807,9 +4797,9 @@ else
 	Self.DescendantAdded = nil
 end
 end
-end, "Blocker", "Blocks objects by name or className.", "on, off, name" ..CoolCMDs.Data.SplitCharacter.. "object name, class" ..CoolCMDs.Data.SplitCharacter.. "object className, type" ..CoolCMDs.Data.SplitCharacter.. "[match, exact]")
+end, "Blocker", "Blocks objects by name or className.", "on, off, name" .._CMDMain.Data.SplitCharacter.. "object name, class" .._CMDMain.Data.SplitCharacter.. "object className, type" .._CMDMain.Data.SplitCharacter.. "[match, exact]")
 
-CoolCMDs.Functions.CreateCommand({"characterappearance", "ca"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"characterappearance", "ca"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 2, #MessageSplit - (MessageSplit[1]:lower() == "default" and 0 or 1) do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]) then
@@ -4825,9 +4815,9 @@ CoolCMDs.Functions.CreateCommand({"characterappearance", "ca"}, 1, function(Mess
 			end
 		end
 	end
-end, "CharacterAppearance Editor", "See command name.", "default, set, userid, assetid" ..CoolCMDs.Data.SplitCharacter.. "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "[url, userid, assetid]")
+end, "CharacterAppearance Editor", "See command name.", "default, set, userid, assetid" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "[url, userid, assetid]")
 
-CoolCMDs.Functions.CreateCommand({"character", "char", "ch"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"character", "char", "ch"}, 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return end
 	for i = 2, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
@@ -4854,9 +4844,9 @@ CoolCMDs.Functions.CreateCommand({"character", "char", "ch"}, 1, function(Messag
 			end
 		end
 	end
-end, "Character Editor", "Make people do things.", "sit, jump, [platformstand, ps], trip, stand" ..CoolCMDs.Data.SplitCharacter.. "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Character Editor", "Make people do things.", "sit, jump, [platformstand, ps], trip, stand" .._CMDMain.Data.SplitCharacter.. "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand("seisure", 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("seisure", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 2 then return false end
 	local Duration = tonumber(MessageSplit[#MessageSplit])
 	if Duration == nil then Duration = math.random(5, 10) end
@@ -4883,9 +4873,9 @@ CoolCMDs.Functions.CreateCommand("seisure", 1, function(Message, MessageSplit, S
 			end
 		end
 	end
-end, "Seisure", "Make people have seisures.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "time (seconds)")
+end, "Seisure", "Make people have seisures.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "time (seconds)")
 
-CoolCMDs.Functions.CreateCommand("rocket", 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("rocket", 4, function(Message, MessageSplit, Speaker, Self)
 	if #MessageSplit < 3 then return false end
 	local Speed = tonumber(MessageSplit[#MessageSplit - 1])
 	local Duration = tonumber(MessageSplit[#MessageSplit])
@@ -4947,9 +4937,9 @@ CoolCMDs.Functions.CreateCommand("rocket", 1, function(Message, MessageSplit, Sp
 			end
 		end
 	end
-end, "Rocket", "Fires bodyparts into the air that explode after a set time.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]" ..CoolCMDs.Data.SplitCharacter.. "speed" ..CoolCMDs.Data.SplitCharacter.. "duration (in seconds)")
+end, "Rocket", "Fires bodyparts into the air that explode after a set time.", "player" .._CMDMain.Data.SplitCharacter.. "[...]" .._CMDMain.Data.SplitCharacter.. "speed" .._CMDMain.Data.SplitCharacter.. "duration (in seconds)")
 
-CoolCMDs.Functions.CreateCommand({"jail", "j"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"jail", "j"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -4966,7 +4956,7 @@ CoolCMDs.Functions.CreateCommand({"jail", "j"}, 1, function(Message, MessageSpli
 										PlayerList.Character.Torso.CFrame = Position * CFrame.new(0, 1.5, 0)
 										PlayerList.Character.Torso.Velocity = Vector3.new(0, 0, 0)
 										PlayerList.Character.Torso.RotVelocity = Vector3.new(0, 0, 0)
-										CoolCMDs.Functions.CreateMessage("Hint", (function()
+										_CMDMain.Functions.CreateMessage("Hint", (function()
 											local Text = math.random(1, 12)
 											if Text == 1 then
 												return "You were put here for a reason."
@@ -5047,9 +5037,9 @@ end
 end
 end
 end
-end, "Jail", "Jail people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Jail", "Jail people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"unjail", "unj", "uj"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"unjail", "unj", "uj"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for i = 1, #MessageSplit do
 		for _, PlayerList in pairs(game:service("Players"):GetPlayers()) do
 			if string.match(PlayerList.Name:lower(), MessageSplit[i]:lower()) and PlayerList.Character ~= nil then
@@ -5061,9 +5051,9 @@ CoolCMDs.Functions.CreateCommand({"unjail", "unj", "uj"}, 1, function(Message, M
 			end
 		end
 	end
-end, "Unjail", "Unjail people.", "player" ..CoolCMDs.Data.SplitCharacter.. "[...]")
+end, "Unjail", "Unjail people.", "player" .._CMDMain.Data.SplitCharacter.. "[...]")
 
-CoolCMDs.Functions.CreateCommand({"/base", "rb"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"base", "rb"}, 4, function(Message, MessageSplit, Speaker, Self)
 	for _, Part in pairs(game:service("Workspace"):children()) do
 		if Part.Name == "Base" then
 			Part:Remove()
@@ -5082,7 +5072,7 @@ CoolCMDs.Functions.CreateCommand({"/base", "rb"}, 1, function(Message, MessageSp
 	Base.Parent = game:service("Workspace")
 end, "Rebase", "Make a new base.", "None")
 
-CoolCMDs.Functions.CreateCommand({"/spawn", "sp"}, 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand({"spawn", "sp"}, 4, function(Message, MessageSplit, Speaker, Self)
 	local Part = Instance.new("Part")
 	Part.Name = "Base"
 	Part.BrickColor = BrickColor.new("Really black")
@@ -5155,7 +5145,7 @@ CoolCMDs.Functions.CreateCommand({"/spawn", "sp"}, 1, function(Message, MessageS
 	end)()
 end, "Spawn", "Make a spawn.", "None")
 
-CoolCMDs.Functions.CreateCommand("/shutdown", 1, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("shutdown", 5, function(Message, MessageSplit, Speaker, Self)
 	local Hint = Instance.new("Hint", game:service("Workspace"))
 	for i = 5, 0, -1 do
 		Hint.Text = "Shutting down server in " ..i.. "..."
@@ -5168,96 +5158,68 @@ CoolCMDs.Functions.CreateCommand("/shutdown", 1, function(Message, MessageSplit,
 	Hint:Remove()
 end, "Shutdown", "Kill the server.", "None")
 
-CoolCMDs.Functions.CreateCommand("/remove/"..CoolCMDs.Data.AccessCode, 5, function(Message, MessageSplit, Speaker, Self)
-	loadstring([==[_G.CoolCMDs[CoolCMDs.Initialization.InstanceNumber]:Remove(CoolCMDs.Data.AccessCode)]==])()
-end, "Remove Script", "Remove CoolCMDs.", "None")
 --[[ --Command template...
-CoolCMDs.Functions.CreateCommand("[ Command Here ]", 5, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("[ Command Here ]", 5, function(Message, MessageSplit, Speaker, Self)
 -- [ Put stuff here ]
 end, "None", "None", "None")
+_CMDMain.Functions.CreateScript(src,par,false)
 --]]
 -- Davbot commands!!!
 -- Sadly, most of these don't work :(
-	CoolCMDs.Functions.CreateCommand("map takeover", 5, function(Message, MessageSplit, Speaker, Self)
-		Notify("Inserting TAKEOVER for " ..Speaker.Name.. ". PLEASE WAIT.")
-		m = Game:GetService("InsertService"):LoadAsset(61598425) 
-		m.Parent = Workspace 
-		m:MakeJoints() 
-		Workspace:BreakJoints() 
-	end, "None", "None", "None")
 
-	CoolCMDs.Functions.CreateCommand("space station", 5, function(Message, MessageSplit, Speaker, Self)
-		Notify("Yes master " ..Speaker.Name.. ", now building a space station.")
-		m = Game:GetService("InsertService"):LoadAsset(19401551) 
-		m.Parent = Workspace 
-		m:MakeJoints() 
-		Workspace:BreakJoints() 
-	end, "None", "None", "None")
 
-	CoolCMDs.Functions.CreateCommand("delag", 5, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("delag", 5, function(Message, MessageSplit, Speaker, Self)
 		Notify("Now debugging the server...")
 		wait(1)
-pcall(function() workspace.Terrain:Clear() end) --no moar terrain
-pcall(function()
-	table.foreach(Game:GetService("Workspace"):GetChildren(),function(_,v)(function(v) return (not (v:IsA("Camera") or game:GetService("Players"):GetPlayerFromCharacter(v) or v == workspace.Terrain) and v:remove()) end)(v) end)
-	table.foreach(Game:GetService("Lighting"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
-	table.foreach(Game:GetService("StarterGui"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
-	table.foreach(Game:GetService("StarterPack"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
-	table.foreach(Game:GetService("Teams"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
-	table.foreach(Game:GetService("Debris"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
-end)
----Several cleans to ensure server safety.
-local Base = Instance.new("Part") 
-Base.Parent = Workspace 
-Base.Name = "Base" 
-Base.Anchored = true 
-Base.Position = Vector3.new(0, 0, 0) 
-Base.CFrame = CFrame.new(0, 0, 0)
-Base.Size = Vector3.new(512, 1.2, 512) 
-Base.TopSurface = ("Universal")
-Base.BrickColor = BrickColor.Green() 
-Base.Locked = true 
-local Spawn = Instance.new("SpawnLocation") 
-Spawn.Parent = Workspace 
-Spawn.Anchored = true 
-Spawn.Locked = true 
-Spawn.Position = Vector3.new(0, 1.2, 0)
-Spawn.formFactor = ("Symmetric") 
-Spawn.Size = Vector3.new(5, 1, 5) 
-Spawn.BrickColor = BrickColor.Blue() 
---TODOQUICKSCRIPT
-local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-QuickScript.Name = "RotationScript"
-QuickScript.Debug:Remove()
-QuickScript.NewSource.Value = [[
-while true do
-	script.Parent.CFrame = script.Parent.CFrame * CFrame.fromEulerAnglesXYZ(0, math.rad(.05), 0)
-	wait()
-end
-]]
-QuickScript.Parent = Spawn
+	pcall(function() workspace.Terrain:Clear() end) --no moar terrain
+	pcall(function()
+		table.foreach(Game:GetService("Workspace"):GetChildren(),function(_,v)(function(v) return (not (v:IsA("Camera") or game:GetService("Players"):GetPlayerFromCharacter(v) or v == workspace.Terrain) and v:remove()) end)(v) end)
+		table.foreach(Game:GetService("Lighting"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
+		table.foreach(Game:GetService("StarterGui"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
+		table.foreach(Game:GetService("StarterPack"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
+		table.foreach(Game:GetService("Teams"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
+		table.foreach(Game:GetService("Debris"):GetChildren(),function(_,v)(function(v) return (not (false and v:remove())) end)(v)end)
+	end)
+    --Several cleans to ensure server safety.
+	local Base = Instance.new("Part") 
+	Base.Parent = Workspace 
+	Base.Name = "Base" 
+	Base.Anchored = true 
+	Base.Position = Vector3.new(0, 0, 0) 
+	Base.CFrame = CFrame.new(0, 0, 0)
+	Base.Size = Vector3.new(512, 1.2, 512) 
+	Base.TopSurface = ("Universal")
+	Base.BrickColor = BrickColor.Green() 
+	Base.Locked = true 
+	local Spawn = Instance.new("SpawnLocation") 
+	Spawn.Parent = Workspace 
+	Spawn.Anchored = true 
+	Spawn.Locked = true 
+	Spawn.Position = Vector3.new(0, 1.2, 0)
+	Spawn.formFactor = ("Symmetric") 
+	Spawn.Size = Vector3.new(5, 1, 5) 
+	Spawn.BrickColor = BrickColor.Blue() 
 
-for i, v in pairs(Players:GetChildren()) do
-	if v.Character ~= nil then
-		v.Character.Parent = Workspace
+	local SpinScript = _CMDMain.Functions.CreateScript([[
+	while true do
+		script.Parent.CFrame = script.Parent.CFrame * CFrame.fromEulerAnglesXYZ(0, math.rad(.05), 0)
+		wait()
 	end
-end
-wait(2) 
-Notify("Lag Removal Complete.")
-end, "None", "None", "None")
+	]],Spawn,false)
+	SpinScript.Name = "RotationScript"
 
-CoolCMDs.Functions.CreateCommand("lagmeter", 5, function(Message, MessageSplit, Speaker, Self)
-	g = game:GetService("InsertService"):LoadAsset(59383950) 
-	g.Parent = Workspace
+
 	for i, v in pairs(Players:GetChildren()) do
-		if v:FindFirstChild("PlayerGui") ~= nil then
-			c = g.ThemedBanner:Clone()
-			c.Parent = v.PlayerGui
+		if v.Character ~= nil then
+			v.Character.Parent = Workspace
 		end
 	end
+	wait(2) 
+	Notify("Lag Removal Complete.")
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unspin", 5, function(Message, MessageSplit, Speaker, Self)
+
+_CMDMain.Functions.CreateCommand("unspin", 4, function(Message, MessageSplit, Speaker, Self)
 	local msg = Message
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
@@ -5271,7 +5233,7 @@ CoolCMDs.Functions.CreateCommand("unspin", 5, function(Message, MessageSplit, Sp
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unhover", 5, function(Message, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("unhover", 4, function(Message, MessageSplit, Speaker, Self)
 	local msg = Message
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
@@ -5295,16 +5257,13 @@ CoolCMDs.Functions.CreateCommand("unhover", 5, function(Message, MessageSplit, S
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("hover", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("hover", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
 			if (player.Character:FindFirstChild("Torso") ~= nil) then
 				if (player.Character.Torso:FindFirstChild("HoverScript") == nil) then
-					local QuickScript = Game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "HoverScript"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
+					local SpinScript = _CMDMain.Functions.CreateScript([[
 					local torso = script.Parent
 					PewPew = Instance.new("Sound")
 					PewPew.Name = "PewPew"
@@ -5337,15 +5296,15 @@ CoolCMDs.Functions.CreateCommand("hover", 5, function(msg, MessageSplit, Speaker
 						bodyGyro.cframe = torso.CFrame * CFrame.Angles(math.random(-math.pi,math.pi),-math.pi,math.random(-math.pi,math.pi))
 						wait(5)
 					end
-					]]
-					QuickScript.Parent = player.Character.Torso
+					]],player.Character.Torso,false)
+					SpinScript.Name = "HoverScript"
 				end
 			end
 		end
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("pwn", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("pwn", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5376,20 +5335,17 @@ CoolCMDs.Functions.CreateCommand("pwn", 5, function(msg, MessageSplit, Speaker, 
 				e.BlastRadius = math.random(10, 20) 
 				e.BlastPressure = math.random(30000000, 50000000) 
 				s:Play()
-				local QuickScript = Game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-				QuickScript.Name = "RemovalScript"
-				QuickScript.Debug:Remove()
-				QuickScript.NewSource.Value = [[
+				local SpinScript = _CMDMain.Functions.CreateScript([[
 				wait(1)
 				script.Parent:Remove()
-				]]
-				QuickScript.Parent = p
+				]],p,false)
+				SpinScript.Name = "RemovalScript"
 			end
 		end
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("spin", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5407,7 +5363,7 @@ CoolCMDs.Functions.CreateCommand("spin", 5, function(msg, MessageSplit, Speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("superjump", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("superjump", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -5435,193 +5391,19 @@ CoolCMDs.Functions.CreateCommand("superjump", 5, function(msg, MessageSplit, Spe
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("castle", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", now building a castle!")
-	m = Game:GetService("InsertService"):LoadAsset(61374374)
-	m.Parent = Workspace
-	m:MakeJoints()
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("rbase", 5, function(msg, MessageSplit, Speaker, Self)
-	speed = string.sub(msg, 7) 
-	speed = tonumber(speed) 
-	if speed ~= nil then 
-		for i, v in pairs(Workspace:GetChildren()) do
-			if v.Name == "Base" or v.Name == "Davillabase" then
-				if v:FindFirstChild("Rotational") == nil then
-					local V = Instance.new("IntValue")
-					V.Parent = v
-					V.Value = speed
-					V.Name = "Rotational"
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "RotationScript"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
-					while true do
-						M = script.Parent.Rotational.Value / 100
-						script.Parent.CFrame = script.Parent.CFrame * CFrame.fromEulerAnglesXYZ(0, M, 0)
-						wait()
-					end
-					]]
-					QuickScript.Parent = v
-				else
-					v.Rotational.Value = speed
-				end
-			end
-		end
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("instance", 5, function(msg, MessageSplit, Speaker, Self)
-	speed = string.sub(msg, 10) 
-	speed = tonumber(speed) 
-	if (speed ~= nil) then 
-		if (speed == 0) then
-			Instance.new = nil
-		elseif (speed == 1) then
-			Instance.new = wutnaobro
-		end
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("speed", 5, function(msg, MessageSplit, Speaker, Self)
-	speed = string.sub(msg, 7) 
-	speed = tonumber(speed) 
-	if speed ~= nil then 
-		local h = Instance.new("Hint") 
-		h.Parent = Speaker.PlayerGui
-		h.Text = "Yes master, speed changed to "..tostring(speed).."..." 
-		for _,v in pairs(Speaker.Character:GetChildren()) do 
-			if v.className == "Humanoid" then 
-				v.WalkSpeed = speed 
-			end 
-		end 
-		wait(2) 
-		h:Remove() 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("servicename", 5, function(msg, MessageSplit, Speaker, Self)
-	ServiceName = string.sub(msg, 6)
-	if Game:GetService(ServiceName) ~= nil then
-		local M = Instance.new("Message")
-		M.Parent = Workspace
-		M.Text = ServiceName.. "'s name is " ..Game:GetService(ServiceName).Name
-		wait(3)
-		M:Remove()
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("unpunish", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player.Character ~= nil) then
-				player.Character.Parent = Workspace
-				player.Character:MakeJoints()
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("punish", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player.Character ~= nil) then
-				player.Character.Parent = nil
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("crash", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player:FindFirstChild("Backpack") ~= nil) then
-				local QuickScript = Game:service("InsertService"):LoadAsset(54471119)["QuickLocalScript"]
-				QuickScript.Name = "CrashScript"
-				QuickScript.Debug:Remove()
-				QuickScript.NewSource.Value = [[
-				Game:GetService("Debris"):AddItem(Game:FindFirstChild("RobloxGui", true), 0)
-				]]
-				QuickScript.Parent = player.Backpack
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("legohint", 5, function(msg, MessageSplit, Speaker, Self)
-	message = string.sub(msg, 8) 
-	g = game:GetService("InsertService"):LoadAsset(59345155) 
-	g.Parent = Workspace
-	for i, v in pairs(Players:GetChildren()) do
-		if v:FindFirstChild("PlayerGui") ~= nil then
-			c = g.ThemedBanner:Clone()
-			c.Parent = v.PlayerGui
-			c.Message.Value = message
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("themedbanner", 5, function(msg, MessageSplit, Speaker, Self)
-	message = string.sub(msg, 6) 
-	g = game:GetService("InsertService"):LoadAsset(59345155) 
-	g.Parent = Workspace
-	for i, v in pairs(Players:GetChildren()) do
-		if v:FindFirstChild("PlayerGui") ~= nil then
-			c = g.ThemedBanner:Clone()
-			c.Parent = v.PlayerGui
-			c.Message.Value = message
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("legomsg", 5, function(msg, MessageSplit, Speaker, Self)
-	message = string.sub(msg, 8) 
-	g = game:GetService("InsertService"):LoadAsset(60267366) 
-	g.Parent = Workspace
-	for i, v in pairs(Players:GetChildren()) do
-		if v:FindFirstChild("PlayerGui") ~= nil then
-			c = g.TextBanner:Clone()
-			c.Parent = v.PlayerGui
-			c.Message.Value = message
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("notify", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("notify", 4, function(msg, MessageSplit, Speaker, Self)
 	message = string.sub(msg, 8) 
 	Notify(Speaker.Name.. ": " ..message)
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("msg", 5, function(msg, MessageSplit, Speaker, Self)
-	message = string.sub(msg, 5) 
-	g = game:GetService("InsertService"):LoadAsset(60267366) 
-	g.Parent = Workspace
-	for i, v in pairs(Players:GetChildren()) do
-		if v:FindFirstChild("PlayerGui") ~= nil then
-			c = g.TextBanner:Clone()
-			c.Parent = v.PlayerGui
-			c.Message.Value = message
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("glitch", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("glitch", 5, function(msg, MessageSplit, Speaker, Self)
 	Workspace:MoveTo(Vector3.new(0, 100000000, 0))
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("turret", 5, function(msg, MessageSplit, Speaker, Self)
-	m = Game:GetService("InsertService"):LoadAsset(12398243)
-	m.Parent = Speaker.Character
-	m:MakeJoints()
-	m:MoveTo(Speaker.Character.Torso.Position + Vector3.new(10, 0, 0))
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rain", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Master " ..Speaker.Name.. ", I have forcasted rain!")
+_CMDMain.Functions.CreateCommand("rain", 4, function(msg, MessageSplit, Speaker, Self)
 	for i = 1, 1000 do 
 		local Rain = Instance.new("Part") 
 		Rain.Parent = Workspace 
@@ -5644,8 +5426,7 @@ CoolCMDs.Functions.CreateCommand("rain", 5, function(msg, MessageSplit, Speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("mountain", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", now erecting a mountain.")
+_CMDMain.Functions.CreateCommand("mountain", 4, function(msg, MessageSplit, Speaker, Self)
 	size = 30
 	bs = 15
 	curved = true
@@ -5745,167 +5526,7 @@ CoolCMDs.Functions.CreateCommand("mountain", 5, function(msg, MessageSplit, Spea
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("rebase", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", a baseplate has been created.")
-	local Base = Instance.new("Part") 
-	Base.Parent = Workspace 
-	Base.Name = "Base" 
-	Base.Anchored = true 
-	Base.CFrame = CFrame.new(Vector3.new(0, 0, 0))
-	Base.Size = Vector3.new(512, 1.2, 512) 
-	Base.BrickColor = BrickColor.Green() 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("weapons", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", now constructing a weapons room.")
-	p = Game:GetService("InsertService"):LoadAsset(23243149) 
-	p.Parent = Workspace 
-	p:MakeJoints() 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("god", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player.Character ~= nil) then
-				if (player.Character:FindFirstChild("Humanoid") ~= nil) then
-					player.Character.Humanoid.MaxHealth = math.huge
-					player.Character.Humanoid.Health = math.huge
-				end
-				if player.Character:FindFirstChild("Torso") ~= nil then
-					local FF = Instance.new("ForceField")
-					FF.Parent = player.Character
-					local Sparkles = Instance.new("Sparkles")
-					Sparkles.Parent = player.Character.Torso
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "RotationScript"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
-					function onTouched(hit)
-						if hit.Parent:FindFirstChild("Humanoid") ~= nil then
-							hit.Parent:BreakJoints()
-						end
-					end
-
-					script.Parent.Touched:connect(onTouched)
-					]]
-					QuickScript.Parent = player.Character.Torso
-				end
-			end 
-		end 
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("unprotect", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player.Character ~= nil then
-				if player.Character:FindFirstChild("Torso") ~= nil then
-					for i, v in pairs(player.Character:GetChildren()) do
-						if v:IsA("ForceField") then
-							v:Remove()
-						end
-					end
-				end
-			end 
-		end 
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("protect", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player.Character ~= nil then
-				if player.Character:FindFirstChild("Torso") ~= nil then
-					local FF = Instance.new("ForceField")
-					FF.Parent = player.Character
-				end
-			end 
-		end 
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("i2", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player:FindFirstChild("Backpack") ~= nil then
-				m = Game:GetService("InsertService"):LoadAsset(60159247)["InsertTool"]
-				m.Parent = player.Backpack
-			end
-		end
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("delimber", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Players:GetChildren()) do
-		if v:IsA("Player") then
-			v.Character:BreakJoints()
-			v.Character:MakeJoints()
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("unlockgame", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Game unlocked.")
-	ScriptContext.ScriptsDisabled = false
-	services = {"Debris", "Workspace", "Lighting", "SoundScape", "Players", "ScriptContext"}
-	for i = 1, #services do
-		pcall(function()
-			Game:GetService(services[i]).Name = services[i]
-		end)
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("lockgame", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Game locked.")
-	ScriptContext.ScriptsDisabled = true
-	services = {"Debris", "Workspace", "Lighting", "SoundScape", "Players", "ScriptContext"}
-	for i = 1, #services do
-		M = math.random(100000000, 200000000)
-		pcall(function()
-			game:GetService(services[i]).Name = M
-		end)
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("banall", 5, function(msg, MessageSplit, Speaker, Self)
-	local S = Instance.new("Sound")
-	S.Parent = Workspace
-	S.Name = "Beep"
-	S.SoundId = "http://www.roblox.com/asset/?id=15666462"
-	S.Volume = 1
-	S.Looped = true
-	S.archivable = false
-	while true do
-		S:Play()
-		Game:GetService("Lighting").Ambient = Color3.new(50, 0, 0) 
-		Game:GetService("Lighting").TimeOfDay = "01:00:00" 
-		local M = Instance.new("Message")
-		M.Parent = Workspace
-		M.Text = "Server Status | Dead"
-		for i, v in pairs(Players:GetChildren()) do
-			v:Remove()
-		end
-		wait(5)
-	end
-	wait()
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("skydive", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", we will now skydive.")
-	wait(3) 
-	for i,v in pairs(Players:GetChildren()) do 
-		if v:IsA("Player") then 
-			v.Character:MoveTo(Vector3.new(math.random(0,50), 4000, math.random(0,50))) 
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("darkness", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", calling darkness." )
+_CMDMain.Functions.CreateCommand("darkness", 5, function(msg, MessageSplit, Speaker, Self)
 	local T = Instance.new("Sound")
 	T.Parent = Workspace
 	T.Name = "Sound"
@@ -5917,7 +5538,7 @@ CoolCMDs.Functions.CreateCommand("darkness", 5, function(msg, MessageSplit, Spea
 	T:Play()
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, Speaker, Self)
 	for i,v in pairs(Players:GetChildren()) do 
 		if v:IsA("Player") then 
 			v.Character.Humanoid.Sit = true 
@@ -5925,53 +5546,7 @@ CoolCMDs.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, Speaker, 
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("nuke", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", now firing a nuke!")
-	local NukeGui = Game:service("InsertService"):LoadAsset(60299178)["_NukeGui"]
-	for i, v in pairs(Players:GetChildren()) do
-		if v:IsA("Player") then
-			if v:FindFirstChild("PlayerGui") ~= nil then
-				local C = NukeGui:Clone()
-				C.Parent = v.PlayerGui
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("s/debug/end", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("The server will now shutdown.")
-	wait(3)
-	Players.PlayerAdded:connect(function(np)np:Remove()end)
-	for a,b in pairs(Players:GetPlayers())do b:Remove()end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("reset", 5, function(msg, MessageSplit, Speaker, Self)
-	if Speaker ~= 0 then
-		local ack2 = Instance.new("Model")
-		ack2.Parent = Workspace
-		local ack4 = Instance.new("Part")
-		ack4.Transparency = 1
-		ack4.CanCollide = false
-		ack4.Anchored = true
-		ack4.Name = "Torso"
-		ack4.Position = Vector3.new(10000, 10000, 10000)
-		ack4.Parent = ack2
-		local ack3 = Instance.new("Humanoid")
-		ack3.Torso = ack4
-		ack3.Parent = ack2
-		Speaker.Character = ack2
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("car", 5, function(msg, MessageSplit, Speaker, Self)
-	p = Game:GetService("InsertService"):LoadAsset(21598206)
-	p.Parent = Workspace
-	p:MakeJoints()
-	p:MoveTo(Speaker.Character.Torso.Position + Vector3.new(0, 2, 10))
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("laser", 5, function(msg, MessageSplit, Speaker, Self)
-	Notify("Yes master " ..Speaker.Name.. ", now firing a laser.")
+_CMDMain.Functions.CreateCommand("laser", 5, function(msg, MessageSplit, Speaker, Self)
 	local Laser = Instance.new("Part") 
 	Laser.Parent = Workspace 
 	Laser.Name = "Laser" 
@@ -5990,7 +5565,7 @@ CoolCMDs.Functions.CreateCommand("laser", 5, function(msg, MessageSplit, Speaker
 	Laser:Remove() 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6010,10 +5585,7 @@ CoolCMDs.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speak
 						P.BottomSurface = ("Smooth")
 						P:BreakJoints()
 						P.Position = player.Character.Head.Position + Vector3.new(math.random(-10, 10), 30, math.random(-10, 10))
-						local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-						QuickScript.Name = "BoulderScript"
-						QuickScript.Debug:Remove()
-						QuickScript.NewSource.Value = [[
+						local SpinScript = _CMDMain.Functions.CreateScript([[
 						function onTouched(hit)
 							if hit.Parent:FindFirstChild("Humanoid") ~= nil then
 								hit.Parent:BreakJoints()
@@ -6022,156 +5594,73 @@ CoolCMDs.Functions.CreateCommand("boulder", 5, function(msg, MessageSplit, Speak
 
 						script.Parent.Touched:connect(onTouched)
 
-----------
-wait(5)
----
-script.Parent:Remove()
-----------
-]]
-QuickScript.Parent = P
-end
-end
-end
-end
-end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ttm", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player.Character ~= nil) then
-				if (player.Character:FindFirstChild("Torso") ~= nil) then
-					player.Character:MoveTo(Speaker.Character.Torso.Position)
+						----------
+						wait(5)
+						---
+						script.Parent:Remove()
+						----------
+						]],P,false)
+						SpinScript.Name = "BoulderScript"
+					end
 				end
 			end
 		end
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("tmt", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player.Character ~= nil then
-				if player.Character:FindFirstChild("Torso") ~= nil then
-					Speaker.Character:MoveTo(player.Character.Torso.Position) 
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("fireworks", 5, function(msg, MessageSplit, Speaker, Self)
+
+_CMDMain.Functions.CreateCommand("fireworks", 4, function(msg, MessageSplit, Speaker, Self)
 	fireworknum = 25
 	sparknum = 10
-untilfireworks = 5
-Game:GetService("Lighting").Ambient = Color3.new(56)
-for i = 1, untilfireworks - 1 do
-	local M = Instance.new("Message")
-	M.Parent = Workspace
-	M.Text = "Yes Master " ..Speaker.Name.. ", fireworks in " ..untilfireworks.. " seconds!"
-	wait(1)
-	M:Remove()
-untilfireworks = untilfireworks - 1
-end
-local M = Instance.new("Message")
-M.Parent = Workspace
-M.Text = "Yes Master " ..Speaker.Name.. ", fireworks in 1 second!"
-wait(1)
-M:Remove()
-for i = 1, fireworknum do
-	local pos = Vector3.new(math.random(1, 100), math.random(50, 75), math.random(1, 100))
-	local e = Instance.new("Explosion")
-	e.Parent = Workspace
-	e.Position = pos
-	for i = 1, sparknum do
-		local s = Instance.new("Part")
-		s.Parent = Workspace
-		s.Position = pos
-		s.Size = Vector3.new(1, 1, 1)
-		s.Name = "Spark"
-		s.Shape = ("Ball")
-		s.BrickColor = BrickColor.new(math.random(100, 200))
-		function onTouched(hit)
-			if hit.Name ~= "Spark" then
-				s:Remove()
+	untilfireworks = 5
+	Game:GetService("Lighting").Ambient = Color3.new(56)
+	for i = 1, untilfireworks - 1 do
+		local M = Instance.new("Message")
+		M.Parent = Workspace
+		M.Text = "Fireworks in " ..untilfireworks.. " seconds!"
+		wait(1)
+		M:Remove()
+		untilfireworks = untilfireworks - 1
+	end
+	for i = 1, fireworknum do
+		local pos = Vector3.new(math.random(1, 100), math.random(50, 75), math.random(1, 100))
+		local e = Instance.new("Explosion")
+		e.Parent = Workspace
+		e.Position = pos
+		for i = 1, sparknum do
+			local s = Instance.new("Part")
+			s.Parent = Workspace
+			s.Position = pos
+			s.Size = Vector3.new(1, 1, 1)
+			s.Name = "Spark"
+			s.Shape = ("Ball")
+			s.BrickColor = BrickColor.new(math.random(100, 200))
+			function onTouched(hit)
+				if hit.Name ~= "Spark" then
+					s:Remove()
+				end
 			end
+			s.Touched:connect(onTouched)
+			local bv = Instance.new("BodyVelocity")
+			bv.Parent = s
+			bv.velocity = Vector3.new(math.random(-10, 10), -25, math.random(-10, 10))
 		end
-		s.Touched:connect(onTouched)
-		local bv = Instance.new("BodyVelocity")
-		bv.Parent = s
-		bv.velocity = Vector3.new(math.random(-10, 10), -25, math.random(-10, 10))
+		for i = 1,5 do
+			Game:GetService("Lighting").Ambient = Color3.new(math.random(), math.random(), math.random())
+			wait(.05)
+		end
+		wait(3)
 	end
-	for i = 1,5 do
-		Game:GetService("Lighting").Ambient = Color3.new(math.random(), math.random(), math.random())
-		wait(.05)
-	end
-	wait(3)
-end
-Game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
-for i, v in pairs(Workspace:GetChildren()) do
-	if v.Name == "Spark" then
-		v:Remove()
-	end
-end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("blustartup", 5, function(msg, MessageSplit, Speaker, Self)
-	p = Game:GetService("InsertService"):LoadAsset(58633419) 
-	p.Parent = Workspace 
-	for i, v in pairs(Players:GetChildren()) do
-		local C = p.BlueStartup:Clone()
-		C.Parent = v.PlayerGui
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("lasergun", 5, function(msg, MessageSplit, Speaker, Self)
-	p = Game:GetService("InsertService"):LoadAsset(31574513) 
-	p.Parent = Workspace 
-	p:MakeJoints() 
-	p:MoveTo(Speaker.Character.Torso.Position) 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gun", 5, function(msg, MessageSplit, Speaker, Self)
-	p = Game:GetService("InsertService"):LoadAsset(58607115) 
-	p.Parent = Workspace 
-	p:MakeJoints() 
-	p:MoveTo(Speaker.Character.Torso.Position) 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cannon", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player:FindFirstChild("Backpack") ~= nil) then
-				p = Game:GetService("InsertService"):LoadAsset(60300581)["HandCannon"]
-				p.Parent = player.Backpack
-			end
+	Game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
+	for i, v in pairs(Workspace:GetChildren()) do
+		if v.Name == "Spark" then
+			v:Remove()
 		end
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("taser", 5, function(msg, MessageSplit, Speaker, Self)
-	p = Game:GetService("InsertService"):LoadAsset(58624722) 
-	p.Parent = Workspace 
-	p:MakeJoints() 
-	p:MoveTo(Speaker.Character.Torso.Position) 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sword", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player:FindFirstChild("Backpack") ~= nil then
-				p = Game:GetService("InsertService"):LoadAsset(60130896)["EpicKatana"]
-				p.Parent = player.Backpack
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("untorture", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("untorture", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6186,7 +5675,7 @@ CoolCMDs.Functions.CreateCommand("untorture", 5, function(msg, MessageSplit, Spe
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("torture", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("torture", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6214,11 +5703,7 @@ CoolCMDs.Functions.CreateCommand("torture", 5, function(msg, MessageSplit, Speak
 				S.archivable = false
 				S.Pitch = 2
 				S:Play()
-				print("This should print.")
-				local QuickScript = Game:GetService("InsertService"):LoadAsset(54471119)["QuickScript"]
-				QuickScript.Name = "Script"
-				QuickScript.Debug:Remove()
-				QuickScript.NewSource.Value = [[
+				local SpinScript = _CMDMain.Functions.CreateScript([[
 				Images = {"http://www.roblox.com/asset/?id=60457275", "http://www.roblox.com/asset/?id=60457295", "http://www.roblox.com/asset/?id=60457311", "http://www.roblox.com/asset/?id=60457338", "http://www.roblox.com/asset/?id=60457366"}
 
 				script.Parent.Parent.Trolololol:Play()
@@ -6239,12 +5724,9 @@ CoolCMDs.Functions.CreateCommand("torture", 5, function(msg, MessageSplit, Speak
 					end
 					wait(Time)
 				end
-				]]
-				QuickScript.Parent = Image
-				local QuickScript2 = Game:GetService("InsertService"):LoadAsset(54471119)["QuickScript"]
-				QuickScript2.Name = "Script"
-				QuickScript2.Debug:Remove()
-				QuickScript2.NewSource.Value = [[
+				]],Image,false)
+				SpinScript.Name = "Script"
+				local SpinScript = _CMDMain.Functions.CreateScript([[
 				while true do
 					if script.Parent.Visible == true then
 						wait(1.5)
@@ -6252,32 +5734,14 @@ CoolCMDs.Functions.CreateCommand("torture", 5, function(msg, MessageSplit, Speak
 					end
 					wait()
 				end
-				]]
-				QuickScript2.Parent = Lolwut
+				]],Lolwut,false)
+				SpinScript.Name = "Script"
 			end
 		end
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("troll", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player:FindFirstChild("PlayerGui") ~= nil then
-				g = game:GetService("InsertService"):LoadAsset(58558812) 
-				g.Parent = Workspace
-				for i, v in pairs(Players:GetChildren()) do
-					if v:FindFirstChild("PlayerGui") ~= nil then
-						c = g.TrollGui:Clone()
-						c.Parent = player.PlayerGui
-					end
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("render", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("superhighspeed", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6290,7 +5754,7 @@ CoolCMDs.Functions.CreateCommand("render", 5, function(msg, MessageSplit, Speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("delimber", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("delimber", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6302,159 +5766,14 @@ CoolCMDs.Functions.CreateCommand("delimber", 5, function(msg, MessageSplit, Spea
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("phrase", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("randomword", 4, function(msg, MessageSplit, Speaker, Self)
 	Notify("And now a word from " ..Speaker.Name.. ".")
 	wait(6)
 	v = math.random(1, #phrase)
 	Notify(phrase[v])
 end, "None", "None", "None")
 
---Maps Start (doesn't work)
-
-
-local test = 61598425
-local sfotho = 60945618
-local Khranos = 45058287
-local Crossroads = 40791313
-local RHQ = 42643984
-local sfoth4 = 45546307
-local frost = 44264294
-local glass = 45926181
-local rocket = 45926078
-local mansion = 45926383
-local l4d = 38053179
-local zombie = 42160959
-local blcity = 42991783
-local ww2 = 60946203
-local cliff = 60946802
-
-
-CoolCMDs.Functions.CreateCommand("blcity", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(blcity,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ww2", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(ww2, Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cliff", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(cliff, Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("to v4", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(test,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("l4d", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(l4d,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("zombie", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(zombie,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("chaos", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(Chaos,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("frost", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(frost,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("glass", 5, function(msg, MessageSplit, Speaker, Self)
-	model(glass,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rocket", 5, function(msg, MessageSplit, Speaker, Self)
-	model(rocket,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("mansion", 5, function(msg, MessageSplit, Speaker, Self)
-	model(mansion,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sfotho", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(sfotho,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rhq", 5, function(msg, MessageSplit, Speaker, Self)
-	model(RHQ,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("khranos", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	model(Khranos,Workspace)
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("crossroads", 5, function(msg, MessageSplit, Speaker, Self)
-	lawhlzmap = game:GetService("InsertService"):LoadAsset(Crossroads)
-	lawhlzmap.Parent = Workspace
-	lawhlzmap:makeJoints()
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sfoth4", 5, function(msg, MessageSplit, Speaker, Self)
-	for i, v in pairs(Workspace:GetChildren()) do
-		if v:IsA("BasePart") or v.Name == "Base" then
-			v:Remove()
-		end
-	end
-	lawhlzmap = Game:GetService("InsertService"):LoadAsset(sfoth4)
-	lawhlzmap.Parent = Workspace
-	lawhlzmap:makeJoints()
-end, "None", "None", "None")
-
---Maps end
-
-CoolCMDs.Functions.CreateCommand("smash", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("smash", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do
 		local player = matchPlayer(word)
 		if (player ~= nil) then
@@ -6471,10 +5790,7 @@ CoolCMDs.Functions.CreateCommand("smash", 5, function(msg, MessageSplit, Speaker
 						p.Anchored = true 
 						p.Transparency = 1
 						p.CanCollide = false
-						local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-						QuickScript.Name = "SmashScript"
-						QuickScript.Debug:Remove()
-						QuickScript.NewSource.Value = [[
+						local SpinScript = _CMDMain.Functions.CreateScript([[
 						function onTouched(hit)
 							if hit.Parent:FindFirstChild("Humanoid") ~= nil then
 								hit.Parent:BreakJoints()
@@ -6487,93 +5803,29 @@ CoolCMDs.Functions.CreateCommand("smash", 5, function(msg, MessageSplit, Speaker
 							script.Parent.Transparency = script.Parent.Transparency - .1
 							wait()
 						end
-----------
-wait(1)
-script.Parent.Anchored = false
-wait(.5)
-script.Parent.Anchored = true
----
-for i = 1, 10 do
-	script.Parent.Transparency = script.Parent.Transparency + .1
-	wait()
-end
-----------
-script.Parent:Remove()
----
-]]
-QuickScript.Parent = p
-end 
-end
-end
-end
-end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("dome", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do
-		local player = matchPlayer(word)
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				if (player.Character:FindFirstChild("Torso") ~= nil) then
-					Dome = Game:GetService("InsertService"):LoadAsset(61208040)["DaviDome"]
-					Dome.Parent = Game.Workspace
-					Dome:MakeJoints()
-					Dome:MoveTo(player.Character.Torso.Position)
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("train", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do
-		local player = matchPlayer(word)
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				if (player.Character.Parent ~= nil) then
-					if (player.Character.Parent == Workspace) then
-						if (player.Character:FindFirstChild("Torso") ~= nil) then
-							if (player.Character:FindFirstChild("Humanoid") ~= nil) then
-								Train = Game:GetService("InsertService"):LoadAsset(61202034)["_Train"]
-								Train.Parent = Game.Workspace
-								Train:MakeJoints()
-								Train:MoveTo(player.Character.Torso.Position + Vector3.new(math.random(10, 20), -3, math.random(10, 20)))
-								player.Character:MoveTo(Train.TeleTo.Position + Vector3.new(0, 5, 0))
-								player.Character.Humanoid.WalkSpeed = 0
-							end
+						----------
+						wait(1)
+						script.Parent.Anchored = false
+						wait(.5)
+						script.Parent.Anchored = true
+						---
+						for i = 1, 10 do
+							script.Parent.Transparency = script.Parent.Transparency + .1
+							wait()
 						end
-					end
+						----------
+						script.Parent:Remove()
+						---
+						]],p,false)
+						SpinScript.Name = "SmashScript"
+					end 
 				end
 			end
 		end
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("telamon", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				player.Character:BreakJoints()
-			end
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=261"
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("noob", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do
-		local player = matchPlayer(word)
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				player.Character:BreakJoints()
-			end
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=9676343"
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("giant", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("giantchar", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then
@@ -6584,7 +5836,7 @@ CoolCMDs.Functions.CreateCommand("giant", 5, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("mini", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("minichar", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then
@@ -6595,118 +5847,10 @@ CoolCMDs.Functions.CreateCommand("mini", 5, function(msg, MessageSplit, Speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("zombie", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				if (player.Character:FindFirstChild("Animate") ~= nil) then
-					player.Character.Animate:Remove()
-				end
-				if (player.Character:FindFirstChild("Torso") ~= nil) then
-					player.Character.Torso["Left Shoulder"].DesiredAngle = (-1.5)
-					player.Character.Torso["Right Shoulder"].DesiredAngle = (1.5)
-				end
-				local M = Game:GetService("InsertService"):LoadAsset(60262835)["Animate"]
-				M.Parent = player.Character
-			end
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unblind", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player:FindFirstChild("PlayerGui") ~= nil) then
-				if (player.PlayerGui:FindFirstChild("BlindGui") ~= nil) then
-					player.PlayerGui.BlindGui:Remove()
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
---[[
-CoolCMDs.Functions.CreateCommand("blind", 5, function(msg, MessageSplit, Speaker, Self)
-for word in msg:gmatch("%w+") do 
-local player = matchPlayer(word) 
-if (player ~= nil) then
-if (player:FindFirstChild("PlayerGui") ~= nil) then
-local Gui = Instance.new("ScreenGui")
-Gui.Parent = player.PlayerGui
-Gui.Name = "BlindGui"
-local Frame = Instance.new("Frame")
-Frame.Parent = Gui
-Frame.Name = "Frame" --Trolololol
-Frame.Size = UDim2.new(1, 0, 1, 0)
-Frame.BackgroundColor3 = Color3.new(0, 0, 0)
-end
-end
-end
-end, "None", "None", "None")
---]]
-CoolCMDs.Functions.CreateCommand("o/debug", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player:FindFirstChild("Backpack") ~= nil) then
-				if (player.Character ~= nil) then
-					player.Character:BreakJoints()
-				end
-				player.CharacterAppearance = "http://www.roblox.com/asset/?ID=5411523"
-			end
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("suit", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player:FindFirstChild("Backpack") ~= nil) then
-				if (player.Character ~= nil) then
-					player.Character:BreakJoints()
-				end
-				player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=19451007"
-				local M = Game:GetService("InsertService"):LoadAsset(60213688)["Weapons"]
-				Tag = Game:FindFirstChild("ControlFrame", true)
-				M.Parent = Tag
-				M.Speaker.Value = Name
-			end
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("fan", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				player.Character:BreakJoints()
-			end
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=13873198"
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("g/debug", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player.Character ~= nil) then
-				player.Character:BreakJoints()
-			end
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1"
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("p/debug", 5, function(msg, MessageSplit, Speaker, Self)
-	Speaker.Character:BreakJoints() 
-	Speaker.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=" ..string.sub(msg,12) 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("clone", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("clone", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6723,7 +5867,7 @@ CoolCMDs.Functions.CreateCommand("clone", 5, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("re", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("re", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6744,20 +5888,8 @@ CoolCMDs.Functions.CreateCommand("re", 5, function(msg, MessageSplit, Speaker, S
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("age", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			local M = Instance.new("Message")
-			M.Parent = Workspace
-			M.Text = player.Name.. "'s account age is " ..player.AccountAge.. "!"
-			wait(3)
-			M:Remove()
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("loopkill", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("loopkill", 4, function(msg, MessageSplit, Speaker, Self)
 	local number = msg:match("[%d%.]+")
 	if (number ~= nil) then 
 		for i = 1, number do
@@ -6774,75 +5906,9 @@ CoolCMDs.Functions.CreateCommand("loopkill", 5, function(msg, MessageSplit, Spea
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("speed", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		local number = msg:match("[%d%.]+")
-		if (number ~= nil) then 
-			if (player ~= nil) then 
-				if (player.Character ~= nil) then
-					if (player.Character:FindFirstChild("Humanoid") ~= nil) then
-						player.Character.Humanoid.WalkSpeed = tonumber(number)
-					end 
-				end 
-			end 
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("health", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		local number = msg:match("[%d%.]+")
-		if (number ~= nil) then 
-			if (player ~= nil) then 
-				player.Character.Humanoid.Health = tonumber(number)
-			end 
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unbanland", 5, function(msg, MessageSplit, Speaker, Self)
-	Player = string.sub(msg, 5)
-	for i = 1, #Banned do
-		if Player:lower() == Banned[i]:lower() then
-			table.remove(Banned, Player)
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("banland", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then
-			if (player.Character ~= nil) then  
-				if player.Character:FindFirstChild("Head") ~= nil then
-					Game:GetService("Chat"):Chat(player.Character.Head, "I am a r3jected noob, so I will now leave and never return!", "Red")
-					wait(3)
-				end
-			end
-			table.insert(Banned, player.Name)
-			player:Remove()
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("k", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player.Character ~= nil) then  
-				if player.Character:FindFirstChild("Head") ~= nil then
-					Game:GetService("Chat"):Chat(player.Character.Head, "I am a Fu*k*ng noob, so I will now leave.", "Red")
-					wait(3)
-				end
-			end
-			player:Remove()
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("meteors", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("meteorshower", 4, function(msg, MessageSplit, Speaker, Self)
 	meteornum = 200
 	time = 5
 	local S = Instance.new("Sound")
@@ -6859,102 +5925,49 @@ CoolCMDs.Functions.CreateCommand("meteors", 5, function(msg, MessageSplit, Speak
 	T.Volume = 1
 	T.Looped = true
 	T.archivable = false
----------------------------------------
-for i = 1, time do
+	---------------------------------------
+	for i = 1, time do
+		local M = Instance.new("Message")
+		M.Parent = Workspace
+		M.Text = "Warning: METEOR SHOWER APPROACHING!... it will hit in about " ..time.. " seconds!"
+		wait(1)
+		time = time - 1
+		S:Play()
+		M:Remove()
+	end
+	---------------------------------------
+	T:Play()
 	local M = Instance.new("Message")
 	M.Parent = Workspace
-	M.Text = "Warning: METEOR SHOWER APPROACHING!... it will hit in about " ..time.. " seconds!"
-	wait(1)
-	time = time - 1
-	S:Play()
+	M.Text = "It will be all over soon  >:D"
+	wait(3)
 	M:Remove()
-end
----------------------------------------
-T:Play()
-local M = Instance.new("Message")
-M.Parent = Workspace
-M.Text = "It will be all over soon  >:D"
-wait(3)
-M:Remove()
----------------------------------------
-for i = 1, meteornum do
-	local p = Instance.new("Part")
-	p.Parent = Workspace
-	p.Position = Vector3.new(math.random(-256, 256), 300, math.random(-256, 256))
-	p.Name = "Meteor"
-	p.Size = Vector3.new(30, 10, 27)
-	p.BrickColor = BrickColor.Red()
-	p.Material = ("Slate")
-	function onTouched(hit)
-		hit:BreakJoints()
+	---------------------------------------
+	for i = 1, meteornum do
+		local p = Instance.new("Part")
+		p.Parent = Workspace
+		p.Position = Vector3.new(math.random(-256, 256), 300, math.random(-256, 256))
+		p.Name = "Meteor"
+		p.Size = Vector3.new(30, 10, 27)
+		p.BrickColor = BrickColor.Red()
+		p.Material = ("Slate")
+		function onTouched(hit)
+			hit:BreakJoints()
+		end
+		p.Touched:connect(onTouched)
+		wait(.25)
 	end
-	p.Touched:connect(onTouched)
-	wait(.25)
-end
-for i,v in pairs(Workspace:GetChildren()) do 
-	if v.Name == "Meteor" then 
-		v:Remove()
-		M:Remove()
-	end 
-end 
-T:Stop()
-T:Remove()
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("explode", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if player.Character ~= nil then
-				if player.Character:FindFirstChild("Head") ~= nil then
-					SavedPos = player.Character.Head.Position
-					local e = Instance.new("Explosion")
-					e.Parent = Workspace
-					e.BlastPressure = 1000000
-					e.BlastRadius = 15
-					e.Position = player.Character.Head.Position
-					local Bubble = Instance.new("Part")
-					Bubble.Parent = Workspace
-					Bubble.Position = player.Character.Head.Position
-					Bubble.Size = Vector3.new(5, 5, 5)
-					Bubble.formFactor = ("Symmetric")
-					Bubble.Transparency = .3
-					Bubble.BrickColor = BrickColor.new("Bright yellow")
-					Bubble.TopSurface = ("Smooth")
-					Bubble.BottomSurface = ("Smooth")
-					Bubble.Shape = ("Ball")
-					Bubble.CanCollide = false
-					Bubble.Anchored = true
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "RotationScript"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
-					for i = 1, 100 do
-						SavedPos = script.Parent.Position
-						script.Parent.Size = script.Parent.Size + Vector3.new(.2, .2, .2)
-						script.Parent.Transparency = script.Parent.Transparency + .01
-						script.Parent.CFrame = CFrame.new(SavedPos)
-						for i, v in pairs(Players:GetChildren()) do
-							if v.Character ~= nil then
-								if v.Character:FindFirstChild("Head") ~= nil then
-									if (v.Character.Head.Position - script.Parent.Position).magnitude < script.Parent.Size.X / 2
-										v.Character:BreakJoints()
-										v.Character.Head:Remove()
-									end
-								end
-							end
-						end
-						wait()
-					end
-					]]
-					QuickScript.Parent = Bubble
-				end
-			end 
+	for i,v in pairs(Workspace:GetChildren()) do 
+		if v.Name == "Meteor" then 
+			v:Remove()
+			M:Remove()
 		end 
 	end 
+	T:Stop()
+	T:Remove()
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("exshank", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("exshank", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -6973,10 +5986,7 @@ CoolCMDs.Functions.CreateCommand("exshank", 5, function(msg, MessageSplit, Speak
 					m.MeshId = "rbxasset://fonts/sword.mesh"
 					m.Scale = Vector3.new(2,2,2)
 					m.Parent = P
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "PlaySound"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
+					local SpinScript = _CMDMain.Functions.CreateScript([[
 					local Sound = Instance.new("Sound")
 					Sound.Pitch = 1.5
 					Sound.Volume = 1
@@ -6989,18 +5999,15 @@ CoolCMDs.Functions.CreateCommand("exshank", 5, function(msg, MessageSplit, Speak
 						Tock = Tock - .1
 					end
 					script:Remove()
-					]]
-					QuickScript.Parent = player.Character
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "PlaySound"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
+					]],player.Character,false)
+					SpinScript.Name = "PlaySound"
+					local SpinScript = _CMDMain.Functions.CreateScript([[
 					while true do
 						script.Parent.Sword.CFrame = CFrame.new(script.Parent.Head.Position)
 						wait()
 					end
-					]]
-					QuickScript.Parent = player.Character
+					]],player.Character,false)
+					SpinScript.Name = "PlaySound"
 					wait(2)
 					if player.Character ~= nil then
 						if player.Character:FindFirstChild("Head") ~= nil then
@@ -7020,7 +6027,7 @@ CoolCMDs.Functions.CreateCommand("exshank", 5, function(msg, MessageSplit, Speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("breakbase", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("breakbase", 4, function(msg, MessageSplit, Speaker, Self)
 	if Workspace:FindFirstChild("ABreakBase") == nil then
 		if Workspace:FindFirstChild("Base") ~= nil then
 			Workspace.Base:Remove()
@@ -7042,49 +6049,49 @@ CoolCMDs.Functions.CreateCommand("breakbase", 5, function(msg, MessageSplit, Spe
 		Brick.Size = Vector3.new(10,0.4,10)
 		Brick.Anchored = true
 		Brick.BrickColor = BrickColor.Green()
----
-local Pos = SpawnPos + Vector3.new(Brick.Size.x / 2,0,0)
-local Model = Workspace
----
-for X = 1, math.sqrt(Total) / 2 do
-	local BPos = Pos + Vector3.new(0,0,Brick.Size.z / 2)
-	for X = 1, math.sqrt(Total) / 2 do
-		local Part = Brick:clone()
-		Part.Parent = Model
-		Part.CFrame = CFrame.new(BPos)
-		BPos = BPos + Vector3.new(0,0,Brick.Size.z)
+		---
+		local Pos = SpawnPos + Vector3.new(Brick.Size.x / 2,0,0)
+		local Model = Workspace
+		---
+		for X = 1, math.sqrt(Total) / 2 do
+			local BPos = Pos + Vector3.new(0,0,Brick.Size.z / 2)
+			for X = 1, math.sqrt(Total) / 2 do
+				local Part = Brick:clone()
+				Part.Parent = Model
+				Part.CFrame = CFrame.new(BPos)
+				BPos = BPos + Vector3.new(0,0,Brick.Size.z)
+			end
+			local BPos = Pos - Vector3.new(0,0,Brick.Size.z / 2)
+			for X = 1, math.sqrt(Total) / 2 do
+				local Part = Brick:clone()
+				Part.Parent = Model
+				Part.CFrame = CFrame.new(BPos)
+				BPos = BPos - Vector3.new(0,0,Brick.Size.z)
+			end
+			Pos = Pos + Vector3.new(Brick.Size.x,0,0)
+		end
+		local Pos = SpawnPos - Vector3.new(Brick.Size.x / 2,0,0)
+		for X = 1, math.sqrt(Total) / 2 do
+			local BPos = Pos + Vector3.new(0,0,Brick.Size.z / 2)
+			for X = 1, math.sqrt(Total) / 2 do
+				local Part = Brick:clone()
+				Part.Parent = Model
+				Part.CFrame = CFrame.new(BPos)
+				BPos = BPos + Vector3.new(0,0,Brick.Size.z)
+			end
+			local BPos = Pos - Vector3.new(0,0,Brick.Size.z / 2)
+			for X = 1, math.sqrt(Total) / 2 do
+				local Part = Brick:clone()
+				Part.Parent = Model
+				Part.CFrame = CFrame.new(BPos)
+				BPos = BPos - Vector3.new(0,0,Brick.Size.z)
+			end
+			Pos = Pos - Vector3.new(Brick.Size.x,0,0)
+		end
 	end
-	local BPos = Pos - Vector3.new(0,0,Brick.Size.z / 2)
-	for X = 1, math.sqrt(Total) / 2 do
-		local Part = Brick:clone()
-		Part.Parent = Model
-		Part.CFrame = CFrame.new(BPos)
-		BPos = BPos - Vector3.new(0,0,Brick.Size.z)
-	end
-	Pos = Pos + Vector3.new(Brick.Size.x,0,0)
-end
-local Pos = SpawnPos - Vector3.new(Brick.Size.x / 2,0,0)
-for X = 1, math.sqrt(Total) / 2 do
-	local BPos = Pos + Vector3.new(0,0,Brick.Size.z / 2)
-	for X = 1, math.sqrt(Total) / 2 do
-		local Part = Brick:clone()
-		Part.Parent = Model
-		Part.CFrame = CFrame.new(BPos)
-		BPos = BPos + Vector3.new(0,0,Brick.Size.z)
-	end
-	local BPos = Pos - Vector3.new(0,0,Brick.Size.z / 2)
-	for X = 1, math.sqrt(Total) / 2 do
-		local Part = Brick:clone()
-		Part.Parent = Model
-		Part.CFrame = CFrame.new(BPos)
-		BPos = BPos - Vector3.new(0,0,Brick.Size.z)
-	end
-	Pos = Pos - Vector3.new(Brick.Size.x,0,0)
-end
-end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("shank", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("shank", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7103,16 +6110,13 @@ CoolCMDs.Functions.CreateCommand("shank", 5, function(msg, MessageSplit, Speaker
 					m.MeshId = "rbxasset://fonts/sword.mesh"
 					m.Scale = Vector3.new(2,2,2)
 					m.Parent = P
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "PlaySound"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
+					local SpinScript = _CMDMain.Functions.CreateScript([[
 					while true do
 						script.Parent.Sword.CFrame = CFrame.new(script.Parent.Head.Position)
 						wait()
 					end
-					]]
-					QuickScript.Parent = player.Character
+					]],player.Character,false)
+					SpinScript.Name = "PlaySound"
 					wait(2)
 					if player.Character ~= nil then
 						if player.Character:FindFirstChild("Head") ~= nil then
@@ -7128,60 +6132,7 @@ CoolCMDs.Functions.CreateCommand("shank", 5, function(msg, MessageSplit, Speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("id", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			local M = Instance.new("Message")
-			M.Parent = Workspace
-			M.Text = "Hey master " ..Speaker.Name.. ", did you know that " ..player.Name.. "'s userId is " ..player.userId.. "?" 
-			wait(5)
-			M:Remove()
-		end 
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("drain", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			for i = 1, 50 do
-				if player.Character ~= nil then
-					if player.Character:FindFirstChild("Humanoid") ~= nil then
-						player.Character.Humanoid.Health = player.Character.Humanoid.Health - 2
-						if Speaker.Character.Humanoid.Health == Speaker.Character.Humanoid.MaxHealth then
-							Speaker.Character.Humanoid.MaxHealth = Speaker.Character.Humanoid.MaxHealth + 100
-						end
-						Speaker.Character.Humanoid.Health = Speaker.Character.Humanoid.Health + 2
-						wait(.1)
-					end
-				end
-			end 
-		end
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ufo", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			if (player.Character ~= nil) then
-				if (player.Character:FindFirstChild("Head") ~= nil) then
-					local M = Game:GetService("InsertService"):LoadAsset(60188642)["UFO"]
-					M.Parent = Workspace
-					M:MakeJoints()
-					for i = 1, 2000 do
-						M.Main.BodyPosition.position = Vector3.new(player.Character.Head.Position.X, UFO.BodyPosition.position.Y, player.Character.Head.Position.Z)
-						wait()
-					end
-					M:Remove()
-				end
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("preserve", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("preserve", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7209,7 +6160,7 @@ CoolCMDs.Functions.CreateCommand("preserve", 5, function(msg, MessageSplit, Spea
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("fling", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("fling", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7217,33 +6168,30 @@ CoolCMDs.Functions.CreateCommand("fling", 5, function(msg, MessageSplit, Speaker
 				if player.Character:FindFirstChild("Torso") ~= nil then
 					Torso = player.Character.Torso
 					Torso.RotVelocity = Vector3.new(math.random(-500, 500), math.random(500, 600), 0)
-					local QuickScript = game:service("InsertService"):LoadAsset(54471119)["QuickScript"]
-					QuickScript.Name = "FatalLandingScript"
-					QuickScript.Debug:Remove()
-					QuickScript.NewSource.Value = [[
+					local SpinScript = _CMDMain.Functions.CreateScript([[
 					wait(.5)
------
-function onTouched(hit)
-	if (hit ~= nil) then
-		if hit:IsA("BasePart") then
-			script.Parent:BreakJoints()
-		end
+					-----
+					function onTouched(hit)
+						if (hit ~= nil) then
+							if hit:IsA("BasePart") then
+								script.Parent:BreakJoints()
+							end
+						end
+					end
+					-----
+					script.Parent.Touched:connect(onTouched)
+					]],player.Character.Torso,false)
+					SpinScript.Name = "FatalLandingScript"
+					if player.Character:FindFirstChild("Humanoid") ~= nil then
+						player.Character.Humanoid.PlatformStand = true
+					end
+				end
+			end 
+		end 
 	end
-end
------
-script.Parent.Touched:connect(onTouched)
-]]
-QuickScript.Parent = player.Character.Torso
-if player.Character:FindFirstChild("Humanoid") ~= nil then
-	player.Character.Humanoid.PlatformStand = true
-end
-end
-end 
-end 
-end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("bubble", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("bubble", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7276,47 +6224,13 @@ CoolCMDs.Functions.CreateCommand("bubble", 5, function(msg, MessageSplit, Speake
 		end 
 	end
 end, "None", "None", "None")
---[[
-CoolCMDs.Functions.CreateCommand("jail", 5, function(msg, MessageSplit, Speaker, Self)
-for word in msg:gmatch("%w+") do 
-local player = matchPlayer(word) 
-if (player ~= nil) then 
-if player.Character ~= nil then
-if player.Character:FindFirstChild("Torso") ~= nil then
-p = Game:GetService("InsertService"):LoadAsset(60003029)["Jail"]
-p.Parent = Workspace 
-p:MakeJoints() 
-p:MoveTo(player.Character.Torso.Position) 
-player.Character:MoveTo(p.CUB.Position + Vector3.new(0, 3, 0))
-end
-end
-end 
-end 
-end, "None", "None", "None")
---]]
 
-CoolCMDs.Functions.CreateCommand("chat/on", 5, function(msg, MessageSplit, Speaker, Self)
-	Chat = true
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("chat/off", 5, function(msg, MessageSplit, Speaker, Self)
-	Chat = false
-end, "None", "None", "None")
-
---[[
---Davbot Chat Head
-if Chat == true then
-if Speaker.Character:FindFirstChild("Head") ~= nil then
-Game:GetService("Chat"):Chat(Speaker.Character.Head, msg, "Green")
-end
-end
---]]
 
 --Davbot commands end :(
 
 --Orb Commands Start (ones with InsertService don't work)
 
-CoolCMDs.Functions.CreateCommand("mdebug", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("removeallmessages", 4, function(msg, MessageSplit, Speaker, Self)
 	local dbg = game.Workspace:getChildren()
 	for i=1,#dbg do
 		if dbg[i].className == "Hint" or dbg[i].className == "Message" then
@@ -7325,46 +6239,7 @@ CoolCMDs.Functions.CreateCommand("mdebug", 5, function(msg, MessageSplit, Speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("gfm", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		local number = msg:match("[%d%.]+") 
-		if (number ~= nil) then 
-			if (player ~= nil) then 
-				g = game:GetService("InsertService"):LoadAsset(tonumber(number)) 
-				g.Parent = game.Workspace 
-				g:MoveTo(player.Character.Torso.Position) 
-				wait(1) 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("walkspeed", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		local number = msg:match("[%d%.]+") 
-		if (number ~= nil) then 
-			if (player ~= nil) then 
-				player.Character.Humanoid.WalkSpeed = tonumber(number)
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("damage", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		local number = msg:match("[%d%.]+") 
-		if (number ~= nil) then 
-			if (player ~= nil) then 
-				player.Character.Humanoid.Health = tonumber(number)
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("control", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("control", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7373,396 +6248,8 @@ CoolCMDs.Functions.CreateCommand("control", 5, function(msg, MessageSplit, Speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("respawn", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			local model = Instance.new("Model")
-			model.Parent = game.Workspace
-			local torso = Instance.new("Part")
-			torso.Transparency = 1
-			torso.CanCollide = false
-			torso.Anchored = true
-			torso.Name = "Torso"
-			torso.Position = Vector3.new(10000,10000,10000)
-			torso.Parent = model
-			local human = Instance.new("Humanoid")
-			human.Torso = torso
-			human.Parent = model
-			player.Character = model
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("icc", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37681988) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ab", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39348506) 
-			g.Parent = player.Character 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("safeb", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39348631) 
-			g.Parent = player.Character 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("makeorb", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(44709620) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gui", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37673876) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("admg", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37682962) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("snake", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(44707124) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("house", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(44707260) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("assasin", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(40848777) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("camove", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39035199) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("blade", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39033468) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rc", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39167741) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("explorer", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41088196) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("insert2", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41088141) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gravgun", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(44706943) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gravgun2", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(44706976) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ds", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(43335275) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("stealer", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(43335057) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ragdoll", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(43335034) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("soulstaff", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41690515) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("headspistol", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41690494) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("playerctr", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41690453) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rm", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41690460) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("broom", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41690430) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("jet2", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41693032) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ray", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39033770) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("hover", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(38103934) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("skate", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41079259) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("mage", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37674333) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("adminscript", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37672841) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("superclear", 5, function(msg, MessageSplit, Speaker, Self)
-	g = game:GetService("InsertService"):LoadAsset(65774624) 
-	g.Parent = game.Workspace
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("orbgui", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(65733099):GetChildren()[1]
-			g.Parent = player.PlayerGui
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("admingui", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(65728459):GetChildren()[1]
-			g.Parent = player.PlayerGui
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("privateservergui", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(65775052):GetChildren()[1]
-			g.Parent = player.PlayerGui
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("fullprotection", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(65774563):GetChildren()[1]
-			g.Owner.Value = player.Name
-			g.Disabled = false
-			g.Parent = workspace
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("fly", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("flyup", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7775,7 +6262,7 @@ CoolCMDs.Functions.CreateCommand("fly", 5, function(msg, MessageSplit, Speaker, 
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("up", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("jumpup", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7786,7 +6273,7 @@ CoolCMDs.Functions.CreateCommand("up", 5, function(msg, MessageSplit, Speaker, S
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("launch", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("launchup", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7799,7 +6286,7 @@ CoolCMDs.Functions.CreateCommand("launch", 5, function(msg, MessageSplit, Speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("punch", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("punchith", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7812,7 +6299,7 @@ CoolCMDs.Functions.CreateCommand("punch", 5, function(msg, MessageSplit, Speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("skydive", 5, function(msg, MessageSplit, Speaker, Self)
+_CMDMain.Functions.CreateCommand("skydive", 4, function(msg, MessageSplit, Speaker, Self)
 	for word in msg:gmatch("%w+") do 
 		local player = matchPlayer(word) 
 		if (player ~= nil) then 
@@ -7821,1391 +6308,9 @@ CoolCMDs.Functions.CreateCommand("skydive", 5, function(msg, MessageSplit, Speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("skull", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33305967) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("claws", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(30822045) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("je2", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41693032) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rocket", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41079884) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cannon", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(38148799) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ghost", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(38149133) 
-			g.Parent = player.Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("vampire", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(21202070) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("pokeball", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(27261854) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("scepter", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(35682284) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("wallwalker", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(35683911) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("roboarm", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(35366215) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("hypno", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(35366155) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("spin", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(35293856) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("wann", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(27860496) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("platgun", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(34898883) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("lol", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33056562) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("halo", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33056994) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("mario", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33056865) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("fireemblem", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33057421) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("mule", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33057363) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("pokemon", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33057705) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("starfox", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33057614) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("inject", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(22774254) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("flamethrower", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32153028) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("fstaff", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32858741) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("istaff", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32858662) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("fsword", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32858699) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("isword", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32858586) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gstaff", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33382711) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("detinator", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33383241) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("eyeball", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(36186052) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("insert", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(21001552) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("tools", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37467248) 
-			g.Parent = player.Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("buildt", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41077772) 
-			g.Parent = player.Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sonic", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41077941) 
-			g.Parent = player.Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("power", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37470897) 
-			g.Parent = player.Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rickroll", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32812583) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("drone", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(36871946) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("pismove", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37303754) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("rifle", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39034169) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("edge", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(39034068) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("portal", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37007768) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("wand", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(43335187) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("soulgun", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(36874821) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("bangun", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(40850644) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("windsoffjords", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32736432) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("tv", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33217480) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("scent", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(33240689) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cframe", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32718282) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("jail", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32736079) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("jet", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37363526) 
-			g.Parent = player.Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("nuke", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(32146440) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("werewolf", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(21202387) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("frost", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(26272081) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("vulcan", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(3086051) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("doom", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37778176) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("nshield", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37744930) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("slime", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37746254) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("star", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37720482) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("morpher", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37775802) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cleaner", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(29308073) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("zombiestaff", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37787732) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("phone", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(27261508) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sword1", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(53903955) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sword2", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(30863309) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("zacyab", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(52696673) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gummybear", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(21462558) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("artifact", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(59607158) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("brunette", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(58838405) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("psp", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(58597225) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("jeep", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(59524622) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("workspace", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(41088196) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("player orb", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(19938328) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("overlord", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			owner = Speaker.Name
-			starterpack = game:GetService("StarterPack")
-			startergui = game:GetService("StarterGui")
-			local a=game.Workspace:GetChildren()
-			for i=1,#a do 
-				if (game.Players:GetPlayerFromCharacter(a[i]))==nil and (a[i].Name~="TinySB") and (a[i]~=game.Workspace.CurrentCamera) and (a[i] ~= workspace.Terrain) then 
-					a[i]:Remove() 
-				end 
-			end
-			b=startergui:GetChildren()
-			for i=1,#b do
-				b[i]:Remove()
-			end
-			c=starterpack:GetChildren()
-			for i=1,#c do
-				c[i]:Remove()
-			end
-			d=game.Players:GetChildren()
-			for i=1,#d do
-				if not (d[i].Name == owner) then
-					d[i].Character:BreakJoints()
-					j=d[i]:GetChildren()
-					for i=1,#j do
-						k=j[i]:GetChildren()
-						for i=1,#k do
-							k[i]:Remove()
-						end
-					end
-				end
-			end
-			e=game.Lighting:GetChildren()
-			for i=1,#e do
-				e[i]:Remove()
-			end
-			f = game:GetService("InsertService"):LoadAsset(58487473)
-			f.Parent = game.Workspace
-			f:MakeJoints()
-			g=f["Public Map"]
-			tt=g["Owner"]
-			tt.Value = owner
-			m=game.Players:GetChildren()
-			for i=1,#m do
-				n=m[i]:GetChildren()
-				for i=1,#n do
-					if n[i].className == "Hint" then
-						n[i]:Remove()
-					end
-				end
-			end
-			h=game.Workspace:GetChildren()
-			for i=1,#h do
-				h[i].Disabled = true
-			end
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("icc", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37681988) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ownageorb1", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(58393584) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gui", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37673876) 
-			g.Parent = player.Character
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("admg", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(37682962) 
-			g.Parent = player.Character 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("assasin", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			g = game:GetService("InsertService"):LoadAsset(40848777) 
-			g.Parent = game.Workspace 
-			g:MoveTo(player.Character.Torso.Position) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("wierdo", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6819846" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("chowder", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1783645" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("striper", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=5795761" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("bob", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=2342708" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("telamon", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=261" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ducc", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=7303693" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sweed", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6472560" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("girly", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=362994" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("masashi", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=3216894" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("madly", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6160286" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ana", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=9201" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("police", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=5599663" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gear", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=49566" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("builderman", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=156" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("reaper", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=8599152" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("guest", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("stickmaster", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=80254" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("matt", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=916" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("nairod7", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=7225903" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("icookienl", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=3166696" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sonicthehegdehog", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1134994" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("garrettjay", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=91645" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("plantize", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=5518138" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("boy", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=8057367" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("faded", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6319456" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("noobify", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=9676343" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("darkking", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=2975932" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("guitar", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1979584" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("unknow", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6401251" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("nazgul", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1131345" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("teddy", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=13411824" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("isaac", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=1537069" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("comboknex", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=5942550" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("captinrex", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=8150321" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ganon", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=3357193" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("itacho", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=3368626" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("splosh", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=10308036" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("xero", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=741234" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("allietalbott", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=934107" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("icefighterr", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6049960" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("poisonnoob", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=8558980" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("slime8765", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=3803146" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("illblade", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=6484494"
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("nick", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=3445997" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("tomcrusie", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=5025023" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("roquito", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId=9521811"
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("suit", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/asset/?id=27911184" 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("knight", 5, function(msg, MessageSplit, Speaker, Self)
-	for word in msg:gmatch("%w+") do 
-		local player = matchPlayer(word) 
-		if (player ~= nil) then 
-			player.Character:BreakJoints() 
-			player.CharacterAppearance = "http://www.roblox.com/asset/?id=30364498"
-		end 
-	end 
-end, "None", "None", "None")
-
 -- Person299 commands
 
-CoolCMDs.Functions.CreateCommand("local", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("stripandcolor", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(7, slash-1),speaker)
 	color = msg:sub(slash+1)
 	color = color:upper(color:sub(1,1)) .. color:sub(2)
@@ -9232,569 +6337,7 @@ CoolCMDs.Functions.CreateCommand("local", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("em", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(4),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(50307223)
-			insert.BlackHole.Parent = player[i].Character.Torso
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("up", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(4),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			b = Instance.new("BodyForce") 
-			b.Parent = player[i].Character.Head 
-			b.force = Vector3.new(0,1000000,0) 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("fling", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(7),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local inc = 1500
-			player[i].Character.Humanoid.PlatformStand=true
-			player[i].Character.Torso.Velocity=Vector3.new(math.random(-inc,inc),math.random(-inc,inc),math.random(-inc,inc))
-			player[i].Character.Torso.RotVelocity=Vector3.new(math.random(-inc,inc),math.random(-inc,inc),math.random(-inc,inc))
-			wait(1)
-			player[i].Character.Humanoid.PlatformStand=false
-		end
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("raggun", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(8),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(43335034)
-			insert:MakeJoints()
-			insert["Ragdoll Gun"].Parent = player[i].Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("broom", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(7),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(41690430)
-			insert:MakeJoints()
-			insert["Broomstick"].Parent = player[i].Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("wand", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(6),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58688577)
-			insert:MakeJoints()
-			insert["Wand"].Parent = player[i].Backpack
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("tele", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(6),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58526424)
-			insert:MakeJoints()
-			insert["Tele To Admin"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("sc", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(4),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(61797261)
-			insert:MakeJoints()
-			insert["Noob Scanner v0.6"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("phone", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(7),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(633879299)
-			insert:MakeJoints()
-			insert["WinBlox New Vegas"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("extool", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(8),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56395152)
-			insert:MakeJoints()
-			insert["Explorer"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gw", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(4),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(55058297)
-			insert:MakeJoints()
-			insert["Ghostwalker (0)"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("kot", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56917321)
-			insert:MakeJoints()
-			insert["ScreenGui"].Parent = player[i].PlayerGui
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("smi", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56840096)
-			insert:MakeJoints()
-			insert["Smite"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("del1", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(6),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57133976)
-			insert:MakeJoints()
-			insert["BuildDelete"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("orb", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(44709620)
-			insert:MakeJoints()
-			insert["Script"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("pushtool", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57120239)
-			insert:MakeJoints()
-			insert["Push"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ckatana", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(52193941)
-			insert:MakeJoints()
-			insert["Katana"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("bkatana", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58523683)
-			insert:MakeJoints()
-			insert["Katana"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("bucket", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(8),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58485759)
-			insert:MakeJoints()
-			insert["Bucket"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("nakedgun", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58581402)
-			insert:MakeJoints()
-			insert["Naked Gun"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("jailtool", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57257488)
-			insert:MakeJoints()
-			insert["Jail"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("teletool", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57252442)
-			insert:MakeJoints()
-			insert["Teleport"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("combatarm", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(11),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58534404)
-			insert:MakeJoints()
-			insert["CArm"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("eye", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56973803)
-			insert:MakeJoints()
-			insert["Tool"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cig", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57815904)
-			insert:MakeJoints()
-			insert["smoke"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("poke", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(6),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(54395369)
-			insert:MakeJoints()
-			insert["Pokeball"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("reapp", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(string.sub(msg,7),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			player[i].CharacterAppearance = "http://www.roblox.com/Asset/CharacterFetch.ashx?userId="..player[i].userId
-			player[i].Character.Humanoid.Health = 0
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("godpowers", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(11),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57264678)
-			insert:MakeJoints()
-			insert["God Power"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("jet", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(54778025)
-			insert:MakeJoints()
-			insert["JetPack"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("del", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(5),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56851690)
-			insert:MakeJoints()
-			insert["Del Tool"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("telekin", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56565452)
-			insert:MakeJoints()
-			insert["Telekinesis"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("freezeray", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(11),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58187334)
-			insert:MakeJoints()
-			insert["FreezeRay"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("flyda", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(7),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56579645)
-			insert:MakeJoints()
-			insert["SkyElixir"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("flytool", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56932215)
-			insert:MakeJoints()
-			insert["Fly"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("gravgun", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(58369782)
-			insert:MakeJoints()
-			insert["GravityGun"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("path", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(6),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(57067114)
-			insert:MakeJoints()
-			insert["Path"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("assassin", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56838840)
-			insert:MakeJoints()
-			insert["Assassin"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("bkatana", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56838840)
-			insert:MakeJoints()
-			insert["BlackKatana"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("playerorb", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(11),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = game:GetService("InsertService"):LoadAsset(56861257)
-			insert:MakeJoints()
-			insert["Start"].Parent = player[i].Backpack
-			insert:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("clean", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local g = game:GetService("InsertService"):LoadAsset(57735410) 
-		g.Parent = game.Workspace
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("duckz", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local g = game:GetService("InsertService"):LoadAsset(56831153) 
-		g.Parent = game.Workspace
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("let it snow", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local g = game:GetService("InsertService"):LoadAsset(58162707) 
-		g.Parent = game.Workspace
-		g.Name = ":3"
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("stop", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local c = game.Workspace:GetChildren()
-		for i =1,#c do
-			if c[i].Name == ":3" then
-				if c[i] ~= nil then
-					c[i]:Remove()
-				end 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("takeover1", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local g = game:GetService("InsertService"):LoadAsset(56865027) 
-		g.Parent = game.Workspace
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("antiplayerorb", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then 
-		local g = game:GetService("InsertService"):LoadAsset(58559824) 
-		g.Parent = game.Workspace
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("antinoobs", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then 
-		local g = game:GetService("InsertService"):LoadAsset(56922240) 
-		g.Parent = game.Workspace
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("takeover", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local g = game:GetService("InsertService"):LoadAsset(58479046) 
-		g.Parent = game.Workspace
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("antimob", 5, function(msg, MessageSplit, speaker, Self)
-	local imgettingtiredofmakingthisstupidscript = PERSON299(speaker.Name)
-	if imgettingtiredofmakingthisstupidscript == true then
-		local g = game:GetService("InsertService"):LoadAsset(58728910) 
-		g.Parent = game.Workspace
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("recolor", 5, function(msg, MessageSplit, speaker, Self)
-	game.Lighting.Ambient = Color3.new(170,170,170)
-	game.Lighting.TimeOfDay = 14
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("noinsert", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local insert = player[i].Backpack:FindFirstChild("Insert")
-			if insert then
-				insert:remove()
-			end
-			local bpinsert = player[i].Character:FindFirstChild("Insert")
-			if bpinsert ~= nil and bpinsert:isA("Tool") then
-				bpinsert:remove()
-			end
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("platformstand", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("platformstand", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(15),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -9805,7 +6348,7 @@ CoolCMDs.Functions.CreateCommand("platformstand", 5, function(msg, MessageSplit,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unplatformstand", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unplatformstand", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(17),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -9816,43 +6359,7 @@ CoolCMDs.Functions.CreateCommand("unplatformstand", 5, function(msg, MessageSpli
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("cframe1", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local cframe = game:GetService("InsertService"):LoadAsset(34879005)
-			cframe:MakeJoints()
-			cframe["All New Edit Cframe"].Parent = player[i].Backpack
-			cframe:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("cframe2", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(9),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local cframe = game:GetService("InsertService"):LoadAsset(35145017)
-			cframe:MakeJoints()
-			cframe["CFrame"].Parent = player[i].Backpack
-			cframe:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("skateboard", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(12),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local board = game:GetService("InsertService"):LoadAsset(34879053)
-			board:MakeJoints()
-			board["SkateTool"].Parent = player[i].Backpack
-			board:remove()
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("wedge", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("wedge", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 7,100 do
@@ -9885,7 +6392,7 @@ CoolCMDs.Functions.CreateCommand("wedge", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("cylinder", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("cylinder", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 10,100 do
@@ -9919,7 +6426,7 @@ CoolCMDs.Functions.CreateCommand("cylinder", 5, function(msg, MessageSplit, spea
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("block", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("block", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 7,100 do
@@ -9953,7 +6460,7 @@ CoolCMDs.Functions.CreateCommand("block", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("plate", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("plate", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 7,100 do
@@ -9987,7 +6494,7 @@ CoolCMDs.Functions.CreateCommand("plate", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("sphere", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("sphere", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 8,100 do
@@ -10022,7 +6529,7 @@ CoolCMDs.Functions.CreateCommand("sphere", 5, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("burn", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("burn", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10041,21 +6548,7 @@ CoolCMDs.Functions.CreateCommand("burn", 5, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("watch", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(msg:sub(7),speaker)
-	if player ~= 0 then
-		if #player == 1 then
-			for i = 1,#player do
-				sc = script.CamScript:clone()
-				sc.Parent = speaker
-				sc["New Subject"].Value = player[i].Character.Head
-				sc.Disabled = false
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("retools", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("retools", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10071,7 +6564,7 @@ CoolCMDs.Functions.CreateCommand("retools", 5, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("savet", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("savet", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(7),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10086,7 +6579,7 @@ CoolCMDs.Functions.CreateCommand("savet", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("getgear", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("getgear", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(msg:sub(9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10099,7 +6592,7 @@ CoolCMDs.Functions.CreateCommand("getgear", 5, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("team", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("team", 4, function(msg, MessageSplit, speaker, Self)
 	local slash = msg:sub(6):find(""..key)+5
 	if slash then 
 		local team = upmsg:sub(6,slash-1)
@@ -10114,7 +6607,7 @@ CoolCMDs.Functions.CreateCommand("team", 5, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("changeteam", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("changeteam", 4, function(msg, MessageSplit, speaker, Self)
 	local slash = msg:sub(12):find(""..key)+11
 	if slash then 
 		local player = findplayer(msg:sub(12,slash-1),speaker)
@@ -10130,7 +6623,7 @@ CoolCMDs.Functions.CreateCommand("changeteam", 5, function(msg, MessageSplit, sp
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("setupteams", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("setupteams", 4, function(msg, MessageSplit, speaker, Self)
 	local Teams = game:GetService("Teams")
 	TeamChild = Teams:GetChildren()
 	if #TeamChild > 0 then
@@ -10147,7 +6640,7 @@ CoolCMDs.Functions.CreateCommand("setupteams", 5, function(msg, MessageSplit, sp
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("reteam", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("reteam", 4, function(msg, MessageSplit, speaker, Self)
 	local Teams = game:GetService("Teams")
 	assignTeam = {}
 	local team = findteam(msg:sub(8),speaker)
@@ -10171,7 +6664,7 @@ CoolCMDs.Functions.CreateCommand("reteam", 5, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("change", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("change", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 8,100 do
@@ -10214,7 +6707,7 @@ CoolCMDs.Functions.CreateCommand("change", 5, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("ungod", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("ungod", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,7),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10251,7 +6744,7 @@ CoolCMDs.Functions.CreateCommand("ungod", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("god", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("god", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,5),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10284,7 +6777,7 @@ CoolCMDs.Functions.CreateCommand("god", 5, function(msg, MessageSplit, speaker, 
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("sparkles", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("sparkles", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,10),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10300,7 +6793,7 @@ CoolCMDs.Functions.CreateCommand("sparkles", 5, function(msg, MessageSplit, spea
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unsparkles", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unsparkles", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,12),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10319,7 +6812,7 @@ CoolCMDs.Functions.CreateCommand("unsparkles", 5, function(msg, MessageSplit, sp
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("heal", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("heal", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10333,7 +6826,7 @@ CoolCMDs.Functions.CreateCommand("heal", 5, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("sit", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,5),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10347,7 +6840,7 @@ CoolCMDs.Functions.CreateCommand("sit", 5, function(msg, MessageSplit, speaker, 
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("jump", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("jump", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10361,7 +6854,7 @@ CoolCMDs.Functions.CreateCommand("jump", 5, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("stand", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("stand", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,7),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10375,41 +6868,8 @@ CoolCMDs.Functions.CreateCommand("stand", 5, function(msg, MessageSplit, speaker
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("jail", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(string.sub(msg,6),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			if player[i].Character ~= nil then
-				local torso = player[i].Character:FindFirstChild("Torso")
-				if torso ~= nil then
-					local ack = Instance.new("Model")
-					ack.Name = "Jail" .. player[i].Name
-					icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-26.5, 108.400002, -1.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-24.5, 108.400002, -3.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-30.5, 108.400002, -3.5, -1, 0, -0, -0, 1, -0, -0, 0, -1) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-28.5, 108.400002, -1.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-24.5, 108.400002, -5.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-24.5, 108.400002, -7.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-24.5, 108.400002, -1.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-30.5, 108.400002, -7.5, -1, 0, -0, -0, 1, -0, -0, 0, -1) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(7,1.2000000476837,7) icky.CFrame = CFrame.new(-27.5, 112.599998, -4.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-26.5, 108.400002, -7.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-30.5, 108.400002, -5.5, -1, 0, -0, -0, 1, -0, -0, 0, -1) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-30.5, 108.400002, -1.5, -1, 0, -0, -0, 1, -0, -0, 0, -1) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack  icky = Instance.new("Part") icky.Size = Vector3.new(1,7.2000002861023,1) icky.CFrame = CFrame.new(-28.5, 108.400002, -7.5, 0, 0, -1, 0, 1, -0, 1, 0, -0) icky.Color = Color3.new(0.105882, 0.164706, 0.203922)  icky.Anchored = true  icky.Locked = true  icky.CanCollide = true  icky.Parent = ack 
-					ack.Parent = game.Workspace
-					ack:MoveTo(torso.Position)
-				end 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unjail", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(string.sub(msg,8),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			local c = game.Workspace:GetChildren()
-			for i2 =1,#c do
-				if string.sub(c[i2].Name,1,4) == "Jail" then
-					if string.sub(c[i2].Name,5) == player[i].Name then
-						c[i2]:remove()
-					end 
-				end 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("givebtools", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("givebtools", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,12),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10426,81 +6886,15 @@ CoolCMDs.Functions.CreateCommand("givebtools", 5, function(msg, MessageSplit, sp
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unshield", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(string.sub(msg,10),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			if player[i].Character ~= nil then
-				local shield = player[i].Character:FindFirstChild("Weird Ball Thingy")
-				if shield ~= nil then
-					shield:remove()
-				end 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("shield", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(string.sub(msg,8),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			if player[i].Character ~= nil then
-				local torso = player[i].Character:FindFirstChild("Torso")
-				if torso ~= nil then
-					if player[i].Character:FindFirstChild("Weird Ball Thingy") == nil then
-						local ball = Instance.new("Part")
-						ball.Size = Vector3.new(10,10,10)
-						ball.BrickColor = BrickColor.new(1)
-						ball.Transparency = 0.5
-						ball.CFrame = torso.CFrame
-						ball.TopSurface = "Smooth"
-						ball.BottomSurface = "Smooth"
-						ball.CanCollide = false
-						ball.Name = "Weird Ball Thingy"
-						ball.Reflectance = 0.2
-						local sm = Instance.new("SpecialMesh")
-						sm.MeshType = "Sphere"
-						sm.Parent = ball
-						ball.Parent = player[i].Character
-						createscript([[ 
-							function ot(hit) 
-								if hit.Parent ~= nil then 
-									if hit.Parent ~= script.Parent.Parent then 
-										if hit.Anchored == false then
-											hit:BreakJoints()
-											local pos = script.Parent.CFrame * (Vector3.new(0, 1.4, 0) * script.Parent.Size)
-											hit.Velocity = ((hit.Position - pos).unit + Vector3.new(0, 0.5, 0)) * 150 + hit.Velocity	
-											hit.RotVelocity = hit.RotVelocity + Vector3.new(hit.Position.z - pos.z, 0, pos.x - hit.Position.x).unit * 40
-										end end end end
-										script.Parent.Touched:connect(ot) ]], ball)
-						local bf = Instance.new("BodyForce")
-						bf.force = Vector3.new(0,5e+004,0)
-						bf.Parent = ball
-						local w = Instance.new("Weld")
-						w.Part1 = torso
-						w.Part0 = ball
-						ball.Shape = 0
-						w.Parent = torso
-					end 
-				end 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("time", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("time", 4, function(msg, MessageSplit, speaker, Self)
 	game.Lighting.TimeOfDay = string.sub(msg,6)
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("maxplayers", 5, function(msg, MessageSplit, speaker, Self)
-	local pie = game.Players.MaxPlayers
-	game.Players.MaxPlayers = string.sub(msg,12)
-	if game.Players.MaxPlayers == 0 then
-		game.Players.MaxPlayers = pie
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("zombify", 5, function(msg, MessageSplit, speaker, Self)
+
+_CMDMain.Functions.CreateCommand("zombify", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10586,23 +6980,8 @@ end
 end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("explode", 5, function(msg, MessageSplit, speaker, Self)
-	local player = findplayer(string.sub(msg,8),speaker)
-	if player ~= 0 then
-		for i = 1,#player do
-			if player[i].Character ~= nil then
-				local torso = player[i].Character:FindFirstChild("Torso")
-				if torso ~= nil then
-					local ex = Instance.new("Explosion")
-					ex.Position = torso.Position
-					ex.Parent = game.Workspace
-				end 
-			end 
-		end 
-	end 
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("rocket", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("rocket", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10644,7 +7023,7 @@ CoolCMDs.Functions.CreateCommand("rocket", 5, function(msg, MessageSplit, speake
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("ambient", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("ambient", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 9,100 do
@@ -10668,7 +7047,7 @@ CoolCMDs.Functions.CreateCommand("ambient", 5, function(msg, MessageSplit, speak
 	game.Lighting.Ambient = Color3.new(-string.sub(msg,9,danumber1 - 1),-string.sub(msg,danumber1 + 1,danumber2 - 1),-string.sub(msg,danumber2 + 1))
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("part", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("part", 4, function(msg, MessageSplit, speaker, Self)
 	local danumber1 = nil
 	local danumber2 = nil
 	for i = 6,100 do
@@ -10701,7 +7080,7 @@ CoolCMDs.Functions.CreateCommand("part", 5, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("control", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("control", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		if #player > 1 then
@@ -10715,7 +7094,7 @@ CoolCMDs.Functions.CreateCommand("control", 5, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("trip", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("trip", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10729,7 +7108,7 @@ end
 end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("setgrav", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("setgrav", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =9,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -10768,7 +7147,7 @@ CoolCMDs.Functions.CreateCommand("setgrav", 5, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("walkspeed", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("walkspeed", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =11,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -10793,7 +7172,7 @@ CoolCMDs.Functions.CreateCommand("walkspeed", 5, function(msg, MessageSplit, spe
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("damage", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("damage", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =8,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -10817,7 +7196,7 @@ CoolCMDs.Functions.CreateCommand("damage", 5, function(msg, MessageSplit, speake
 		end 
 	end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("health", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("health", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =8,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -10847,7 +7226,7 @@ CoolCMDs.Functions.CreateCommand("health", 5, function(msg, MessageSplit, speake
 		end 
 	end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("teleport", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("teleport", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i = 10,100 do
 		if string.sub(msg,i,i) == " " then
@@ -10887,7 +7266,7 @@ CoolCMDs.Functions.CreateCommand("teleport", 5, function(msg, MessageSplit, spea
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("merge", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("merge", 4, function(msg, MessageSplit, speaker, Self)
 	danumber = nil
 	for i =7,100 do
 		if string.sub(msg,i,i) == ""..key then
@@ -10918,7 +7297,7 @@ CoolCMDs.Functions.CreateCommand("merge", 5, function(msg, MessageSplit, speaker
 		end 
 	end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("clearscripts", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("clearscripts", 4, function(msg, MessageSplit, speaker, Self)
 	local c = game.Workspace:GetChildren()
 	for i =1,#c do
 		if c[i].className == "Script" then
@@ -10937,7 +7316,7 @@ CoolCMDs.Functions.CreateCommand("clearscripts", 5, function(msg, MessageSplit, 
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("respawn", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("respawn", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10958,7 +7337,7 @@ CoolCMDs.Functions.CreateCommand("respawn", 5, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("invisible", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,11),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -10987,7 +7366,7 @@ CoolCMDs.Functions.CreateCommand("invisible", 5, function(msg, MessageSplit, spe
 									end end end end end end end 
 								end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("visible", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,9),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11023,7 +7402,7 @@ CoolCMDs.Functions.CreateCommand("visible", 5, function(msg, MessageSplit, speak
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("freeze", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("freeze", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11039,7 +7418,7 @@ CoolCMDs.Functions.CreateCommand("freeze", 5, function(msg, MessageSplit, speake
 					end end end end end 
 				end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("thaw", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("thaw", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11056,7 +7435,7 @@ CoolCMDs.Functions.CreateCommand("thaw", 5, function(msg, MessageSplit, speaker,
 					end end end end end 
 				end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("nograv", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("nograv", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11079,7 +7458,7 @@ CoolCMDs.Functions.CreateCommand("nograv", 5, function(msg, MessageSplit, speake
 						end end end end end end 
 					end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("antigrav", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("antigrav", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,10),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11102,7 +7481,7 @@ CoolCMDs.Functions.CreateCommand("antigrav", 5, function(msg, MessageSplit, spea
 						end end end end end end 
 					end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("highgrav", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("highgrav", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,10),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11125,7 +7504,7 @@ CoolCMDs.Functions.CreateCommand("highgrav", 5, function(msg, MessageSplit, spea
 						end end end end end end 
 					end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("grav", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("grav", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11138,7 +7517,7 @@ CoolCMDs.Functions.CreateCommand("grav", 5, function(msg, MessageSplit, speaker,
 					end end end end end 
 				end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unlock", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unlock", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,8),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11150,7 +7529,7 @@ CoolCMDs.Functions.CreateCommand("unlock", 5, function(msg, MessageSplit, speake
 					end end end end end 
 				end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("lock", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("lock", 4, function(msg, MessageSplit, speaker, Self)
 	local player = findplayer(string.sub(msg,6),speaker)
 	if player ~= 0 then
 		for i = 1,#player do
@@ -11166,17 +7545,17 @@ CoolCMDs.Functions.CreateCommand("lock", 5, function(msg, MessageSplit, speaker,
 	end 
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("time", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("time", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 6 then
 		game.Lighting.TimeOfDay = string.sub(msg,6)
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("resetmp", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("resetmp", 4, function(msg, MessageSplit, speaker, Self)
 	game.Players.MaxPlayers = MaxPlayers
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("color", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("color", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 7 then
 		Add = nil
 		for i=7,10000 do
@@ -11202,7 +7581,7 @@ CoolCMDs.Functions.CreateCommand("color", 5, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("rcolor", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("rcolor", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		Plr = findplr(string.sub(msg,8),player)
 		if Plr ~= 0 then
@@ -11217,7 +7596,7 @@ CoolCMDs.Functions.CreateCommand("rcolor", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("launch", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("launch", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		plr = findplr(string.sub(msg,8),player)
 		if plr ~= 0 then
@@ -11256,7 +7635,7 @@ CoolCMDs.Functions.CreateCommand("launch", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("flip", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("flip", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 6 then
 		plr = findplr(string.sub(msg,6),player)
 		if plr ~= 0 then
@@ -11268,7 +7647,7 @@ CoolCMDs.Functions.CreateCommand("flip", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("bighead", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("bighead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -11279,7 +7658,7 @@ CoolCMDs.Functions.CreateCommand("bighead", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("smallhead", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("smallhead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 11 then
 		stop = findplr(string.sub(msg,11),player)
 		if stop ~= 0 then
@@ -11290,7 +7669,7 @@ CoolCMDs.Functions.CreateCommand("smallhead", 5, function(msg, MessageSplit, spe
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("normhead", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("normhead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 10 then
 		stop = findplr(string.sub(msg,10),player)
 		if stop ~= 0 then
@@ -11301,7 +7680,7 @@ CoolCMDs.Functions.CreateCommand("normhead", 5, function(msg, MessageSplit, spea
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("sethead", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("sethead", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		Add = nil
 		Num = nil
@@ -11327,7 +7706,7 @@ CoolCMDs.Functions.CreateCommand("sethead", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("hide", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("hide", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 6 then
 		stop = findplr(string.sub(msg,6))
 		if stop ~= 0 then
@@ -11346,7 +7725,7 @@ CoolCMDs.Functions.CreateCommand("hide", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unhide", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unhide", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		stop = findplr(string.sub(msg,8))
 		if stop ~= 0 then
@@ -11360,12 +7739,12 @@ CoolCMDs.Functions.CreateCommand("unhide", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unsmoke", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unsmoke", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
 			for x=1,#stop do
-				Spark = stop[x].Character.Torso:FindFirstChild("BCGSmoke")
+				Spark = stop[x].Character.Torso:FindFirstChild("SuperCMDSmoke")
 				if Spark then
 					Spark:remove()
 				end
@@ -11374,15 +7753,15 @@ CoolCMDs.Functions.CreateCommand("unsmoke", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("smoke", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("smoke", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
 			for x=1,#stop do
-				Spark = stop[x].Character.Torso:FindFirstChild("BCGSmoke")
+				Spark = stop[x].Character.Torso:FindFirstChild("SuperCMDSmoke")
 				if not Spark then
 					A=Instance.new("Smoke")
-					A.Name = "BCGSmoke"
+					A.Name = "SuperCMDSmoke"
 					A.Color = Color3.new((math.random(1,255))/255,(math.random(1,255))/255,(math.random(1,255))/255)
 					A.Opacity = 0.5
 					A.RiseVelocity = 5
@@ -11393,7 +7772,7 @@ CoolCMDs.Functions.CreateCommand("smoke", 5, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("shadcol", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("shadcol", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		I = nil
 		C = nil
@@ -11417,7 +7796,7 @@ CoolCMDs.Functions.CreateCommand("shadcol", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("b", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("awardbadge", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 3 then
 		I = nil
 		for i=3,9999 do
@@ -11440,7 +7819,7 @@ CoolCMDs.Functions.CreateCommand("b", 5, function(msg, MessageSplit, speaker, Se
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("amb", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("amb", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 5 then
 		I = nil
 		C = nil
@@ -11464,14 +7843,14 @@ CoolCMDs.Functions.CreateCommand("amb", 5, function(msg, MessageSplit, speaker, 
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("brightness", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("brightness", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 12 then
 		print(string.sub(msg,12))
 		game.Lighting.Brightness = tonumber(string.sub(msg,12))
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("gettool", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("gettool", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 9 then
 		Plr = nil
 		Tool = nil
@@ -11499,7 +7878,7 @@ CoolCMDs.Functions.CreateCommand("gettool", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("give", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("give", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		AAA = nil
 		for sa=6,1000 do
@@ -11528,7 +7907,7 @@ CoolCMDs.Functions.CreateCommand("give", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("ice", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("ice", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=5 then
 		stop = findplr(string.sub(msg,5),player)
 		if stop ~= 0 then
@@ -11544,7 +7923,7 @@ CoolCMDs.Functions.CreateCommand("ice", 5, function(msg, MessageSplit, speaker, 
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("grass", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("grass", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -11560,7 +7939,7 @@ CoolCMDs.Functions.CreateCommand("grass", 5, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("foil", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("foil", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~= 0 then
@@ -11576,7 +7955,7 @@ CoolCMDs.Functions.CreateCommand("foil", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("corrmetal", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("corrmetal", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=11 then
 		stop = findplr(string.sub(msg,11),player)
 		if stop ~= 0 then
@@ -11592,7 +7971,7 @@ CoolCMDs.Functions.CreateCommand("corrmetal", 5, function(msg, MessageSplit, spe
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("slate", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("slate", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -11608,7 +7987,7 @@ CoolCMDs.Functions.CreateCommand("slate", 5, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("concrete", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("concrete", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=10 then
 		stop = findplr(string.sub(msg,10),player)
 		if stop ~= 0 then
@@ -11624,7 +8003,7 @@ CoolCMDs.Functions.CreateCommand("concrete", 5, function(msg, MessageSplit, spea
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("dimpl", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("dimpl", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		stop = findplr(string.sub(msg,7),player)
 		if stop ~= 0 then
@@ -11640,7 +8019,7 @@ CoolCMDs.Functions.CreateCommand("dimpl", 5, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("plastic", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("plastic", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -11656,7 +8035,7 @@ CoolCMDs.Functions.CreateCommand("plastic", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("wood", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("wood", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~= 0 then
@@ -11672,7 +8051,7 @@ CoolCMDs.Functions.CreateCommand("wood", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("stealh", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("stealh", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -11694,7 +8073,7 @@ CoolCMDs.Functions.CreateCommand("stealh", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("cloneh", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("cloneh", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -11716,7 +8095,7 @@ CoolCMDs.Functions.CreateCommand("cloneh", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("spin", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("spin", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~= 0 then
@@ -11735,7 +8114,7 @@ CoolCMDs.Functions.CreateCommand("spin", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unspin", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unspin", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -11749,52 +8128,8 @@ CoolCMDs.Functions.CreateCommand("unspin", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unfreeze", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg)>=10 then
-		stop = findplr(string.sub(msg,10),player)
-		if stop ~= 0 then
-			for x=1,#stop do
-				Char = stop[x].Character:getChildren()
-				for i=1,#Char do
-					if Char[i].className == "Part" then
-						Char[i].Anchored = false
-						Char[i].Reflectance = 0
-					end
-				end
-				c,d = pcall(function()
-					stop[x].Character.Humanoid.WalkSpeed = stop[x].Character.Speed.Value
-					stop[x].Character.Speed:remove()
-				end)
-				if not c then
-					stop[x].Character.Humanoid.WalkSpeed = 16
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unfreeze", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg)>= 8 then
-		stop = findplr(string.sub(msg,8),player)
-		if stop ~= 0 then
-			for x=1,#stop do
-				Char = stop[x].Character:GetChildren()
-				for i=1,#Char do
-					if Char[i].className == "Part" then
-						Char[i].Anchored = true
-						Char[i].Reflectance = 0.6
-					end
-				end
-				Speed = Instance.new("IntValue",stop[x].Character)
-				Speed.Value = stop[x].Character.Humanoid.WalkSpeed
-				Speed.Name = "Speed"
-				stop[x].Character.Humanoid.WalkSpeed = 0
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("invisible", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("invisible", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=11 then
 		stop = findplr(string.sub(msg,11),player)
 		if stop ~= 0 then
@@ -11815,7 +8150,7 @@ CoolCMDs.Functions.CreateCommand("invisible", 5, function(msg, MessageSplit, spe
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("visible", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("visible", 4, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=9 then
 		stop = findplr(string.sub(msg,9),player)
 		if stop ~= 0 then
@@ -11836,16 +8171,7 @@ CoolCMDs.Functions.CreateCommand("visible", 5, function(msg, MessageSplit, speak
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("mp", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg)>=4 then
-		Num = tonumber((string.sub(msg,4)))
-		if Num >= 6 and Num <= 30 then
-			game.Players.MaxPlayers = Num
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("trans", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("trans", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=7 then
 		Add = nil
 		for i=7,1000 do
@@ -11873,57 +8199,8 @@ CoolCMDs.Functions.CreateCommand("trans", 5, function(msg, MessageSplit, speaker
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("blind", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg)>=7 then
-		Go = false
-		for _,v in pairs(Admins) do
-			if player.Name == v then
-				Go = true
-				break
-			end
-		end
-		if Go then
-			stop = findplr(string.sub(msg,7),player)
-			if stop ~= 0 then
-				for x=1,#stop do
-					if not stop[x].PlayerGui:FindFirstChild("BlindGui") then
-						A=Instance.new("ScreenGui")
-						A.Name = "BlindGui"
-						B=Instance.new("Frame",A)
-						B.BackgroundColor3 = Color3.new(0,0,0)
-						B.Size = UDim2.new(5,0,5,0)
-						B.Position = UDim2.new(-0.005,0,-0.05,0)
-						A.Parent = stop[x].PlayerGui
-					end
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unblind", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg)>=9 then
-		Go = false
-		for _,v in pairs(Admins) do
-			if player.Name == v then
-				Go = true
-				break
-			end
-		end
-		if Go then
-			stop = findplr(string.sub(msg,9),player)
-			if stop ~= 0 then
-				for x=1,#stop do
-					if stop[x].PlayerGui:FindFirstChild("BlindGui") then
-						stop[x].PlayerGui:FindFirstChild("BlindGui"):remove()
-					end
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("ws", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("ws", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=4 then
 		Add = nil
 		for i=4,1000 do
@@ -11943,21 +8220,7 @@ CoolCMDs.Functions.CreateCommand("ws", 5, function(msg, MessageSplit, speaker, S
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("heal", 5, function(msg, MessageSplit, speaker, Self)
-	if string.len(msg)>=6 then
-		stop=findplr(string.sub(msg,6),player)
-		if stop ~= 0 then
-			for x=1,#stop do
-				bp=stop[x].Character
-				if bp then
-					bp.Humanoid.Health = bp.Humanoid.MaxHealth
-				end
-			end
-		end
-	end
-end, "None", "None", "None")
-
-CoolCMDs.Functions.CreateCommand("hang", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("hang", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=6 then
 		stop = findplr(string.sub(msg,6),player)
 		if stop ~=0 then
@@ -11983,7 +8246,7 @@ CoolCMDs.Functions.CreateCommand("hang", 5, function(msg, MessageSplit, speaker,
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("unhang", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("unhang", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg)>=8 then
 		stop=findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -12018,7 +8281,7 @@ CoolCMDs.Functions.CreateCommand("unhang", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speaker, Self)
+_CMDMain.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speaker, Self)
 	if string.len(msg) >= 8 then
 		stop = findplr(string.sub(msg,8),player)
 		if stop ~= 0 then
@@ -12040,4 +8303,28 @@ CoolCMDs.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speake
 	end
 end, "None", "None", "None")
 
-CoolCMDs.Functions.RunAtBottomOfScript() -- DO NOT DELETE!
+--uyjulian's custom commands
+
+_CMDMain.Functions.CreateCommand("poison", 5, function(msg, MessageSplit, speaker, Self)
+	if string.len(msg) >= 8 then
+		stop = findplr(string.sub(msg,8),player)
+		if stop ~= 0 then
+			for x=1,#stop do
+				bp = stop[x].Character
+				if bp then
+					Fire = Instance.new("Smoke",bp.Torso)
+					Fire.Size = 10
+					Fire.Opacity = 0.5
+					Fire.Color=Color3.new(0,1,0)
+					repeat
+						wait(0.2)
+						bp.Humanoid:TakeDamage(2)
+					until bp.Humanoid.Health <= 0
+					Fire:remove()
+				end
+			end
+		end
+	end
+end, "None", "None", "None")
+
+_CMDMain.Functions.RunAtBottomOfScript() -- DO NOT DELETE!
