@@ -1,7 +1,13 @@
 SuperCMDs
 =========
 
-Advanced commands for ROBLOX.
+This is a simple commands script that you easily plop in your place and use.
+
+How to use
+==========
+
+Insert the model below into your place.
+To get a list of commands, say "commands;".
 
 This is a work in progress!
 
