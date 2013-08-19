@@ -1,7 +1,7 @@
 SuperCMDs
 =========
 
-This is a simple commands script that you easily plop in your place and use.
+This is a simple commands script that you easily plop in your place and use. SuperCMDs is currently being rewritten, once it is done, it will have new features, such as auto-updating. It will make use of metatables.
 
 How to use
 ==========
