@@ -9,6 +9,15 @@ How to use
 Insert the model below into your place.
 To get a list of commands, say "commands;".
 
+Custom versions
+===============
+
+PM uyjulian on ROBLOX for more details. You need to pay in bitcoins.
+The more you pay, the faster you get your custom version.
+
+Footer
+======
+
 This is a work in progress!
 
 SuperCMDs official account: http://www.roblox.com/User.aspx?ID=43200492
