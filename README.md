@@ -13,7 +13,7 @@ Custom versions
 ===============
 
 PM uyjulian on ROBLOX for more details. You need to pay in bitcoins.
-The more you pay, the faster you get your custom version.
+The more you pay, the faster you get your custom version!
 
 Footer
 ======
