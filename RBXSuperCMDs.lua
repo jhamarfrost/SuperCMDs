@@ -1,18 +1,20 @@
 -- WARNING: There is over 10000 lines in this script! 
 -- Created by uyjulian (goo (dot) gl/w8F9w)
 -- TODO: add Kohl's commands
-Admins = {"noobv11","noobv14","Player", "Player1"} --Put Admins name here
-Banned = {} --banned people
-ItemId = 0 --auto admin (Not enabled yet)
-KeyFor = ";" --the key you use to seprate the parts
-Owners = {"noobv11","noobv14","Player", "Player1"} --they get all the commands (Not enabled yet)
-FrieAd = false --make your friend admin, or not? (Not enabled yet)
-BeFrAd = false --make your best friend admin, or not? (Not enabled yet)
-AdGrID = 00000 --make those people in that group admin (Not enabled yet)
-CrEnBo = false --make this true if you want to award a badge when you enter (Not enabled yet)
-CrEnId = 0000000 --the ID of the badge (Not enabled yet)
-MoName = "Money" --for the donate command (Not enabled yet)
-AutAdm = {"Player1, Admin", "uyjulian, Owner", "Player, Admin"} -- AutoAdmin plugin
+Owners = {"noobv11","noobv14","Player", "Player1"} -- they get all the commands
+Admins = {"noobv11","noobv14","Player", "Player1"} -- they can not do advanced commands
+Banned = {} -- banned people
+ItemId = 0 -- auto admin (Not enabled yet)
+KeyFor = ";" -- the key you use to seprate the parts (if this was ;, it would be command;pram1;pram2)
+FrieAd = false -- make your friend admin, or not? (Not enabled yet)
+BeFrAd = false -- make your best friend admin, or not? (Not enabled yet)
+AsseId = {} -- put asset ID (such as T-shirt) here
+AdGrou = {{1,1}} -- Add groups here {group, rank}
+-- Misc stuff (useful) --
+CrEnBo = false -- make this true if you want to award a badge when you enter (Not enabled yet)
+CrEnId = 0000000 -- the ID of the badge (Not enabled yet)
+MoName = "Money" -- for the donate command (Not enabled yet)
+AutAdm = {"Player1, Admin", "uyjulian, Owner", "Player, Admin"} -- AutoAdmin plugin (Do not mess with)
 -- Thank you for using SuperCMDs!
 -- If you like this admin script, share it with your friends!
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -407,10 +409,10 @@ _C.Functions.GetRecursiveChildren = function(Source, Name, SearchType, Children)
 				end
 				return false
 			end)() then
-			table.insert(Children, Child)
-		end
-		_C.Functions.GetRecursiveChildren(Child, Name, SearchType, Children)
-	end)
+				table.insert(Children, Child)
+			end
+			_C.Functions.GetRecursiveChildren(Child, Name, SearchType, Children)
+		end)
 	end
 	return Children
 end
@@ -460,7 +462,7 @@ _C.Functions.CatchMessage = function(Message, Speaker)
 							table.insert(Message3, _C.Functions.Explode(_C.Data.SplitCharacter, Message2)[x])
 						end
 						if Message3 == nil then Message3 = {""} end
-						_C.CommandHandles[i].Trigger(Message2, Message3, Speaker, _C.CommandHandles[i])
+						delay(0.01, function() _C.CommandHandles[i].Trigger(Message2, Message3, Speaker, _C.CommandHandles[i]) end)
 					else
 						_C.Functions.CreateMessage("Message", "You are not an administrator.", 2.5, Speaker)
 						wait(2.5)
@@ -573,28 +575,27 @@ _C.Functions.GetPlayersFromCommand = function(plr, str)
 	return plrz
 end
 
+_C.Functions.PrintInLog("SuperCMDs has been made by uyjulian!")
+function onEntered(Player)
+	if _C.Functions.CheckTable(Admins,Player.Name) then 
+		_C.Functions.CreatePlayerTable(Player,_C.Functions.GetGroup("Admin", "ByName")) 
+	elseif Player.userId == game.CreatorId or _C.Functions.CheckTable(Owners,Player.Name) then
+		_C.Functions.CreatePlayerTable(Player,_C.Functions.GetGroup("Owner", "ByName")) 
+	else 
+		_C.Functions.CreatePlayerTable(Player) 
+	end 
+end
+
+function onLeft(Player)
+	_C.Functions.RemovePlayerTable(Player)
+end
+
+game:GetService("Players").PlayerAdded:connect(onEntered)
+game:GetService("Players").PlayerRemoving:connect(onLeft)
+for _, Player in pairs(game:service("Players"):GetPlayers()) do pcall(function() onEntered(Player) end) end
+
 _C.Functions.RunAtBottomOfScript = function()
-	_C.Functions.PrintInLog("SuperCMDs has been made by uyjulian!")
-	function onEntered(Player)
-		local kv = Instance.new("ObjectValue")
-		kv.Name = "kv"
-		kv.Parent = Player
-		if _C.Functions.CheckTable(Admins,Player.Name) then 
-			_C.Functions.CreatePlayerTable(Player,_C.Functions.GetGroup("Admin", "ByName")) 
-		elseif Player.userId == game.CreatorId or _C.Functions.CheckTable(Owners,Player.Name) then
-			_C.Functions.CreatePlayerTable(Player,_C.Functions.GetGroup("Owner", "ByName")) 
-		else 
-			_C.Functions.CreatePlayerTable(Player) 
-		end 
-	end
 
-	function onLeft(Player)
-		_C.Functions.RemovePlayerTable(Player)
-	end
-
-	game:GetService("Players").PlayerAdded:connect(onEntered)
-	game:GetService("Players").PlayerRemoving:connect(onLeft)
-	for _, Player in pairs(game:service("Players"):GetPlayers()) do pcall(function() onEntered(Player) end) end
 	_C.Functions.LoadModule(true, nil, true)
 	_C.Initialization.FinishTime = tick()
 	_C.Initialization.ElapsedTime = _C.Initialization.FinishTime - _C.Initialization.StartTime
@@ -673,6 +674,35 @@ _C.Functions.CreateModule("EasyAutoGroupManager", function(Self, Message)
 end, 
 function(Self, Message)
 
+	return true
+end, "None")
+
+_C.Functions.CreateModule("DebugFunc", function(Self, Message)
+	Self.Commands = {}
+	Self.DCommand = {}
+	for i = 1, #_C.CommandHandles do
+		if type(_C.CommandHandles[i].Command) == "string" then
+			table.insert(Self.Commands,_C.CommandHandles[i].Command)
+		elseif type(_C.CommandHandles[i].Command) == "table" then
+			for x = 1, #_C.CommandHandles[i].Command do
+				table.insert(Self.Commands,_C.CommandHandles[x].Command)
+			end
+		end
+	end
+	print(Self.Commands)
+	for x = 1, #Self.Commands do
+		if Self.DCommand[Self.Commands[i]] == nil then
+			Self.DCommand[Self.Commands[i]] = 1
+		else 
+			Self.DCommand[Self.Commands[i]] = Self.DCommand[Self.Commands[i]] + 1
+		end
+	end
+	print(Self.DCommand)
+	return true
+end, 
+function(Self, Message)
+	Self.Commands = {}
+	Self.DCommand = {}
 	return true
 end, "None")
 
@@ -1005,7 +1035,7 @@ local Message = Instance.new("StringValue")
 	return _Notification
 end
 		delay(0,function()
-			Name = script.Owner.Value
+			--Name = script.Owner.Value
 			Chat = true
 			Workspace = Game:GetService("Workspace")
 			Players = Game:GetService("Players")
@@ -1890,7 +1920,7 @@ local Check = function(Player, Show)
 			if Player.Name == _C.Functions.Explode(", ", Self.Players[i])[1] then
 				_C.Functions.GetPlayerTable(Player.Name).Group = _C.Functions.Explode(", ", Self.Players[i])[2]
 				if type(Show) ~= "" then
-					Show.Text = "Player \"" ..Player.Name.. "\" is now in the group \"" .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\"."
+					--Show.Text = "Player \"" ..Player.Name.. "\" is now in the group \"" .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\"."
 				elseif Show == true then
 					wait(1)
 					_C.Functions.CreateMessage("Hint", "You are now in the group \"" .._C.Functions.GetGroup(_C.Functions.GetPlayerTable(Player.Name).Group).FullName.. "\".", 5, Player)

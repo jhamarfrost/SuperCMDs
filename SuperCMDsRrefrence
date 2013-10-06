@@ -1,0 +1,79 @@
+SuperCMDsR refrence
+
+commands:
+
+
+groups:
+
+	_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateGroup("TempModerators", 6 ,"TempModerators", "TempModerators can only kick and kill. Nothing else.")
+	_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateGroup("Moderators", 7 ,"Moderators", "Moderators can only kick, ban, and kill. Nothing else.")
+	_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateGroup("TempAdmins", 8 ,"TempAdmins", "These admins can do mostly what regular Admins can do. However, they cannot do stuff that would make people mad.")
+	_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateGroup("Admins", 9 ,"Admins", "These admins are permanent, and have higher privileges then TempAdmins.")
+	_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateGroup("Owner", 9 ,"Owner", "The creator of this place can use all commands SuperCMDs has to offer.")
+
+Sample code/APIs:
+
+-- [New module]
+_C.Data.Functions.CreateModule("Name", function(Module, DataTable) 
+
+	return true 
+end, function(Module, DataTable) 
+
+	return true
+end, "This is a sample module.")
+
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateMessage(Format, MessageText, ShowTime, MessageParent)
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.IsModuleEnabled(ModuleName)
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateScript(Source, Parent, DebugEnabled)
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CreateLocalScript(Source, Parent, DebugEnabled)
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.Explode(Divider, Text)
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.GetRecursiveChildren(Source, Name, SearchType, Children)
+_C.Data.Functions.GetModule("SuperCMDsEssentials").DataTable.Functions.CheckTable(Table, Value)
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.CreatePlayerTable(Player, PlayerGroup)
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.RemovePlayerTable(Player)
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetPlayerTable(Player)
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.CreateGroup(GroupName, GroupControl, GroupFullName, GroupHelp)
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetGroup(Group, Format)
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetLowestGroup()
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetHighestGroup()
+_C.Data.Functions.GetModule("CommandManager").DataTable.Functions.CreateCommand(CommandText, CommandControl, CommandFunction, CommandFullName, CommandHelp, CommandHelpArgs)
+_C.Data.Functions.GetModule("CommandManager").DataTable.Functions.RemoveCommand(Command)
+_C.Data.Functions.GetModule("CommandManager").DataTable.Functions.GetCommand(Command, Format)
+_C.Data.Functions.GetModule("CommandManager").DataTable.Functions.CatchMessage(Message, Speaker)
+_C.Data.Functions.GetModule("CommandManager").DataTable.Functions.OnPlayerEntered(Player) 
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+_C.Data.Functions.GetModule("").DataTable.Functions.
+
+
+
+
+
+
+
+
+
+
+
+
