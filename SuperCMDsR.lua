@@ -1,3 +1,6 @@
+-- This is SuperCMDsR.
+-- Created by uyjulian (goo (dot) gl/w8F9w)
+
 --Bootstrap (auto-updater?)
 local _B = {}
 _B.U = {} --updater
@@ -273,6 +276,14 @@ _C.Data.Functions.CreateModule("GroupManager", function(Module, DataTable)
 		end
 		return nil
 	end
+
+	DataTable.Functions.WaitForPlayerTable = function(Player)
+		if Player == nil then return false end
+		if not Player:IsA("Player") then return false end
+		repeat wait() until _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetPlayerTable(Player.Name)
+		return _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetPlayerTable(Player.Name)
+	end
+
 	DataTable.Functions.CreateGroup("Players", 1 ,"Players", "Normal players that don't get admin commands.")
 	game:GetService("Players").PlayerAdded:connect(DataTable.Functions.CreatePlayerTable)
 	game:GetService("Players").PlayerRemoving:connect(DataTable.Functions.RemovePlayerTable)
@@ -345,7 +356,7 @@ _C.Data.Functions.CreateModule("AutoGroup", function(Module, DataTable)
 
 
 	DataTable.Functions.OnPlayerEntered = function(Player) 
-		repeat wait() until _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetPlayerTable(Player.Name) --TODO: shorten this
+		_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.DataTable.Functions.WaitForPlayerTable(Player)
 		
 	end
 
@@ -474,7 +485,7 @@ _C.Data.Functions.CreateModule("CommandManager", function(Module, DataTable)
 	end
 
 	DataTable.Functions.OnPlayerEntered = function(Player) 
-		repeat wait() until _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetPlayerTable(Player.Name) --TODO: shorten this
+		_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.DataTable.Functions.WaitForPlayerTable(Player)
 		Player.Chatted:connect(function(Message) DataTable.Functions.CatchMessage(Message, Player) end)
 	end
 

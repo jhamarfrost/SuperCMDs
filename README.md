@@ -1,13 +1,17 @@
 SuperCMDs
 =========
 
-This is a simple commands script that you easily plop in your place and use. SuperCMDs is currently being rewritten, once it is done, it will have new features, such as auto-updating. It will make use of metatables.
+This is a simple commands script that you easily plop in your place and use. SuperCMDs is currently being rewritten, once it is done, it will have new features, such as auto-updating. 
 
-How to use
-==========
+API
+===
 
-Insert the model below into your place.
-To get a list of commands, say "commands;".
+Look in the file "SuperCMDsRrefrence" for more info.
+
+Releasing
+=========
+
+There will be two versions: one will be published on ROBLOX on SuperCMDs offical model, and the other will be maintained on GitHub, where advanced scripters can git clone it.
 
 Custom versions
 ===============
@@ -24,4 +28,3 @@ SuperCMDs official account: http://www.roblox.com/User.aspx?ID=43200492
 
 SuperCMDs official model: http://www.roblox.com/--item?id=117557211
 
-Lots of work to do. :-)

@@ -1,6 +1,6 @@
--- WARNING: There is over 10000 lines in this script! 
+-- WARNING: This is an old version of SuperCMDs!
 -- Created by uyjulian (goo (dot) gl/w8F9w)
--- TODO: add Kohl's commands
+--
 Owners = {"noobv11","noobv14","Player", "Player1"} -- they get all the commands
 Admins = {"noobv11","noobv14","Player", "Player1"} -- they can not do advanced commands
 Banned = {} -- banned people

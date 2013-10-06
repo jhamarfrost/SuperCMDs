@@ -1,3 +1,5 @@
+
+Created by uyjulian (goo (dot) gl/w8F9w)
 SuperCMDsR refrence
 
 commands:
@@ -36,12 +38,13 @@ _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.CreateGroup(Grou
 _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetGroup(Group, Format)
 _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetLowestGroup()
 _C.Data.Functions.GetModule("GroupManager").DataTable.Functions.GetHighestGroup()
+_C.Data.Functions.GetModule("GroupManager").DataTable.Functions.DataTable.Functions.WaitForPlayerTable(Player)
 _C.Data.Functions.GetModule("CommandManager").DataTable.Functions.CreateCommand(CommandText, CommandControl, CommandFunction, CommandFullName, CommandHelp, CommandHelpArgs)
 _C.Data.Functions.GetModule("CommandManager").DataTable.Functions.RemoveCommand(Command)
 _C.Data.Functions.GetModule("CommandManager").DataTable.Functions.GetCommand(Command, Format)
 _C.Data.Functions.GetModule("CommandManager").DataTable.Functions.CatchMessage(Message, Speaker)
 _C.Data.Functions.GetModule("CommandManager").DataTable.Functions.OnPlayerEntered(Player) 
-_C.Data.Functions.GetModule("").DataTable.Functions.
+
 _C.Data.Functions.GetModule("").DataTable.Functions.
 _C.Data.Functions.GetModule("").DataTable.Functions.
 _C.Data.Functions.GetModule("").DataTable.Functions.

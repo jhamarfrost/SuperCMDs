@@ -1,3 +1,6 @@
+-- These functions have been removed from SuperCMDs.
+-- Created by uyjulian (goo (dot) gl/w8F9w)
+
 	_CMDMain.Functions.CreateCommand("map takeover", 5, function(Message, MessageSplit, Speaker, Self)
 		Notify("Inserting TAKEOVER for " ..Speaker.Name.. ". PLEASE WAIT.")
 		m = Game:GetService("InsertService"):LoadAsset(61598425) 
