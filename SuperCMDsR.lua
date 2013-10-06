@@ -361,6 +361,8 @@ _C.Data.Functions.CreateModule("AutoGroup", function(Module, DataTable)
 	end
 
 	game:GetService("Players").PlayerAdded:connect(DataTable.Functions.OnPlayerEntered)
+	for _, Player in pairs(game:GetService("Players"):GetPlayers()) do pcall(function() DataTable.Functions.CreatePlayerTable(Player) end) end
+	
 	return true 
 end, nil, "This module will automaticly move you to a group.")
 
@@ -490,6 +492,7 @@ _C.Data.Functions.CreateModule("CommandManager", function(Module, DataTable)
 	end
 
 	game:GetService("Players").PlayerAdded:connect(DataTable.Functions.OnPlayerEntered)
+	for _, Player in pairs(game:GetService("Players"):GetPlayers()) do pcall(function() DataTable.Functions.CreatePlayerTable(Player) end) end
 
 	return true 
 end, nil, "This module adds Command functionality to SuperCMDs.")
